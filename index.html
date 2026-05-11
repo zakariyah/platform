@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AFA Command Center — Platform Observability</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,400&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="assets/styles.css" />
+</head>
+<body>
+
+<!-- ============ TOP BRAND BAR ============ -->
+<header class="brandbar">
+  <div class="brandbar-left">
+    <span>Command Center</span>
+    <span style="color: var(--ink-4);">/</span>
+    <span style="color: var(--cyan); letter-spacing: 0.2em;">Platform Observability</span>
+  </div>
+
+  <div class="brandbar-logo">
+    <div class="logo-mark">
+      <svg viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20 4 L34 14 L34 26 L20 36 L6 26 L6 14 Z" stroke="#5ecdf5" stroke-width="1.6" fill="none" opacity="0.85"/>
+        <path d="M20 11 L28 17 L28 23 L20 29 L12 23 L12 17 Z" stroke="#3b9eff" stroke-width="1.4" fill="none"/>
+        <circle cx="20" cy="20" r="3" fill="#5ecdf5"/>
+      </svg>
+    </div>
+    <div>
+      <div class="logo-text">Al-Futtaim</div>
+      <div class="logo-sub">Automotive</div>
+    </div>
+    <div class="logo-arabic" dir="rtl">الفطيم للسيارات</div>
+  </div>
+
+  <div class="brandbar-right">
+    <div class="live-indicator"><div class="live-dot"></div>Live · Now</div>
+    <div id="clock">—</div>
+    <div style="display: flex; align-items: center; gap: 6px;">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="12" cy="12" r="3"/>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<!-- ============ TAB BAR ============ -->
+<nav class="tabbar">
+  <div class="tabbar-tabs">
+    <div class="tabbar-tab active" data-page="overview">Overview</div>
+    <div class="tabbar-tab" data-page="lead">Lead Management</div>
+    <div class="tabbar-tab" data-page="testdrive">Test Drive</div>
+    <div class="tabbar-tab" data-page="finance">Finance Application</div>
+    <div class="tabbar-tab" data-page="service">Service Booking</div>
+    <div class="tabbar-tab" data-page="vehicle">Vehicle Delivery</div>
+  </div>
+  <div class="tabbar-right">
+
+    <!-- ── Date Selector ── -->
+    <div class="ds-wrap" id="ds-wrap">
+      <button class="ds-trigger" id="ds-trigger">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <rect x="2" y="3" width="12" height="11" rx="1.5"/>
+          <path d="M2 7h12M5 1v4M11 1v4"/>
+        </svg>
+        <span id="ds-display">May 1 – 10, 2026</span>
+        <svg class="ds-caret" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4.5l3 3 3-3"/></svg>
+      </button>
+
+      <div class="ds-dropdown" id="ds-dropdown">
+        <!-- Preset grid -->
+        <div class="ds-presets">
+          <button class="ds-preset" data-preset="today">Today</button>
+          <button class="ds-preset" data-preset="wtd">WTD</button>
+          <button class="ds-preset ds-active" data-preset="mtd">MTD</button>
+          <button class="ds-preset" data-preset="qtd">QTD</button>
+          <button class="ds-preset" data-preset="ytd">YTD</button>
+          <button class="ds-preset" data-preset="last7">Last 7D</button>
+          <button class="ds-preset" data-preset="last30">Last 30D</button>
+          <button class="ds-preset" data-preset="last90">Last 90D</button>
+          <button class="ds-preset" data-preset="lastq">Last Qtr</button>
+          <button class="ds-preset" data-preset="lasty">Last Year</button>
+        </div>
+
+        <!-- Divider -->
+        <div class="ds-div">
+          <span>Custom Range</span>
+        </div>
+
+        <!-- Date inputs -->
+        <div class="ds-range-row">
+          <div class="ds-input-group">
+            <label class="ds-label">From</label>
+            <input class="ds-input" type="date" id="ds-from" value="2026-05-01"/>
+          </div>
+          <svg width="20" height="12" viewBox="0 0 20 12" fill="none" style="flex-shrink:0;margin-top:18px">
+            <line x1="0" y1="6" x2="16" y2="6" stroke="#3d557a" stroke-width="1.2"/>
+            <polygon points="13,3 20,6 13,9" fill="#3d557a"/>
+          </svg>
+          <div class="ds-input-group">
+            <label class="ds-label">To</label>
+            <input class="ds-input" type="date" id="ds-to" value="2026-05-10"/>
+          </div>
+        </div>
+
+        <!-- Footer -->
+        <div class="ds-footer">
+          <span class="ds-selected-label" id="ds-selected-label">May 1 – 10, 2026 · 10 days</span>
+          <button class="ds-apply" id="ds-apply">Apply</button>
+        </div>
+      </div>
+    </div><!-- /ds-wrap -->
+
+    <!-- ── Brand Selector ── -->
+    <div class="bs-wrap" id="bs-wrap">
+      <button class="bs-trigger" id="bs-trigger">
+        <svg width="13" height="13" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+          <path d="M2 4h12M4 8h8M6 12h4"/>
+        </svg>
+        <span id="bs-display">8 Brands · UAE</span>
+        <svg class="bs-caret" width="10" height="10" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M3 4.5l3 3 3-3"/></svg>
+      </button>
+
+      <div class="bs-dropdown" id="bs-dropdown">
+
+        <!-- Country row -->
+        <div class="bs-section-label">Country</div>
+        <div class="bs-country-row" id="bs-countries">
+          <button class="bs-country bs-c-active" data-country="UAE">🇦🇪 UAE</button>
+          <button class="bs-country" data-country="Egypt">🇪🇬 Egypt</button>
+          <button class="bs-country" data-country="Singapore">🇸🇬 Singapore</button>
+          <button class="bs-country" data-country="Pakistan">🇵🇰 Pakistan</button>
+        </div>
+
+        <!-- Controls -->
+        <div class="bs-controls">
+          <span class="bs-section-label" style="margin:0">Brands</span>
+          <button class="bs-ctrl" id="bs-select-all">Select all</button>
+          <button class="bs-ctrl" id="bs-clear-all">Clear</button>
+        </div>
+
+        <!-- Brand list (rendered by JS) -->
+        <div class="bs-list" id="bs-list"></div>
+
+        <!-- Footer -->
+        <div class="bs-footer">
+          <span class="bs-count" id="bs-count">8 of 16 selected</span>
+          <button class="bs-apply-btn" id="bs-apply-btn">Apply</button>
+        </div>
+      </div>
+    </div><!-- /bs-wrap -->
+  </div>
+</nav>
+
+
+<div class="page-content active" data-page="overview">
+
+<!-- ============ SUBTABS (Overview sub-views) ============ -->
+<nav class="subtabs" id="subtabs">
+  <div class="subtab" data-sub="topology">
+    <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+      <circle cx="4" cy="4" r="1.6"/><circle cx="12" cy="4" r="1.6"/>
+      <circle cx="8" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/>
+      <path d="M4 4l4 8M12 4l-4 8M8 12h4"/>
+    </svg>
+    System Topology
+  </div>
+  <div class="subtab active" data-sub="flow">
+    <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+      <rect x="1.5" y="3" width="4" height="3" rx="0.5"/>
+      <rect x="10.5" y="3" width="4" height="3" rx="0.5"/>
+      <rect x="6" y="10" width="4" height="3" rx="0.5"/>
+      <path d="M3.5 6v2h4.5M12.5 6v2h-4.5"/>
+    </svg>
+    Business Flow
+  </div>
+</nav>
+
+<!-- ============ SUBVIEW: SYSTEM TOPOLOGY ============ -->
+<div class="subview" data-view="topology">
+<main class="main layout-overview">
+
+  <!-- ---------- LENS 1 — TOPOLOGY ---------- -->
+  <section class="panel topology-panel">
+    <div class="panel-header">
+      <div class="panel-title-group">
+        <span class="lens-tag">Lens 01</span>
+        <div>
+          <div class="panel-title">System Topology</div>
+          <div class="panel-sub">Live health of every system and the connections between them</div>
+        </div>
+      </div>
+      <div class="panel-actions">23 nodes · click for detail</div>
+    </div>
+
+    <div class="topology-canvas">
+      <svg class="topology-svg" viewBox="0 0 800 540" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <radialGradient id="glow-green">
+            <stop offset="0%" stop-color="#4dffaa" stop-opacity="0.55"/>
+            <stop offset="100%" stop-color="#4dffaa" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="glow-cyan">
+            <stop offset="0%" stop-color="#5ecdf5" stop-opacity="0.6"/>
+            <stop offset="100%" stop-color="#5ecdf5" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="glow-amber">
+            <stop offset="0%" stop-color="#ffb74d" stop-opacity="0.65"/>
+            <stop offset="100%" stop-color="#ffb74d" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="glow-red">
+            <stop offset="0%" stop-color="#ff5b7a" stop-opacity="0.78"/>
+            <stop offset="100%" stop-color="#ff5b7a" stop-opacity="0"/>
+          </radialGradient>
+        </defs>
+
+        <!-- ============ EDGES ============ -->
+        <line x1="170" y1="120" x2="380" y2="120" stroke="#5ecdf5" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.5">
+          <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="1.2s" repeatCount="indefinite" />
+        </line>
+        <line x1="170" y1="200" x2="380" y2="270" stroke="#5ecdf5" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.5">
+          <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="1.5s" repeatCount="indefinite" />
+        </line>
+        <line x1="170" y1="280" x2="380" y2="270" stroke="#5ecdf5" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.5">
+          <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="1.4s" repeatCount="indefinite" />
+        </line>
+        <line x1="170" y1="360" x2="380" y2="270" stroke="#ffb74d" stroke-width="1.6" stroke-dasharray="6 3" opacity="0.75">
+          <animate attributeName="stroke-dashoffset" from="0" to="-18" dur="0.8s" repeatCount="indefinite" />
+        </line>
+
+        <line x1="430" y1="150" x2="430" y2="240" stroke="#5ecdf5" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.5">
+          <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="1.3s" repeatCount="indefinite" />
+        </line>
+
+        <line x1="480" y1="270" x2="600" y2="200" stroke="#5ecdf5" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.5">
+          <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="1.2s" repeatCount="indefinite" />
+        </line>
+
+        <!-- FAILED edge -->
+        <line x1="480" y1="290" x2="600" y2="350" stroke="#ff5b7a" stroke-width="2.2" opacity="0.95">
+          <animate attributeName="opacity" values="0.4;1;0.4" dur="1.2s" repeatCount="indefinite" />
+        </line>
+        <circle cx="540" cy="320" r="22" fill="url(#glow-red)">
+          <animate attributeName="r" values="18;28;18" dur="1.6s" repeatCount="indefinite" />
+        </circle>
+        <text x="540" y="305" text-anchor="middle" class="node-sublabel" fill="#ff5b7a" style="font-size: 9px; font-weight: 600;">CONNECTION DOWN</text>
+
+        <line x1="480" y1="280" x2="600" y2="280" stroke="#5ecdf5" stroke-width="1.2" stroke-dasharray="4 4" opacity="0.5">
+          <animate attributeName="stroke-dashoffset" from="0" to="-16" dur="1.4s" repeatCount="indefinite" />
+        </line>
+
+        <path d="M 600 180 Q 520 100 460 130" stroke="#5ecdf5" stroke-width="1" stroke-dasharray="3 3" opacity="0.3" fill="none">
+          <animate attributeName="stroke-dashoffset" from="0" to="-12" dur="2s" repeatCount="indefinite" />
+        </path>
+
+        <!-- ============ NODES ============ -->
+        <!-- LEFT COLUMN -->
+        <g class="node">
+          <circle cx="120" cy="120" r="18" fill="url(#glow-cyan)" />
+          <circle cx="120" cy="120" r="10" fill="var(--bg-1)" stroke="#5ecdf5" stroke-width="1.5" />
+          <circle cx="120" cy="120" r="3" fill="#5ecdf5">
+            <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
+          </circle>
+          <text x="120" y="148" text-anchor="middle" class="node-label">Customer App</text>
+          <text x="120" y="161" text-anchor="middle" class="node-sublabel">iOS · Android</text>
+        </g>
+        <g class="node">
+          <circle cx="120" cy="200" r="18" fill="url(#glow-cyan)" />
+          <circle cx="120" cy="200" r="10" fill="var(--bg-1)" stroke="#5ecdf5" stroke-width="1.5" />
+          <circle cx="120" cy="200" r="3" fill="#5ecdf5">
+            <animate attributeName="opacity" values="1;0.4;1" dur="2.2s" repeatCount="indefinite" />
+          </circle>
+          <text x="120" y="228" text-anchor="middle" class="node-label">Web Portal</text>
+          <text x="120" y="241" text-anchor="middle" class="node-sublabel">React</text>
+        </g>
+        <g class="node">
+          <circle cx="120" cy="280" r="18" fill="url(#glow-cyan)" />
+          <circle cx="120" cy="280" r="10" fill="var(--bg-1)" stroke="#5ecdf5" stroke-width="1.5" />
+          <circle cx="120" cy="280" r="3" fill="#5ecdf5">
+            <animate attributeName="opacity" values="1;0.4;1" dur="1.8s" repeatCount="indefinite" />
+          </circle>
+          <text x="120" y="308" text-anchor="middle" class="node-label">Showroom Tablet</text>
+          <text x="120" y="321" text-anchor="middle" class="node-sublabel">Sales Floor</text>
+        </g>
+        <g class="node">
+          <circle cx="120" cy="360" r="18" fill="url(#glow-amber)" />
+          <circle cx="120" cy="360" r="10" fill="var(--bg-1)" stroke="#ffb74d" stroke-width="1.5" />
+          <circle cx="120" cy="360" r="3" fill="#ffb74d">
+            <animate attributeName="opacity" values="1;0.3;1" dur="0.9s" repeatCount="indefinite" />
+          </circle>
+          <text x="120" y="388" text-anchor="middle" class="node-label">Dealer Portal</text>
+          <text x="120" y="401" text-anchor="middle" class="node-sublabel" style="fill: #ffb74d;">Latency 1.4s</text>
+        </g>
+
+        <!-- CENTER COLUMN -->
+        <g class="node">
+          <circle cx="430" cy="120" r="22" fill="url(#glow-cyan)" />
+          <circle cx="430" cy="120" r="13" fill="var(--bg-1)" stroke="#5ecdf5" stroke-width="1.5" />
+          <text x="430" y="124" text-anchor="middle" style="font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: #5ecdf5; font-weight: 600;">CRM</text>
+          <text x="430" y="158" text-anchor="middle" class="node-label">SAP C4C</text>
+          <text x="430" y="171" text-anchor="middle" class="node-sublabel">Customer 360</text>
+        </g>
+        <g class="node">
+          <circle cx="430" cy="280" r="28" fill="url(#glow-cyan)" opacity="0.75" />
+          <circle cx="430" cy="280" r="18" fill="var(--bg-1)" stroke="#5ecdf5" stroke-width="2" />
+          <circle cx="430" cy="280" r="14" fill="none" stroke="#5ecdf5" stroke-width="0.5" opacity="0.5">
+            <animate attributeName="r" values="14;22;14" dur="3s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.6;0;0.6" dur="3s" repeatCount="indefinite" />
+          </circle>
+          <text x="430" y="284" text-anchor="middle" style="font-family: 'JetBrains Mono', monospace; font-size: 9px; fill: #5ecdf5; font-weight: 600;">HUB</text>
+          <text x="430" y="324" text-anchor="middle" class="node-label">Azure Middleware</text>
+          <text x="430" y="337" text-anchor="middle" class="node-sublabel">APIM · Service Bus</text>
+        </g>
+
+        <!-- RIGHT COLUMN -->
+        <g class="node">
+          <circle cx="650" cy="200" r="20" fill="url(#glow-cyan)" />
+          <circle cx="650" cy="200" r="12" fill="var(--bg-1)" stroke="#5ecdf5" stroke-width="1.5" />
+          <circle cx="650" cy="200" r="4" fill="#5ecdf5">
+            <animate attributeName="opacity" values="1;0.4;1" dur="2.4s" repeatCount="indefinite" />
+          </circle>
+          <text x="650" y="232" text-anchor="middle" class="node-label">Power Platform</text>
+          <text x="650" y="245" text-anchor="middle" class="node-sublabel">Workflow · Dataverse</text>
+        </g>
+        <g class="node">
+          <circle cx="650" cy="280" r="18" fill="url(#glow-cyan)" />
+          <circle cx="650" cy="280" r="10" fill="var(--bg-1)" stroke="#5ecdf5" stroke-width="1.5" />
+          <circle cx="650" cy="280" r="3" fill="#5ecdf5">
+            <animate attributeName="opacity" values="1;0.4;1" dur="2s" repeatCount="indefinite" />
+          </circle>
+          <text x="650" y="308" text-anchor="middle" class="node-label">Comms Gateway</text>
+          <text x="650" y="321" text-anchor="middle" class="node-sublabel">SMS · WhatsApp · Email</text>
+        </g>
+        <g class="node">
+          <circle cx="650" cy="380" r="22" fill="url(#glow-red)" />
+          <circle cx="650" cy="380" r="12" fill="var(--bg-1)" stroke="#ff5b7a" stroke-width="2" />
+          <circle cx="650" cy="380" r="14" fill="none" stroke="#ff5b7a" stroke-width="1" opacity="0.6">
+            <animate attributeName="r" values="14;24;14" dur="1.4s" repeatCount="indefinite" />
+            <animate attributeName="opacity" values="0.7;0;0.7" dur="1.4s" repeatCount="indefinite" />
+          </circle>
+          <text x="650" y="384" text-anchor="middle" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; fill: #ff5b7a; font-weight: 700;">!</text>
+          <text x="650" y="416" text-anchor="middle" class="node-label" style="fill: #ff5b7a;">OEM Credit API</text>
+          <text x="650" y="429" text-anchor="middle" class="node-sublabel" style="fill: #ff5b7a;">Down · 48 min</text>
+        </g>
+
+        <!-- Axis labels -->
+        <text x="40" y="60" class="node-sublabel" style="fill: var(--ink-3); font-size: 8px;">CHANNELS</text>
+        <text x="395" y="60" class="node-sublabel" style="fill: var(--ink-3); font-size: 8px;">PLATFORM CORE</text>
+        <text x="615" y="60" class="node-sublabel" style="fill: var(--ink-3); font-size: 8px;">DOWNSTREAM</text>
+
+        <text x="40" y="510" class="node-sublabel" style="fill: var(--ink-3);">23 nodes monitored</text>
+        <text x="760" y="510" text-anchor="end" class="node-sublabel" style="fill: var(--ink-3);">Last sync 00:00:04 ago</text>
+      </svg>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot green"></div>Healthy</div>
+      <div class="legend-item"><div class="legend-dot amber"></div>Degraded</div>
+      <div class="legend-item"><div class="legend-dot red"></div>Failed</div>
+      <div class="legend-item"><div class="legend-dot grey"></div>Unknown</div>
+      <div class="legend-item" style="margin-left: auto;">→ Direction of data flow</div>
+    </div>
+  </section>
+
+</main>
+</div><!-- /subview topology -->
+
+<!-- ============ SUBVIEW: BUSINESS FLOW ============ -->
+<div class="subview active" data-view="flow">
+<main class="main layout-overview">
+
+  <section class="lifecycle-panel">
+    <div class="panel-header">
+      <div class="panel-title-group">
+        <span class="lens-tag">Lens 02</span>
+        <div>
+          <div class="panel-title">Lead-to-Invoice Lifecycle</div>
+          <div class="panel-sub">Select a stage on the map to inspect its internal breakdown</div>
+        </div>
+      </div>
+      <div class="panel-actions">May 1 – 10 · MTD</div>
+    </div>
+
+    <!-- ===== STAGE COLUMN CARDS ===== -->
+    <div class="stage-pipeline">
+
+      <!-- Summary strip -->
+      <div class="pipeline-meta">
+        <span>37,815 total leads · May 1–10 · MTD · 6 stages</span>
+        <span style="color:var(--green)">8.8% close rate · 3,334 invoiced</span>
+      </div>
+
+      <!-- Cards row -->
+      <div class="pipeline-row">
+
+        <!-- 01 Lead Sourcing -->
+        <div class="sc green" data-stage="sourcing" onclick="selectStage('sourcing')">
+          <div class="sc-head">
+            <span class="sc-num">01</span>
+            <span class="sc-name">Lead Sourcing</span>
+            <span class="sc-dot green"></span>
+          </div>
+          <div class="sc-metrics">
+            <div class="sc-metric">
+              <div class="sc-lbl">Entered</div>
+              <div class="sc-val">37,815</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Through</div>
+              <div class="sc-val c-green">35,600</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Dropped</div>
+              <div class="sc-val c-red">2,215</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Pending</div>
+              <div class="sc-val c-dim">0</div>
+            </div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-bar" style="width:100%"></div></div>
+        </div>
+
+        <div class="pipeline-connector">
+          <div class="pc-rate">94.1%</div>
+          <div class="pc-arrow">→</div>
+          <div class="pc-timing">
+            <div class="pc-avg">avg 4.2h</div>
+            <svg class="pc-bp" viewBox="0 0 44 14" xmlns="http://www.w3.org/2000/svg">
+              <line x1="4" y1="7" x2="40" y2="7" stroke="#1c3658" stroke-width="1.5"/>
+              <rect x="13" y="4" width="18" height="6" fill="rgba(59,158,255,0.18)" stroke="#3b9eff" stroke-width="0.8" rx="1"/>
+              <line x1="22" y1="3" x2="22" y2="11" stroke="#5ecdf5" stroke-width="1.5"/>
+              <circle cx="4" cy="7" r="2" fill="#3d557a"/>
+              <circle cx="40" cy="7" r="2" fill="#3d557a"/>
+            </svg>
+            <div class="pc-range"><span>0.3h</span><span>72h</span></div>
+            <div class="pc-quartiles"><span>Q1 1.2h</span><span>med 2.8h</span><span>Q3 6.5h</span></div>
+          </div>
+        </div>
+
+        <!-- 02 Call Center -->
+        <div class="sc amber" data-stage="cec" onclick="selectStage('cec')">
+          <div class="sc-head">
+            <span class="sc-num">02</span>
+            <span class="sc-name">Call Center</span>
+            <span class="sc-dot amber"></span>
+          </div>
+          <div class="sc-metrics">
+            <div class="sc-metric">
+              <div class="sc-lbl">Entered</div>
+              <div class="sc-val">35,600</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Through</div>
+              <div class="sc-val c-green">17,271</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Dropped</div>
+              <div class="sc-val c-red">18,155</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Pending</div>
+              <div class="sc-val c-amber">2,763</div>
+            </div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-bar" style="width:94.1%"></div></div>
+        </div>
+
+        <div class="pipeline-connector">
+          <div class="pc-rate">48.5%</div>
+          <div class="pc-arrow">→</div>
+          <div class="pc-timing">
+            <div class="pc-avg">avg 3.2d</div>
+            <svg class="pc-bp" viewBox="0 0 44 14" xmlns="http://www.w3.org/2000/svg">
+              <line x1="4" y1="7" x2="40" y2="7" stroke="#1c3658" stroke-width="1.5"/>
+              <rect x="11" y="4" width="20" height="6" fill="rgba(255,183,77,0.18)" stroke="#ffb74d" stroke-width="0.8" rx="1"/>
+              <line x1="23" y1="3" x2="23" y2="11" stroke="#5ecdf5" stroke-width="1.5"/>
+              <circle cx="4" cy="7" r="2" fill="#3d557a"/>
+              <circle cx="40" cy="7" r="2" fill="#3d557a"/>
+            </svg>
+            <div class="pc-range"><span>4h</span><span>30d</span></div>
+            <div class="pc-quartiles"><span>Q1 1.5d</span><span>med 2.8d</span><span>Q3 5.2d</span></div>
+          </div>
+        </div>
+
+        <!-- 03 Showroom Visit -->
+        <div class="sc green" data-stage="se" onclick="selectStage('se')">
+          <div class="sc-head">
+            <span class="sc-num">03</span>
+            <span class="sc-name">Showroom Visit</span>
+            <span class="sc-dot green"></span>
+          </div>
+          <div class="sc-metrics">
+            <div class="sc-metric">
+              <div class="sc-lbl">Entered</div>
+              <div class="sc-val">17,271</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Through</div>
+              <div class="sc-val c-green">10,932</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Dropped</div>
+              <div class="sc-val c-red">5,968</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Pending</div>
+              <div class="sc-val c-amber">371</div>
+            </div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-bar" style="width:45.7%"></div></div>
+        </div>
+
+        <div class="pipeline-connector">
+          <div class="pc-rate">37.3%</div>
+          <div class="pc-arrow">→</div>
+          <div class="pc-timing">
+            <div class="pc-avg">avg 1.8d</div>
+            <svg class="pc-bp" viewBox="0 0 44 14" xmlns="http://www.w3.org/2000/svg">
+              <line x1="4" y1="7" x2="40" y2="7" stroke="#1c3658" stroke-width="1.5"/>
+              <rect x="10" y="4" width="19" height="6" fill="rgba(59,158,255,0.18)" stroke="#3b9eff" stroke-width="0.8" rx="1"/>
+              <line x1="20" y1="3" x2="20" y2="11" stroke="#5ecdf5" stroke-width="1.5"/>
+              <circle cx="4" cy="7" r="2" fill="#3d557a"/>
+              <circle cx="40" cy="7" r="2" fill="#3d557a"/>
+            </svg>
+            <div class="pc-range"><span>2h</span><span>14d</span></div>
+            <div class="pc-quartiles"><span>Q1 0.5d</span><span>med 1.2d</span><span>Q3 3d</span></div>
+          </div>
+        </div>
+
+        <!-- 04 Test Drive -->
+        <div class="sc amber" data-stage="td" onclick="selectStage('td')">
+          <div class="sc-head">
+            <span class="sc-num">04</span>
+            <span class="sc-name">Test Drive</span>
+            <span class="sc-dot amber"></span>
+          </div>
+          <div class="sc-metrics">
+            <div class="sc-metric">
+              <div class="sc-lbl">Entered</div>
+              <div class="sc-val">6,442</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Through</div>
+              <div class="sc-val c-green">5,325</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Dropped</div>
+              <div class="sc-val c-red">1,117</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Pending</div>
+              <div class="sc-val c-dim">0</div>
+            </div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-bar" style="width:17.0%"></div></div>
+        </div>
+
+        <div class="pipeline-connector">
+          <div class="pc-rate">82.7%</div>
+          <div class="pc-arrow">→</div>
+          <div class="pc-timing">
+            <div class="pc-avg">avg 2.4d</div>
+            <svg class="pc-bp" viewBox="0 0 44 14" xmlns="http://www.w3.org/2000/svg">
+              <line x1="4" y1="7" x2="40" y2="7" stroke="#1c3658" stroke-width="1.5"/>
+              <rect x="12" y="4" width="17" height="6" fill="rgba(77,255,170,0.15)" stroke="#4dffaa" stroke-width="0.8" rx="1"/>
+              <line x1="21" y1="3" x2="21" y2="11" stroke="#5ecdf5" stroke-width="1.5"/>
+              <circle cx="4" cy="7" r="2" fill="#3d557a"/>
+              <circle cx="40" cy="7" r="2" fill="#3d557a"/>
+            </svg>
+            <div class="pc-range"><span>0h</span><span>21d</span></div>
+            <div class="pc-quartiles"><span>Q1 0.8d</span><span>med 1.9d</span><span>Q3 3.5d</span></div>
+          </div>
+        </div>
+
+        <!-- 05 Reservations -->
+        <div class="sc green" data-stage="ordering" onclick="selectStage('ordering')">
+          <div class="sc-head">
+            <span class="sc-num">05</span>
+            <span class="sc-name">Reservations</span>
+            <span class="sc-dot green"></span>
+          </div>
+          <div class="sc-metrics">
+            <div class="sc-metric">
+              <div class="sc-lbl">Entered</div>
+              <div class="sc-val">5,325</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Through</div>
+              <div class="sc-val c-green">4,527</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Dropped</div>
+              <div class="sc-val c-red">798</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Pending</div>
+              <div class="sc-val c-dim">0</div>
+            </div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-bar" style="width:12.0%"></div></div>
+        </div>
+
+        <div class="pipeline-connector">
+          <div class="pc-rate">85.0%</div>
+          <div class="pc-arrow">→</div>
+          <div class="pc-timing">
+            <div class="pc-avg">avg 5.8d</div>
+            <svg class="pc-bp" viewBox="0 0 44 14" xmlns="http://www.w3.org/2000/svg">
+              <line x1="4" y1="7" x2="40" y2="7" stroke="#1c3658" stroke-width="1.5"/>
+              <rect x="14" y="4" width="19" height="6" fill="rgba(59,158,255,0.18)" stroke="#3b9eff" stroke-width="0.8" rx="1"/>
+              <line x1="25" y1="3" x2="25" y2="11" stroke="#5ecdf5" stroke-width="1.5"/>
+              <circle cx="4" cy="7" r="2" fill="#3d557a"/>
+              <circle cx="40" cy="7" r="2" fill="#3d557a"/>
+            </svg>
+            <div class="pc-range"><span>1d</span><span>30d</span></div>
+            <div class="pc-quartiles"><span>Q1 3d</span><span>med 5.2d</span><span>Q3 8.5d</span></div>
+          </div>
+        </div>
+
+        <!-- 06 Invoicing -->
+        <div class="sc green" data-stage="invoicing" onclick="selectStage('invoicing')">
+          <div class="sc-head">
+            <span class="sc-num">06</span>
+            <span class="sc-name">Invoicing</span>
+            <span class="sc-dot green"></span>
+          </div>
+          <div class="sc-metrics">
+            <div class="sc-metric">
+              <div class="sc-lbl">Entered</div>
+              <div class="sc-val">4,527</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Through</div>
+              <div class="sc-val c-green">3,334</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Dropped</div>
+              <div class="sc-val c-red">1,193</div>
+            </div>
+            <div class="sc-metric">
+              <div class="sc-lbl">Pending</div>
+              <div class="sc-val c-dim">0</div>
+            </div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-bar" style="width:8.8%"></div></div>
+        </div>
+
+      </div><!-- /pipeline-row -->
+
+      <!-- Detail panel (appears below cards on click) -->
+      <div class="pipeline-detail" id="pipeline-detail" style="display:none">
+        <div class="detail-stage" id="detail-stage">
+          <div class="detail-back" onclick="clearStage()">← Back</div>
+          <div class="detail-stage-header">
+            <div class="detail-stage-meta">
+              <div class="stage-name" id="ds-name">—</div>
+              <div class="stage-conv" id="ds-conv">—</div>
+            </div>
+            <div class="detail-stage-vol">
+              <div class="vol-num" id="ds-vol">—</div>
+              <div class="vol-label">Total volume</div>
+            </div>
+          </div>
+          <div class="detail-nodes-grid" id="ds-grid"></div>
+          <div class="detail-insight" id="ds-insight"></div>
+        </div>
+      </div>
+
+    </div><!-- /stage-pipeline -->
+
+    <!-- ======= OLD TWO-PANEL (archived, hidden) ======= -->
+    <div style="display:none">
+      <!-- LEFT: Flow Map -->
+      <div class="map-panel">
+        <div class="map-panel-header">
+          <div class="map-panel-title">Flow Map</div>
+          <div class="map-panel-sub">7 stages</div>
+        </div>
+
+        <!-- SVG serpentine flow: Row 1 L→R, Row 2 R→L -->
+        <!-- =====================================================
+             Flow Map SVG — two-column serpentine
+             Col A (x=4,  w=140): Lead Sourcing, Test Drive, Reservations, Invoicing
+             Col B (x=152,w=140): CEC, Showroom Visit
+             Node height: 118px  Gap between nodes: 14px
+             Row tops: R1=20, R2=152, R3=284, R4=416
+             ===================================================== -->
+        <svg class="flow-map-svg" viewBox="0 0 296 556" preserveAspectRatio="xMidYMid meet" id="flow-map">
+          <defs>
+            <marker id="fm-arrow-r" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+              <path d="M0,1 L7,4 L0,7 Z" fill="#3d557a"/>
+            </marker>
+            <marker id="fm-arrow-l" viewBox="0 0 8 8" refX="1" refY="4" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+              <path d="M8,1 L1,4 L8,7 Z" fill="#3d557a"/>
+            </marker>
+            <marker id="fm-arrow-d" viewBox="0 0 8 8" refX="4" refY="7" markerWidth="5" markerHeight="5" orient="auto">
+              <path d="M1,0 L4,7 L7,0 Z" fill="#3d557a"/>
+            </marker>
+          </defs>
+
+          <!-- ===== ARROWS ===== -->
+          <!-- Lead Sourcing → CEC (right) -->
+          <line class="fm-edge" x1="144" y1="79" x2="152" y2="79" marker-end="url(#fm-arrow-r)"/>
+          <!-- CEC ↓ Showroom Visit -->
+          <line class="fm-edge" x1="222" y1="138" x2="222" y2="152" marker-end="url(#fm-arrow-d)"/>
+          <!-- Showroom Visit → Test Drive (left) -->
+          <line class="fm-edge" x1="152" y1="211" x2="144" y2="211" marker-end="url(#fm-arrow-l)"/>
+          <!-- Test Drive ↓ Reservations -->
+          <line class="fm-edge" x1="74" y1="270" x2="74" y2="284" marker-end="url(#fm-arrow-d)"/>
+          <!-- Reservations ↓ Invoicing -->
+          <line class="fm-edge" x1="74" y1="402" x2="74" y2="416" marker-end="url(#fm-arrow-d)"/>
+
+          <!-- ===== NODE MACRO: each node = rect + left-bar + title + badge + 2 dividers + 4 metric cells ===== -->
+
+          <!-- ─── LEAD SOURCING (col A, y=20) ─── -->
+          <g class="fm-node green" data-stage="sourcing" onclick="selectStage('sourcing')">
+            <rect class="fm-bg" x="4" y="20" width="140" height="118" rx="5"/>
+            <rect class="fm-left-bar" x="4" y="20" width="4" height="118" rx="2"/>
+            <text class="fm-name" x="16" y="36">Lead Sourcing</text>
+            <text class="fm-badge" x="132" y="36">●</text>
+            <!-- dividers -->
+            <line class="fm-divider" x1="8" y1="43" x2="144" y2="43"/>
+            <line class="fm-divider" x1="76" y1="43" x2="76" y2="138"/>
+            <line class="fm-divider" x1="8" y1="90" x2="144" y2="90"/>
+            <!-- IN -->
+            <text class="fm-metric-lbl" x="42" y="56" text-anchor="middle">Went In</text>
+            <text class="fm-metric-val" x="42" y="74" text-anchor="middle">37,815</text>
+            <!-- THROUGH -->
+            <text class="fm-metric-lbl" x="110" y="56" text-anchor="middle">Through</text>
+            <text class="fm-metric-val c-green" x="110" y="74" text-anchor="middle">35,600</text>
+            <!-- DROP -->
+            <text class="fm-metric-lbl" x="42" y="103" text-anchor="middle">Dropped</text>
+            <text class="fm-metric-val c-red" x="42" y="121" text-anchor="middle">2,215</text>
+            <!-- PENDING -->
+            <text class="fm-metric-lbl" x="110" y="103" text-anchor="middle">Pending</text>
+            <text class="fm-metric-val c-dim" x="110" y="121" text-anchor="middle">0</text>
+          </g>
+
+          <!-- ─── CALL CENTER (col B, y=20) ─── -->
+          <g class="fm-node amber" data-stage="cec" onclick="selectStage('cec')">
+            <rect class="fm-bg" x="152" y="20" width="140" height="118" rx="5"/>
+            <rect class="fm-left-bar" x="152" y="20" width="4" height="118" rx="2"/>
+            <text class="fm-name" x="164" y="36">Call Center</text>
+            <text class="fm-badge" x="280" y="36">●</text>
+            <line class="fm-divider" x1="156" y1="43" x2="292" y2="43"/>
+            <line class="fm-divider" x1="222" y1="43" x2="222" y2="138"/>
+            <line class="fm-divider" x1="156" y1="90" x2="292" y2="90"/>
+            <text class="fm-metric-lbl" x="189" y="56" text-anchor="middle">Went In</text>
+            <text class="fm-metric-val" x="189" y="74" text-anchor="middle">35,600</text>
+            <text class="fm-metric-lbl" x="257" y="56" text-anchor="middle">Through</text>
+            <text class="fm-metric-val c-green" x="257" y="74" text-anchor="middle">17,271</text>
+            <text class="fm-metric-lbl" x="189" y="103" text-anchor="middle">Dropped</text>
+            <text class="fm-metric-val c-red" x="189" y="121" text-anchor="middle">18,155</text>
+            <text class="fm-metric-lbl" x="257" y="103" text-anchor="middle">Pending</text>
+            <text class="fm-metric-val c-amber" x="257" y="121" text-anchor="middle">2,763</text>
+          </g>
+
+          <!-- ─── SHOWROOM VISIT (col B, y=152) ─── -->
+          <g class="fm-node green" data-stage="se" onclick="selectStage('se')">
+            <rect class="fm-bg" x="152" y="152" width="140" height="118" rx="5"/>
+            <rect class="fm-left-bar" x="152" y="152" width="4" height="118" rx="2"/>
+            <text class="fm-name" x="164" y="168">Showroom Visit</text>
+            <text class="fm-badge" x="280" y="168">●</text>
+            <line class="fm-divider" x1="156" y1="175" x2="292" y2="175"/>
+            <line class="fm-divider" x1="222" y1="175" x2="222" y2="270"/>
+            <line class="fm-divider" x1="156" y1="222" x2="292" y2="222"/>
+            <text class="fm-metric-lbl" x="189" y="188" text-anchor="middle">Went In</text>
+            <text class="fm-metric-val" x="189" y="206" text-anchor="middle">17,271</text>
+            <text class="fm-metric-lbl" x="257" y="188" text-anchor="middle">Through</text>
+            <text class="fm-metric-val c-green" x="257" y="206" text-anchor="middle">10,932</text>
+            <text class="fm-metric-lbl" x="189" y="235" text-anchor="middle">Dropped</text>
+            <text class="fm-metric-val c-red" x="189" y="253" text-anchor="middle">5,968</text>
+            <text class="fm-metric-lbl" x="257" y="235" text-anchor="middle">Pending</text>
+            <text class="fm-metric-val c-amber" x="257" y="253" text-anchor="middle">371</text>
+          </g>
+
+          <!-- ─── TEST DRIVE (col A, y=152) ─── -->
+          <g class="fm-node amber" data-stage="td" onclick="selectStage('td')">
+            <rect class="fm-bg" x="4" y="152" width="140" height="118" rx="5"/>
+            <rect class="fm-left-bar" x="4" y="152" width="4" height="118" rx="2"/>
+            <text class="fm-name" x="16" y="168">Test Drive</text>
+            <text class="fm-badge" x="132" y="168">●</text>
+            <line class="fm-divider" x1="8" y1="175" x2="144" y2="175"/>
+            <line class="fm-divider" x1="76" y1="175" x2="76" y2="270"/>
+            <line class="fm-divider" x1="8" y1="222" x2="144" y2="222"/>
+            <text class="fm-metric-lbl" x="42" y="188" text-anchor="middle">Went In</text>
+            <text class="fm-metric-val" x="42" y="206" text-anchor="middle">6,442</text>
+            <text class="fm-metric-lbl" x="110" y="188" text-anchor="middle">Through</text>
+            <text class="fm-metric-val c-green" x="110" y="206" text-anchor="middle">5,325</text>
+            <text class="fm-metric-lbl" x="42" y="235" text-anchor="middle">Dropped</text>
+            <text class="fm-metric-val c-red" x="42" y="253" text-anchor="middle">1,117</text>
+            <text class="fm-metric-lbl" x="110" y="235" text-anchor="middle">Pending</text>
+            <text class="fm-metric-val c-dim" x="110" y="253" text-anchor="middle">0</text>
+          </g>
+
+          <!-- ─── RESERVATIONS (col A, y=284) ─── -->
+          <g class="fm-node green" data-stage="ordering" onclick="selectStage('ordering')">
+            <rect class="fm-bg" x="4" y="284" width="140" height="118" rx="5"/>
+            <rect class="fm-left-bar" x="4" y="284" width="4" height="118" rx="2"/>
+            <text class="fm-name" x="16" y="300">Reservations</text>
+            <text class="fm-badge" x="132" y="300">●</text>
+            <line class="fm-divider" x1="8" y1="307" x2="144" y2="307"/>
+            <line class="fm-divider" x1="76" y1="307" x2="76" y2="402"/>
+            <line class="fm-divider" x1="8" y1="354" x2="144" y2="354"/>
+            <text class="fm-metric-lbl" x="42" y="320" text-anchor="middle">Went In</text>
+            <text class="fm-metric-val" x="42" y="338" text-anchor="middle">5,325</text>
+            <text class="fm-metric-lbl" x="110" y="320" text-anchor="middle">Through</text>
+            <text class="fm-metric-val c-green" x="110" y="338" text-anchor="middle">4,527</text>
+            <text class="fm-metric-lbl" x="42" y="367" text-anchor="middle">Dropped</text>
+            <text class="fm-metric-val c-red" x="42" y="385" text-anchor="middle">798</text>
+            <text class="fm-metric-lbl" x="110" y="367" text-anchor="middle">Pending</text>
+            <text class="fm-metric-val c-dim" x="110" y="385" text-anchor="middle">0</text>
+          </g>
+
+          <!-- ─── INVOICING (col A, y=416) ─── -->
+          <g class="fm-node green" data-stage="invoicing" onclick="selectStage('invoicing')">
+            <rect class="fm-bg" x="4" y="416" width="140" height="118" rx="5"/>
+            <rect class="fm-left-bar" x="4" y="416" width="4" height="118" rx="2"/>
+            <text class="fm-name" x="16" y="432">Invoicing</text>
+            <text class="fm-badge" x="132" y="432">●</text>
+            <line class="fm-divider" x1="8" y1="439" x2="144" y2="439"/>
+            <line class="fm-divider" x1="76" y1="439" x2="76" y2="534"/>
+            <line class="fm-divider" x1="8" y1="486" x2="144" y2="486"/>
+            <text class="fm-metric-lbl" x="42" y="452" text-anchor="middle">Went In</text>
+            <text class="fm-metric-val" x="42" y="470" text-anchor="middle">4,527</text>
+            <text class="fm-metric-lbl" x="110" y="452" text-anchor="middle">Through</text>
+            <text class="fm-metric-val c-green" x="110" y="470" text-anchor="middle">3,334</text>
+            <text class="fm-metric-lbl" x="42" y="499" text-anchor="middle">Dropped</text>
+            <text class="fm-metric-val c-red" x="42" y="517" text-anchor="middle">1,193</text>
+            <text class="fm-metric-lbl" x="110" y="499" text-anchor="middle">Pending</text>
+            <text class="fm-metric-val c-dim" x="110" y="517" text-anchor="middle">0</text>
+          </g>
+
+          <!-- Legend / hint -->
+          <text x="156" y="452" style="fill:#3d557a; font-family:'JetBrains Mono',monospace; font-size:7.5px; letter-spacing:0.14em; text-transform:uppercase;">● Click to inspect</text>
+        </svg>
+
+        <!-- Legend -->
+        <div class="legend" style="gap:12px; margin-top:10px;">
+          <div class="legend-item"><div class="legend-dot green"></div>Healthy</div>
+          <div class="legend-item"><div class="legend-dot amber"></div>Watch</div>
+          <div class="legend-item"><div class="legend-dot red"></div>Issue</div>
+        </div>
+      </div><!-- /map-panel -->
+
+      <!-- RIGHT: Detail Panel -->
+      <div class="detail-panel" id="detail-panel">
+        <!-- Default: funnel waterfall -->
+        <div class="detail-default" id="detail-default">
+          <div class="detail-funnel-title">Full Funnel · May MTD · 37,815 leads</div>
+
+          <div class="funnel-row">
+            <div class="funnel-label">Lead Sourcing</div>
+            <div class="funnel-bar-wrap">
+              <div class="funnel-bar" style="width:100%"></div>
+            </div>
+            <div class="funnel-meta"><div class="funnel-count">37,815</div><div class="funnel-pct">100.0%</div></div>
+          </div>
+          <div class="funnel-row">
+            <div class="funnel-label">CEC Actioned</div>
+            <div class="funnel-bar-wrap">
+              <div class="funnel-bar" style="width:93.7%"></div>
+            </div>
+            <div class="funnel-meta"><div class="funnel-count">35,426</div><div class="funnel-pct">93.7%</div></div>
+          </div>
+          <div class="funnel-row">
+            <div class="funnel-label">Reachable</div>
+            <div class="funnel-bar-wrap">
+              <div class="funnel-bar amber" style="width:45.6%"></div>
+            </div>
+            <div class="funnel-meta"><div class="funnel-count">17,271</div><div class="funnel-pct">45.6%</div></div>
+          </div>
+          <div class="funnel-row">
+            <div class="funnel-label">Showroom Visit</div>
+            <div class="funnel-bar-wrap">
+              <div class="funnel-bar green" style="width:50.6%"></div>
+            </div>
+            <div class="funnel-meta"><div class="funnel-count">19,130</div><div class="funnel-pct">50.6%</div></div>
+          </div>
+          <div class="funnel-row">
+            <div class="funnel-label">Test Drive</div>
+            <div class="funnel-bar-wrap">
+              <div class="funnel-bar" style="width:17.0%"></div>
+            </div>
+            <div class="funnel-meta"><div class="funnel-count">6,442</div><div class="funnel-pct">17.0%</div></div>
+          </div>
+          <div class="funnel-row">
+            <div class="funnel-label">Reservations</div>
+            <div class="funnel-bar-wrap">
+              <div class="funnel-bar" style="width:12.0%"></div>
+            </div>
+            <div class="funnel-meta"><div class="funnel-count">4,527</div><div class="funnel-pct">12.0%</div></div>
+          </div>
+          <div class="funnel-row">
+            <div class="funnel-label">Invoiced</div>
+            <div class="funnel-bar-wrap">
+              <div class="funnel-bar green" style="width:8.8%"></div>
+            </div>
+            <div class="funnel-meta"><div class="funnel-count">3,334</div><div class="funnel-pct">8.8%</div></div>
+          </div>
+
+          <div class="detail-insight" style="margin-top:24px;">
+            <strong>Key drop-off:</strong> 51.6% of leads are unreachable at the Call Center stage — the largest single point of attrition in the funnel. Select any stage on the map for a detailed breakdown.
+          </div>
+        </div>
+
+        <!-- Stage detail (hidden by default) -->
+        <div class="detail-stage" id="detail-stage" style="display:none">
+          <div class="detail-back" onclick="clearStage()">
+            ← Back to full funnel
+          </div>
+          <div class="detail-stage-header">
+            <div class="detail-stage-meta">
+              <div class="stage-name" id="ds-name">—</div>
+              <div class="stage-conv" id="ds-conv">—</div>
+            </div>
+            <div class="detail-stage-vol">
+              <div class="vol-num" id="ds-vol">—</div>
+              <div class="vol-label">Total volume</div>
+            </div>
+          </div>
+          <div class="detail-nodes-grid" id="ds-grid"></div>
+          <div class="detail-insight" id="ds-insight"></div>
+        </div>
+      </div><!-- /detail-panel -->
+
+    </div><!-- /two-panel (archived) -->
+    </div><!-- /hidden archive -->
+
+    <div class="lifecycle-canvas" style="display:none">
+      <svg class="lifecycle-svg" viewBox="0 0 1900 1100" preserveAspectRatio="xMidYMid meet">
+        <defs>
+          <marker id="lc-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+            <path d="M0,0 L8,4 L0,8 Z" fill="#5a7395" />
+          </marker>
+        </defs>
+
+        <!-- ============ GROUP BACKGROUNDS ============ -->
+        <g class="lc-group sourcing">
+          <rect class="lc-group-bg" x="20" y="40" width="1080" height="560" />
+          <text class="lc-group-title" x="560" y="68" text-anchor="middle">Lead Sourcing</text>
+        </g>
+
+        <g class="lc-group cec">
+          <rect class="lc-group-bg" x="1120" y="40" width="620" height="440" />
+          <text class="lc-group-title" x="1430" y="68" text-anchor="middle">Call Center Processing</text>
+        </g>
+
+        <g class="lc-group qual">
+          <rect class="lc-group-bg" x="1610" y="500" width="270" height="240" />
+          <text class="lc-group-title" x="1745" y="528" text-anchor="middle">Qualification</text>
+        </g>
+
+        <g class="lc-group ord">
+          <rect class="lc-group-bg" x="20" y="640" width="220" height="180" />
+          <text class="lc-group-title" x="130" y="668" text-anchor="middle">Ordering</text>
+        </g>
+
+        <g class="lc-group inv">
+          <rect class="lc-group-bg" x="20" y="840" width="220" height="180" />
+          <text class="lc-group-title" x="130" y="868" text-anchor="middle">Invoicing</text>
+        </g>
+
+        <g class="lc-group td">
+          <rect class="lc-group-bg" x="260" y="640" width="340" height="380" />
+          <text class="lc-group-title" x="430" y="668" text-anchor="middle">Test Drive</text>
+        </g>
+
+        <g class="lc-group se">
+          <rect class="lc-group-bg" x="620" y="640" width="1100" height="440" />
+          <text class="lc-group-title" x="1170" y="668" text-anchor="middle">Sales Executive</text>
+        </g>
+
+        <!-- ============ ARROWS (drawn first, behind nodes) ============ -->
+        <!-- Subforms → category boxes -->
+        <path class="lc-edge" d="M 150 130 Q 480 130 540 135" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 150 220 Q 470 220 540 230" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 510 220 Q 530 280 540 310" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 150 310 Q 460 320 540 420" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 510 310 Q 530 380 540 415" marker-end="url(#lc-arrow)" />
+
+        <!-- Categories → Total Leads -->
+        <path class="lc-edge" d="M 670 145 Q 695 200 710 290" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 670 245 Q 695 270 710 305" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 670 340 Q 695 330 710 320" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 670 440 Q 695 380 710 340" marker-end="url(#lc-arrow)" />
+
+        <!-- Total Leads → Unique / Duplicate -->
+        <path class="lc-edge" d="M 845 290 Q 870 240 890 230" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 845 340 Q 870 380 890 400" marker-end="url(#lc-arrow)" />
+
+        <!-- Unique Leads → CEC Actioned / CEC Not Actioned -->
+        <path class="lc-edge" d="M 1025 230 Q 1100 230 1170 230" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 1025 250 Q 1100 320 1170 340" marker-end="url(#lc-arrow)" />
+
+        <!-- CEC Actioned → Reachable / Pending / Unreachable -->
+        <path class="lc-edge" d="M 1320 215 Q 1380 165 1430 150" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 1320 235 Q 1380 245 1430 250" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 1320 260 Q 1380 320 1430 355" marker-end="url(#lc-arrow)" />
+
+        <!-- Reachable → Hot Leads (via Qualification) -->
+        <path class="lc-edge" d="M 1590 150 Q 1700 350 1800 580" marker-end="url(#lc-arrow)" />
+        <!-- Unreachable → Cold Leads -->
+        <path class="lc-edge" d="M 1590 360 Q 1680 460 1690 580" marker-end="url(#lc-arrow)" />
+
+        <!-- Hot Leads → Walk-In Opportunity / Walk-In Enquiry -->
+        <path class="lc-edge" d="M 1800 660 Q 1500 700 1430 720" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 1800 660 Q 1650 700 1610 720" marker-end="url(#lc-arrow)" />
+
+        <!-- Cold Leads → SE Not Assigned -->
+        <path class="lc-edge" d="M 1690 660 Q 1600 720 1560 780" marker-end="url(#lc-arrow)" />
+
+        <!-- Walk-In Enquiry → Total Opportunity / No Opportunity / SE No Action -->
+        <path class="lc-edge" d="M 1320 780 Q 950 810 800 850" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 1340 780 Q 1100 810 960 850" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 1380 780 Q 1280 810 1130 850" marker-end="url(#lc-arrow)" />
+
+        <!-- SE Not Assigned → SE Assigned -->
+        <path class="lc-edge" d="M 1560 820 Q 1530 850 1500 850" marker-end="url(#lc-arrow)" />
+
+        <!-- SE Assigned → SE Actioned / Digital Opportunities -->
+        <path class="lc-edge" d="M 1430 890 Q 1330 920 1290 950" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 1430 890 Q 1080 940 970 950" marker-end="url(#lc-arrow)" />
+
+        <!-- Total Opportunity → Test Drive Booked -->
+        <path class="lc-edge" d="M 730 850 Q 600 800 530 760" marker-end="url(#lc-arrow)" />
+
+        <!-- Test Drive Booked → No Show / Completed -->
+        <path class="lc-edge" d="M 440 790 Q 370 800 350 830" marker-end="url(#lc-arrow)" />
+        <path class="lc-edge" d="M 470 800 Q 460 830 440 850" marker-end="url(#lc-arrow)" />
+
+        <!-- Completed → Total Orders -->
+        <path class="lc-edge" d="M 360 870 Q 280 800 220 740" marker-end="url(#lc-arrow)" />
+
+        <!-- Total Orders → Invoiced -->
+        <path class="lc-edge" d="M 130 800 Q 130 850 130 910" marker-end="url(#lc-arrow)" />
+
+        <!-- ============ LEAD SOURCING NODES ============ -->
+
+        <!-- Subforms row 1 (Web channels) -->
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="40" y="100" width="110" height="74" />
+          <text class="lc-title" x="95" y="118" text-anchor="middle">Offer Form</text>
+          <text class="lc-count" x="95" y="142" text-anchor="middle">16,836</text>
+          <text class="lc-pct" x="95" y="160" text-anchor="middle">69.6%</text>
+        </g>
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="160" y="100" width="110" height="74" />
+          <text class="lc-title" x="215" y="118" text-anchor="middle">Web Form</text>
+          <text class="lc-count" x="215" y="142" text-anchor="middle">3,345</text>
+          <text class="lc-pct" x="215" y="160" text-anchor="middle">13.8%</text>
+        </g>
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="280" y="100" width="110" height="74" />
+          <text class="lc-title" x="335" y="118" text-anchor="middle">Loan Eligibility</text>
+          <text class="lc-count" x="335" y="142" text-anchor="middle">1,663</text>
+          <text class="lc-pct" x="335" y="160" text-anchor="middle">6.9%</text>
+        </g>
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="400" y="100" width="110" height="74" />
+          <text class="lc-title" x="455" y="118" text-anchor="middle">Enquiry Form</text>
+          <text class="lc-count" x="455" y="142" text-anchor="middle">1,070</text>
+          <text class="lc-pct" x="455" y="160" text-anchor="middle">4.4%</text>
+        </g>
+
+        <!-- Subforms row 2 -->
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="40" y="190" width="110" height="74" />
+          <text class="lc-title" x="95" y="208" text-anchor="middle">Test Drive Form</text>
+          <text class="lc-count" x="95" y="232" text-anchor="middle">788</text>
+          <text class="lc-pct" x="95" y="250" text-anchor="middle">3.3%</text>
+        </g>
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="160" y="190" width="110" height="74" />
+          <text class="lc-title" x="215" y="208" text-anchor="middle">Trade-in Form</text>
+          <text class="lc-count" x="215" y="232" text-anchor="middle">478</text>
+          <text class="lc-pct" x="215" y="250" text-anchor="middle">2.0%</text>
+        </g>
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="280" y="190" width="110" height="74" />
+          <text class="lc-title" x="335" y="208" text-anchor="middle">Web Other</text>
+          <text class="lc-count" x="335" y="232" text-anchor="middle">30</text>
+          <text class="lc-pct" x="335" y="250" text-anchor="middle">0.0%</text>
+        </g>
+
+        <!-- Subforms row 3 (Social) -->
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="40" y="280" width="110" height="74" />
+          <text class="lc-title" x="95" y="298" text-anchor="middle">Facebook</text>
+          <text class="lc-count" x="95" y="322" text-anchor="middle">7,764</text>
+          <text class="lc-pct" x="95" y="340" text-anchor="middle">63.8%</text>
+        </g>
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="160" y="280" width="110" height="74" />
+          <text class="lc-title" x="215" y="298" text-anchor="middle">Instagram</text>
+          <text class="lc-count" x="215" y="322" text-anchor="middle">4,167</text>
+          <text class="lc-pct" x="215" y="340" text-anchor="middle">34.2%</text>
+        </g>
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="280" y="280" width="110" height="74" />
+          <text class="lc-title" x="335" y="298" text-anchor="middle">TikTok</text>
+          <text class="lc-count" x="335" y="322" text-anchor="middle">185</text>
+          <text class="lc-pct" x="335" y="340" text-anchor="middle">1.5%</text>
+        </g>
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="400" y="280" width="110" height="74" />
+          <text class="lc-title" x="455" y="298" text-anchor="middle">Social Other</text>
+          <text class="lc-count" x="455" y="322" text-anchor="middle">55</text>
+          <text class="lc-pct" x="455" y="340" text-anchor="middle">0.5%</text>
+        </g>
+
+        <!-- Channel category column -->
+        <g class="lc-node blue">
+          <rect class="lc-node-bg" x="540" y="100" width="130" height="80" />
+          <text class="lc-title" x="605" y="120" text-anchor="middle">Web</text>
+          <text class="lc-count" x="605" y="146" text-anchor="middle">24,195</text>
+          <text class="lc-pct" x="605" y="165" text-anchor="middle">64%</text>
+        </g>
+        <g class="lc-node blue">
+          <rect class="lc-node-bg" x="540" y="200" width="130" height="80" />
+          <text class="lc-title" x="605" y="220" text-anchor="middle">Showroom Promo</text>
+          <text class="lc-count" x="605" y="246" text-anchor="middle">1,318</text>
+          <text class="lc-pct" x="605" y="265" text-anchor="middle">3.5%</text>
+        </g>
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="540" y="300" width="130" height="80" />
+          <text class="lc-title" x="605" y="320" text-anchor="middle">Others</text>
+          <text class="lc-count" x="605" y="346" text-anchor="middle">147</text>
+          <text class="lc-pct" x="605" y="365" text-anchor="middle">0.0%</text>
+        </g>
+        <g class="lc-node blue">
+          <rect class="lc-node-bg" x="540" y="400" width="130" height="80" />
+          <text class="lc-title" x="605" y="420" text-anchor="middle">Social Media</text>
+          <text class="lc-count" x="605" y="446" text-anchor="middle">12,167</text>
+          <text class="lc-pct" x="605" y="465" text-anchor="middle">32.2%</text>
+        </g>
+
+        <!-- Total Leads -->
+        <g class="lc-node green">
+          <rect class="lc-node-bg" x="710" y="270" width="135" height="80" />
+          <text class="lc-title" x="777" y="290" text-anchor="middle">Total Leads</text>
+          <text class="lc-count" x="777" y="316" text-anchor="middle">37,815</text>
+          <text class="lc-pct" x="777" y="335" text-anchor="middle">100%</text>
+        </g>
+
+        <!-- Unique / Duplicate -->
+        <g class="lc-node green">
+          <rect class="lc-node-bg" x="890" y="190" width="135" height="80" />
+          <text class="lc-title" x="957" y="210" text-anchor="middle">Unique Leads</text>
+          <text class="lc-count" x="957" y="236" text-anchor="middle">35,600</text>
+          <text class="lc-pct" x="957" y="255" text-anchor="middle">94.1%</text>
+        </g>
+        <g class="lc-node red">
+          <rect class="lc-node-bg" x="890" y="360" width="135" height="80" />
+          <text class="lc-title" x="957" y="380" text-anchor="middle">Duplicate Leads</text>
+          <text class="lc-count" x="957" y="406" text-anchor="middle">2,215</text>
+          <text class="lc-pct" x="957" y="425" text-anchor="middle">5.9%</text>
+        </g>
+
+        <!-- ============ CALL CENTER NODES ============ -->
+        <g class="lc-node green">
+          <rect class="lc-node-bg" x="1170" y="190" width="150" height="80" />
+          <text class="lc-title" x="1245" y="210" text-anchor="middle">CEC Actioned</text>
+          <text class="lc-count" x="1245" y="236" text-anchor="middle">35,426</text>
+          <text class="lc-pct" x="1245" y="255" text-anchor="middle">99.95%</text>
+        </g>
+        <g class="lc-node red">
+          <rect class="lc-node-bg" x="1170" y="310" width="150" height="80" />
+          <text class="lc-title" x="1245" y="330" text-anchor="middle">CEC Not Actioned</text>
+          <text class="lc-count" x="1245" y="356" text-anchor="middle">174</text>
+          <text class="lc-pct" x="1245" y="375" text-anchor="middle">0.05%</text>
+        </g>
+        <g class="lc-node green">
+          <rect class="lc-node-bg" x="1430" y="110" width="150" height="80" />
+          <text class="lc-title" x="1505" y="130" text-anchor="middle">Reachable</text>
+          <text class="lc-count" x="1505" y="156" text-anchor="middle">17,271</text>
+          <text class="lc-pct" x="1505" y="175" text-anchor="middle">48.8%</text>
+        </g>
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="1430" y="210" width="150" height="80" />
+          <text class="lc-title" x="1505" y="230" text-anchor="middle">Pending</text>
+          <text class="lc-count" x="1505" y="256" text-anchor="middle">2,763</text>
+          <text class="lc-pct" x="1505" y="275" text-anchor="middle">7.8%</text>
+        </g>
+        <g class="lc-node red">
+          <rect class="lc-node-bg" x="1430" y="320" width="150" height="80" />
+          <text class="lc-title" x="1505" y="340" text-anchor="middle">Unreachable</text>
+          <text class="lc-count" x="1505" y="366" text-anchor="middle">18,265</text>
+          <text class="lc-pct" x="1505" y="385" text-anchor="middle">51.6%</text>
+        </g>
+
+        <!-- ============ QUALIFICATION NODES ============ -->
+        <g class="lc-node red">
+          <rect class="lc-node-bg" x="1630" y="580" width="115" height="80" />
+          <text class="lc-title" x="1687" y="600" text-anchor="middle">Cold Leads</text>
+          <text class="lc-count" x="1687" y="626" text-anchor="middle">15,925</text>
+          <text class="lc-pct" x="1687" y="645" text-anchor="middle">45%</text>
+        </g>
+        <g class="lc-node green">
+          <rect class="lc-node-bg" x="1750" y="580" width="115" height="80" />
+          <text class="lc-title" x="1807" y="600" text-anchor="middle">Hot Leads</text>
+          <text class="lc-count" x="1807" y="626" text-anchor="middle">19,500</text>
+          <text class="lc-pct" x="1807" y="645" text-anchor="middle">55%</text>
+        </g>
+
+        <!-- ============ SALES EXECUTIVE NODES ============ -->
+        <!-- Walk-In row -->
+        <g class="lc-node amber">
+          <rect class="lc-node-bg" x="1320" y="700" width="150" height="80" />
+          <text class="lc-title" x="1395" y="720" text-anchor="middle">Walk-In Opportunity</text>
+          <text class="lc-count" x="1395" y="746" text-anchor="middle">10,932</text>
+          <text class="lc-pct" x="1395" y="765" text-anchor="middle">100%</text>
+        </g>
+        <g class="lc-node amber">
+          <rect class="lc-node-bg" x="1500" y="700" width="150" height="80" />
+          <text class="lc-title" x="1575" y="720" text-anchor="middle">Walk-In Enquiry</text>
+          <text class="lc-count" x="1575" y="746" text-anchor="middle">10,932</text>
+          <text class="lc-pct" x="1575" y="765" text-anchor="middle">100%</text>
+        </g>
+
+        <!-- Opportunity row -->
+        <g class="lc-node green">
+          <rect class="lc-node-bg" x="650" y="850" width="150" height="80" />
+          <text class="lc-title" x="725" y="870" text-anchor="middle">Total Opportunity</text>
+          <text class="lc-count" x="725" y="896" text-anchor="middle">14,013</text>
+          <text class="lc-pct" x="725" y="915" text-anchor="middle">100%</text>
+        </g>
+        <g class="lc-node red">
+          <rect class="lc-node-bg" x="820" y="850" width="150" height="80" />
+          <text class="lc-title" x="895" y="870" text-anchor="middle">No Opportunity</text>
+          <text class="lc-count" x="895" y="896" text-anchor="middle">16,024</text>
+          <text class="lc-pct" x="895" y="915" text-anchor="middle">83.9%</text>
+        </g>
+        <g class="lc-node red">
+          <rect class="lc-node-bg" x="990" y="850" width="150" height="80" />
+          <text class="lc-title" x="1065" y="870" text-anchor="middle">SE No Action</text>
+          <text class="lc-count" x="1065" y="896" text-anchor="middle">25</text>
+          <text class="lc-pct" x="1065" y="915" text-anchor="middle">0.1%</text>
+        </g>
+
+        <!-- SE assignment -->
+        <g class="lc-node red">
+          <rect class="lc-node-bg" x="1480" y="780" width="150" height="80" />
+          <text class="lc-title" x="1555" y="800" text-anchor="middle">SE Not Assigned</text>
+          <text class="lc-count" x="1555" y="826" text-anchor="middle">371</text>
+          <text class="lc-pct" x="1555" y="845" text-anchor="middle">1.9%</text>
+        </g>
+        <g class="lc-node green">
+          <rect class="lc-node-bg" x="1320" y="850" width="150" height="80" />
+          <text class="lc-title" x="1395" y="870" text-anchor="middle">SE Assigned</text>
+          <text class="lc-count" x="1395" y="896" text-anchor="middle">19,130</text>
+          <text class="lc-pct" x="1395" y="915" text-anchor="middle">98.1%</text>
+        </g>
+
+        <!-- Bottom SE row -->
+        <g class="lc-node green">
+          <rect class="lc-node-bg" x="820" y="960" width="150" height="80" />
+          <text class="lc-title" x="895" y="980" text-anchor="middle">Digital Opps</text>
+          <text class="lc-count" x="895" y="1006" text-anchor="middle">3,081</text>
+          <text class="lc-pct" x="895" y="1025" text-anchor="middle">16.1%</text>
+        </g>
+        <g class="lc-node green">
+          <rect class="lc-node-bg" x="1140" y="960" width="150" height="80" />
+          <text class="lc-title" x="1215" y="980" text-anchor="middle">SE Actioned</text>
+          <text class="lc-count" x="1215" y="1006" text-anchor="middle">19,105</text>
+          <text class="lc-pct" x="1215" y="1025" text-anchor="middle">99.9%</text>
+        </g>
+
+        <!-- ============ TEST DRIVE NODES ============ -->
+        <g class="lc-node red">
+          <rect class="lc-node-bg" x="280" y="720" width="140" height="80" />
+          <text class="lc-title" x="350" y="740" text-anchor="middle">No Show</text>
+          <text class="lc-count" x="350" y="766" text-anchor="middle">1,117</text>
+          <text class="lc-pct" x="350" y="785" text-anchor="middle">17.3%</text>
+        </g>
+        <g class="lc-node">
+          <rect class="lc-node-bg" x="440" y="720" width="140" height="80" />
+          <text class="lc-title" x="510" y="740" text-anchor="middle">Test Drive Booked</text>
+          <text class="lc-count" x="510" y="766" text-anchor="middle">6,442</text>
+          <text class="lc-pct" x="510" y="785" text-anchor="middle">47.3%</text>
+        </g>
+        <g class="lc-node green">
+          <rect class="lc-node-bg" x="360" y="850" width="140" height="80" />
+          <text class="lc-title" x="430" y="870" text-anchor="middle">Completed</text>
+          <text class="lc-count" x="430" y="896" text-anchor="middle">5,325</text>
+          <text class="lc-pct" x="430" y="915" text-anchor="middle">82.7%</text>
+        </g>
+
+        <!-- ============ ORDERING NODE ============ -->
+        <g class="lc-node green">
+          <rect class="lc-node-bg" x="60" y="700" width="140" height="80" />
+          <text class="lc-title" x="130" y="720" text-anchor="middle">Total Orders</text>
+          <text class="lc-count" x="130" y="746" text-anchor="middle">4,527</text>
+          <text class="lc-pct" x="130" y="765" text-anchor="middle">32.3%</text>
+        </g>
+
+        <!-- ============ INVOICING NODE ============ -->
+        <g class="lc-node green">
+          <rect class="lc-node-bg" x="60" y="900" width="140" height="80" />
+          <text class="lc-title" x="130" y="920" text-anchor="middle">Invoiced</text>
+          <text class="lc-count" x="130" y="946" text-anchor="middle">3,334</text>
+          <text class="lc-pct" x="130" y="965" text-anchor="middle">73.6%</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="legend" style="margin-top: 14px;">
+      <div class="legend-item"><div class="legend-dot green"></div>Healthy / On-track</div>
+      <div class="legend-item"><div class="legend-dot amber"></div>In progress</div>
+      <div class="legend-item"><div class="legend-dot red"></div>Drop-off / Failed</div>
+      <div class="legend-item" style="margin-left: auto;">─ ─ ─ Direction of lead flow</div>
+    </div>
+  </section>
+</main>
+</div><!-- /subview flow -->
+
+</div><!-- /page-content overview -->
+
+
+<!-- ============================================================ -->
+<!-- PAGE: TEST DRIVE                                             -->
+<!-- ============================================================ -->
+<div class="page-content" data-page="testdrive">
+
+  <!-- Subtab strip -->
+  <nav class="subtabs">
+    <div class="subtab active" data-sub="td-flow">
+      <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+        <rect x="1.5" y="3" width="4" height="3" rx="0.5"/>
+        <rect x="10.5" y="3" width="4" height="3" rx="0.5"/>
+        <rect x="6" y="10" width="4" height="3" rx="0.5"/>
+        <path d="M3.5 6v2h4.5M12.5 6v2h-4.5"/>
+      </svg>
+      Business Flow
+    </div>
+    <div class="subtab" data-sub="td-topology">
+      <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="4" cy="4" r="1.6"/><circle cx="12" cy="4" r="1.6"/>
+        <circle cx="8" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/>
+        <path d="M4 4l4 8M12 4l-4 8M8 12h4"/>
+      </svg>
+      System Topology
+    </div>
+  </nav>
+
+  <!-- ── Business Flow subview ── -->
+  <div class="subview active" data-view="td-flow">
+  <main class="main layout-overview">
+    <section class="lifecycle-panel">
+
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <span class="lens-tag">Lens 02</span>
+          <div>
+            <div class="panel-title">Test Drive Journey</div>
+            <div class="panel-sub">From lead capture through booking to test drive completion</div>
+          </div>
+        </div>
+        <div class="panel-actions">May 1 – 10 · MTD</div>
+      </div>
+
+      <!-- Left-to-right transposed flow -->
+      <div class="td-flow-lr">
+
+        <!-- ═══ COLUMN 1: SOURCES ═══ -->
+        <div class="td-col">
+          <div class="td-col-label">Lead Sources · 73,815 landed</div>
+
+          <!-- Website -->
+          <div class="td-card blue">
+            <div class="td-card-head"><span class="td-card-num">01</span><span class="td-card-name">Website</span><span class="td-card-dot blue"></span></div>
+            <div class="td-mg">
+              <div class="td-mt"><div class="td-mlabel">Landed</div><div class="td-mval">48,200</div></div>
+              <div class="td-mt"><div class="td-mlabel">Submitted</div><div class="td-mval">24,195</div></div>
+              <div class="td-mt"><div class="td-mlabel">Avg Lead Time</div><div class="td-mval">5.2d</div></div>
+              <div class="td-mt"><div class="td-mlabel">No-show</div><div class="td-mval c-red">12.0%</div></div>
+              <div class="td-mt td-mt-full"><div class="td-mlabel">Doc Upload</div><div class="td-bar-row"><div class="td-bar-track"><div class="td-bar-fill green" style="width:78%"></div></div><span class="td-bar-val c-green">78%</span></div></div>
+            </div>
+          </div>
+
+          <!-- Blue App -->
+          <div class="td-card blue">
+            <div class="td-card-head"><span class="td-card-num">02</span><span class="td-card-name">Blue App</span><span class="td-card-dot blue"></span></div>
+            <div class="td-mg">
+              <div class="td-mt"><div class="td-mlabel">Landed</div><div class="td-mval">18,400</div></div>
+              <div class="td-mt"><div class="td-mlabel">Submitted</div><div class="td-mval">9,250</div></div>
+              <div class="td-mt"><div class="td-mlabel">Avg Lead Time</div><div class="td-mval">3.8d</div></div>
+              <div class="td-mt"><div class="td-mlabel">No-show</div><div class="td-mval c-red">15.2%</div></div>
+              <div class="td-mt td-mt-full"><div class="td-mlabel">Doc Upload</div><div class="td-bar-row"><div class="td-bar-track"><div class="td-bar-fill green" style="width:82%"></div></div><span class="td-bar-val c-green">82%</span></div></div>
+            </div>
+          </div>
+
+          <!-- Chatbot -->
+          <div class="td-card blue">
+            <div class="td-card-head"><span class="td-card-num">03</span><span class="td-card-name">Chatbot</span><span class="td-card-dot blue"></span></div>
+            <div class="td-mg">
+              <div class="td-mt"><div class="td-mlabel">Landed</div><div class="td-mval">5,100</div></div>
+              <div class="td-mt"><div class="td-mlabel">Submitted</div><div class="td-mval">2,917</div></div>
+              <div class="td-mt"><div class="td-mlabel">Avg Lead Time</div><div class="td-mval">2.1d</div></div>
+              <div class="td-mt"><div class="td-mlabel">No-show</div><div class="td-mval c-amber">17.8%</div></div>
+              <div class="td-mt td-mt-full"><div class="td-mlabel">Doc Upload</div><div class="td-bar-row"><div class="td-bar-track"><div class="td-bar-fill amber" style="width:71%"></div></div><span class="td-bar-val c-amber">71%</span></div></div>
+            </div>
+          </div>
+
+          <!-- Call Center -->
+          <div class="td-card amber">
+            <div class="td-card-head"><span class="td-card-num">04</span><span class="td-card-name">Call Center</span><span class="td-card-dot amber"></span></div>
+            <div class="td-mg">
+              <div class="td-mt"><div class="td-mlabel">Landed</div><div class="td-mval">2,100</div></div>
+              <div class="td-mt"><div class="td-mlabel">Submitted</div><div class="td-mval">1,453</div></div>
+              <div class="td-mt"><div class="td-mlabel">Avg Lead Time</div><div class="td-mval">1.4d</div></div>
+              <div class="td-mt"><div class="td-mlabel">No-show</div><div class="td-mval c-red">21.6%</div></div>
+              <div class="td-mt td-mt-full"><div class="td-mlabel">Doc Upload</div><div class="td-bar-row"><div class="td-bar-track"><div class="td-bar-fill red" style="width:65%"></div></div><span class="td-bar-val c-red">65%</span></div></div>
+            </div>
+          </div>
+          <!-- Walk-In — direct channel, not booked -->
+          <div class="td-card td-walkin-card">
+            <div class="td-card-head">
+              <span class="td-card-num">05</span>
+              <span class="td-card-name">Walk-In</span>
+              <span class="td-walkin-badge">DIRECT</span>
+              <span class="td-card-dot amber"></span>
+            </div>
+            <div class="td-walkin-hero">1,850</div>
+            <div class="td-walkin-sub">showroom arrivals · no prior booking</div>
+            <div class="td-mg" style="margin-top:10px;">
+              <div class="td-mt"><div class="td-mlabel">Completed TD</div><div class="td-mval c-green">1,490</div></div>
+              <div class="td-mt"><div class="td-mlabel">No-show</div><div class="td-mval c-red">18.7%</div></div>
+              <div class="td-mt td-mt-full"><div class="td-mlabel">Doc Upload</div><div class="td-bar-row"><div class="td-bar-track"><div class="td-bar-fill amber" style="width:61%"></div></div><span class="td-bar-val c-amber">61%</span></div></div>
+            </div>
+          </div>
+        </div><!-- /col sources -->
+
+        <!-- ═══ CONNECTOR: many → one ═══ -->
+        <div class="td-connector">
+          <svg class="td-conn-svg" viewBox="0 0 44 520" preserveAspectRatio="none">
+            <line x1="2" y1="48"  x2="34" y2="230" stroke="#254672" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="2" y1="148" x2="34" y2="230" stroke="#254672" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="2" y1="252" x2="34" y2="230" stroke="#254672" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="2" y1="352" x2="34" y2="230" stroke="#254672" stroke-width="1" stroke-dasharray="3 3"/>
+            <!-- Walk-in bypasses hub — dashed amber line, no arrowhead (continues in connector 2) -->
+            <line x1="2" y1="472" x2="44" y2="472" stroke="#ffb74d" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line x1="34" y1="230" x2="44" y2="230" stroke="#3b9eff" stroke-width="2"/>
+            <polygon points="39,227 44,230 39,233" fill="#3b9eff"/>
+          </svg>
+        </div>
+
+        <!-- ═══ COLUMN 2: BOOKINGS HUB ═══ -->
+        <div class="td-col td-col-center">
+          <div class="td-col-label">Aggregation</div>
+          <div class="td-card td-hub-card">
+            <div class="td-hub-head">
+              <div class="td-hub-icon">
+                <svg width="18" height="18" viewBox="0 0 18 18" fill="none"><circle cx="9" cy="9" r="8" stroke="#4dffaa" stroke-width="1.2"/><path d="M6 9h6M9 6v6" stroke="#4dffaa" stroke-width="1.4" stroke-linecap="round"/></svg>
+              </div>
+              <span class="td-hub-name">Bookings</span>
+              <span class="td-card-dot green"></span>
+            </div>
+            <div class="td-hub-vol">37,815</div>
+            <div class="td-hub-sublabel">total bookings</div>
+            <div class="td-hub-metrics">
+              <div class="td-hm">
+                <div class="td-bar-row" style="flex-direction:column;align-items:flex-start;gap:4px;">
+                  <div class="td-mlabel">Doc Upload</div>
+                  <div class="td-bar-track" style="width:100%"><div class="td-bar-fill green" style="width:74%"></div></div>
+                </div>
+                <span class="td-bar-val c-green" style="font-size:16px;">74.0%</span>
+              </div>
+              <div class="td-hm td-hm-sep">
+                <div class="td-mlabel">No-show Rate</div>
+                <div class="td-mval c-red" style="font-size:20px;">14.8%</div>
+              </div>
+            </div>
+          </div>
+        </div><!-- /col bookings -->
+
+        <!-- ═══ CONNECTOR: one → two ═══ -->
+        <div class="td-connector">
+          <svg class="td-conn-svg" viewBox="0 0 44 400" preserveAspectRatio="none">
+            <line x1="0"  y1="200" x2="18" y2="200" stroke="#3b9eff" stroke-width="2"/>
+            <line x1="18" y1="200" x2="18" y2="110" stroke="#5ecdf5" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="18" y1="200" x2="18" y2="290" stroke="#5ecdf5" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="18" y1="110" x2="44" y2="110" stroke="#5ecdf5" stroke-width="1" stroke-dasharray="3 3"/>
+            <line x1="18" y1="290" x2="44" y2="290" stroke="#5ecdf5" stroke-width="1" stroke-dasharray="3 3"/>
+            <circle cx="18" cy="200" r="3" fill="#3b9eff"/>
+            <polygon points="39,107 44,110 39,113" fill="#5a7395"/>
+            <!-- Walk-in amber line: enters bottom, angles up to Test Drive -->
+            <line x1="0" y1="363" x2="10" y2="363" stroke="#ffb74d" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line x1="10" y1="363" x2="10" y2="110" stroke="#ffb74d" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <line x1="10" y1="110" x2="44" y2="110" stroke="#ffb74d" stroke-width="1.5" stroke-dasharray="4 3"/>
+            <polygon points="39,107 44,110 39,113" fill="#ffb74d"/>
+          </svg>
+        </div>
+
+        <!-- ═══ COLUMN 3: OUTCOMES ═══ -->
+        <div class="td-col td-col-outputs">
+          <div class="td-col-label">Outcomes</div>
+
+          <!-- Test Drive -->
+          <div class="td-card amber">
+            <div class="td-card-head">
+              <span class="td-card-name">Test Drive</span>
+              <span class="td-card-dot amber"></span>
+            </div>
+            <div class="td-mg-hero">
+              <div class="td-hero-num">8,292</div>
+              <div class="td-hero-label">into funnel · 6,442 from bookings</div>
+            </div>
+            <div class="td-mg td-mg-3">
+              <div class="td-mt"><div class="td-mlabel">Completed</div><div class="td-mval c-green">5,325</div></div>
+              <div class="td-mt"><div class="td-mlabel">Cancelled</div><div class="td-mval c-amber">412</div></div>
+              <div class="td-mt"><div class="td-mlabel">No-show</div><div class="td-mval c-red">1,117</div></div>
+              <div class="td-mt"><div class="td-mlabel">Pending</div><div class="td-mval c-dim">1,438</div></div>
+              <div class="td-mt td-mt-full"><div class="td-mlabel">Doc Upload</div><div class="td-bar-row"><div class="td-bar-track"><div class="td-bar-fill amber" style="width:74%"></div></div><span class="td-bar-val c-amber">74.0%</span></div></div>
+            </div>
+          </div>
+
+          <!-- Sales Manager -->
+          <div class="td-card blue">
+            <div class="td-card-head"><span class="td-card-name">Sales Manager</span><span class="td-card-dot blue"></span></div>
+            <div class="td-mg">
+              <div class="td-mt"><div class="td-mlabel">Into Funnel</div><div class="td-mval">17,271</div></div>
+              <div class="td-mt"><div class="td-mlabel">Assigned to SE</div><div class="td-mval c-green">16,900</div></div>
+              <div class="td-mt"><div class="td-mlabel">Pending</div><div class="td-mval c-amber">371</div></div>
+              <div class="td-mt"><div class="td-mlabel">Avg Assign Time</div><div class="td-mval">2.4h</div></div>
+            </div>
+          </div>
+        </div><!-- /col outputs -->
+
+      </div><!-- /td-flow-lr -->
+
+      <!-- Legend -->
+      <div class="legend" style="margin-top:18px;">
+        <div class="legend-item"><div class="legend-dot green"></div>On-track</div>
+        <div class="legend-item"><div class="legend-dot amber"></div>Watch</div>
+        <div class="legend-item"><div class="legend-dot red"></div>Issue</div>
+        <div class="legend-item" style="background:transparent"><div class="legend-dot" style="background:var(--blue);box-shadow:0 0 8px var(--blue)"></div>Digital</div>
+        <div class="legend-item" style="margin-left:auto;">─ ─ ─ Direction of flow</div>
+      </div>
+
+      <!-- HIDDEN OLD SVG (archived) -->
+      <div style="display:none">
+      <div class="td-flow-wrap">
+        <svg class="td-flow-svg" viewBox="0 0 700 500" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            <marker id="td-arr" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="6" markerHeight="6" orient="auto">
+              <path d="M0,1 L7,4 L0,7 Z" fill="#3d557a"/>
+            </marker>
+          </defs>
+
+          <!-- ═══════ ARROWS ═══════ -->
+          <!-- Sources → Bookings (converging) -->
+          <path class="td-edge" d="M 80,72 Q 80,106 290,130"  marker-end="url(#td-arr)"/>
+          <path class="td-edge" d="M 215,72 Q 230,106 290,130" marker-end="url(#td-arr)"/>
+          <path class="td-edge" d="M 350,72 Q 335,106 290,130" marker-end="url(#td-arr)"/>
+          <path class="td-edge" d="M 485,72 Q 485,106 450,130" marker-end="url(#td-arr)"/>
+
+          <!-- Bookings → Showroom Visit + Sales Manager -->
+          <path class="td-edge" d="M 240,194 Q 190,232 170,270" marker-end="url(#td-arr)"/>
+          <path class="td-edge" d="M 360,194 Q 420,232 460,270" marker-end="url(#td-arr)"/>
+
+          <!-- Walk-In → Showroom Visit -->
+          <line class="td-edge" x1="55" y1="302" x2="68" y2="302" marker-end="url(#td-arr)"/>
+
+          <!-- Showroom Visit → Test Drive -->
+          <line class="td-edge" x1="170" y1="334" x2="170" y2="400" marker-end="url(#td-arr)"/>
+
+          <!-- Sales Manager → SE Appt -->
+          <line class="td-edge" x1="460" y1="334" x2="460" y2="400" marker-end="url(#td-arr)"/>
+
+          <!-- ═══════ SOURCE BOXES (row 1) ═══════ -->
+          <!-- Website -->
+          <g class="td-node blue">
+            <rect class="td-bg" x="20" y="20" width="120" height="52" rx="5"/>
+            <rect class="td-bar" x="20" y="20" width="4" height="52" rx="2"/>
+            <text class="td-title" x="85" y="40" text-anchor="middle">Website</text>
+            <text class="td-count" x="85" y="58" text-anchor="middle">24,195</text>
+          </g>
+          <!-- Blue App -->
+          <g class="td-node blue">
+            <rect class="td-bg" x="155" y="20" width="120" height="52" rx="5"/>
+            <rect class="td-bar" x="155" y="20" width="4" height="52" rx="2"/>
+            <text class="td-title" x="220" y="40" text-anchor="middle">Blue App</text>
+            <text class="td-count" x="220" y="58" text-anchor="middle">9,250</text>
+          </g>
+          <!-- Chatbot -->
+          <g class="td-node blue">
+            <rect class="td-bg" x="290" y="20" width="120" height="52" rx="5"/>
+            <rect class="td-bar" x="290" y="20" width="4" height="52" rx="2"/>
+            <text class="td-title" x="355" y="40" text-anchor="middle">Chatbot</text>
+            <text class="td-count" x="355" y="58" text-anchor="middle">2,917</text>
+          </g>
+          <!-- Call Center -->
+          <g class="td-node amber">
+            <rect class="td-bg" x="425" y="20" width="120" height="52" rx="5"/>
+            <rect class="td-bar" x="425" y="20" width="4" height="52" rx="2"/>
+            <text class="td-title" x="490" y="40" text-anchor="middle">Call Center</text>
+            <text class="td-count" x="490" y="58" text-anchor="middle">1,453</text>
+          </g>
+
+          <!-- Source total label -->
+          <text class="td-group-label" x="290" y="12" text-anchor="middle">LEAD SOURCES · 37,815 TOTAL</text>
+
+          <!-- ═══════ BOOKINGS / DOCUMENTATION (row 2) ═══════ -->
+          <g class="td-node green">
+            <rect class="td-bg" x="130" y="130" width="320" height="64" rx="5"/>
+            <rect class="td-bar" x="130" y="130" width="4" height="64" rx="2"/>
+            <text class="td-title" x="295" y="152" text-anchor="middle">Bookings / Documentation</text>
+            <text class="td-count" x="250" y="178" text-anchor="middle">35,426</text>
+            <text class="td-meta" x="250" y="178" dx="54" text-anchor="start">actioned</text>
+            <text class="td-badge-red" x="390" y="178" text-anchor="end">174 not actioned</text>
+          </g>
+
+          <!-- ═══════ WALK-IN (side entry) ═══════ -->
+          <g class="td-node amber">
+            <rect class="td-bg" x="5" y="278" width="63" height="48" rx="5"/>
+            <rect class="td-bar" x="5" y="278" width="4" height="48" rx="2"/>
+            <text class="td-title" x="36" y="297" text-anchor="middle">Walk-In</text>
+            <text class="td-count-sm" x="36" y="313" text-anchor="middle">10,932</text>
+          </g>
+
+          <!-- ═══════ SHOWROOM VISIT (left branch) ═══════ -->
+          <g class="td-node green">
+            <rect class="td-bg" x="68" y="270" width="204" height="64" rx="5"/>
+            <rect class="td-bar" x="68" y="270" width="4" height="64" rx="2"/>
+            <text class="td-title" x="175" y="291" text-anchor="middle">Showroom Visit</text>
+            <text class="td-count" x="155" y="316" text-anchor="middle">19,130</text>
+            <text class="td-meta" x="155" y="316" dx="52" text-anchor="start">SE assigned</text>
+          </g>
+
+          <!-- ═══════ SALES MANAGER (right branch) ═══════ -->
+          <g class="td-node blue">
+            <rect class="td-bg" x="360" y="270" width="200" height="64" rx="5"/>
+            <rect class="td-bar" x="360" y="270" width="4" height="64" rx="2"/>
+            <text class="td-title" x="465" y="291" text-anchor="middle">Sales Manager</text>
+            <text class="td-count" x="450" y="316" text-anchor="middle">17,271</text>
+            <text class="td-meta" x="450" y="316" dx="46" text-anchor="start">reachable</text>
+          </g>
+
+          <!-- ═══════ TEST DRIVE (bottom left) ═══════ -->
+          <g class="td-node amber">
+            <rect class="td-bg" x="68" y="400" width="204" height="64" rx="5"/>
+            <rect class="td-bar" x="68" y="400" width="4" height="64" rx="2"/>
+            <text class="td-title" x="175" y="421" text-anchor="middle">Test Drive</text>
+            <text class="td-count" x="155" y="447" text-anchor="middle">6,442</text>
+            <text class="td-meta" x="155" y="447" dx="42" text-anchor="start">booked</text>
+            <text class="td-sub" x="175" y="460" text-anchor="middle">5,325 completed · 1,117 no-show</text>
+          </g>
+
+          <!-- ═══════ SE APPT (bottom right) ═══════ -->
+          <g class="td-node green">
+            <rect class="td-bg" x="360" y="400" width="200" height="64" rx="5"/>
+            <rect class="td-bar" x="360" y="400" width="4" height="64" rx="2"/>
+            <text class="td-title" x="465" y="421" text-anchor="middle">SE Assignment</text>
+            <text class="td-count" x="445" y="447" text-anchor="middle">19,130</text>
+            <text class="td-meta" x="445" y="447" dx="48" text-anchor="start">assigned</text>
+            <text class="td-sub" x="465" y="460" text-anchor="middle">371 pending · 98.1% assignment rate</text>
+          </g>
+
+          <!-- Group labels -->
+          <text class="td-group-label" x="170" y="265" text-anchor="middle">QUALIFICATION PATH</text>
+          <text class="td-group-label" x="460" y="265" text-anchor="middle">SALES PATH</text>
+        </svg>
+      </div>
+
+      <!-- Legend -->
+      <div class="legend" style="margin-top: 14px;">
+        <div class="legend-item"><div class="legend-dot green"></div>Healthy / On-track</div>
+        <div class="legend-item"><div class="legend-dot amber"></div>Watch / Partial</div>
+      </div><!-- /hidden archive -->
+
+    </section>
+  </main>
+  </div><!-- /subview td-flow -->
+
+  <!-- ── System Topology subview (blank for now) ── -->
+  <div class="subview" data-view="td-topology">
+  <main class="main layout-overview">
+    <section class="panel" style="min-height:400px; display:flex; align-items:center; justify-content:center; flex-direction:column; gap:12px;">
+      <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="var(--ink-4)" stroke-width="1.2">
+        <circle cx="10" cy="10" r="4"/><circle cx="30" cy="10" r="4"/>
+        <circle cx="10" cy="30" r="4"/><circle cx="30" cy="30" r="4"/>
+        <line x1="14" y1="10" x2="26" y2="10"/><line x1="14" y1="30" x2="26" y2="30"/>
+        <line x1="10" y1="14" x2="10" y2="26"/><line x1="30" y1="14" x2="30" y2="26"/>
+      </svg>
+      <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:var(--ink-4); letter-spacing:0.14em; text-transform:uppercase;">System Topology — Coming Soon</div>
+    </section>
+  </main>
+  </div><!-- /subview td-topology -->
+
+</div><!-- /page-content testdrive -->
+
+
+<script src="assets/app.js"></script>
+</body>
+</html>
