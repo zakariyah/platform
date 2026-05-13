@@ -17,10 +17,10 @@
   });
 
   // ---- Per-page subtab switching ----
-  // Each page-content has its own .subtab + .subview elements
-  pages.forEach((page) => {
-    const subtabs = page.querySelectorAll('.subtab');
-    const subviews = page.querySelectorAll('.subview');
+  // Scope subtabs/subviews to their immediate container (page-content or journey-page)
+  [...document.querySelectorAll('.page-content'), ...document.querySelectorAll('.journey-page')].forEach((container) => {
+    const subtabs = container.querySelectorAll(':scope > nav.subtabs .subtab');
+    const subviews = container.querySelectorAll(':scope > .subview');
     subtabs.forEach((tab) => {
       tab.addEventListener('click', () => {
         const key = tab.getAttribute('data-sub');
@@ -29,6 +29,20 @@
       });
     });
   });
+
+  // ---- Journey Page Switcher (Overview) ----
+  (function () {
+    const navPills = document.querySelectorAll('.journey-nav-pill');
+    const journeyPages = document.querySelectorAll('.journey-page');
+    navPills.forEach(pill => {
+      pill.addEventListener('click', () => {
+        const key = pill.getAttribute('data-journey-page');
+        navPills.forEach(p => p.classList.toggle('active', p === pill));
+        journeyPages.forEach(jp => jp.classList.toggle('active', jp.getAttribute('data-journey-page') === key));
+        clearStage();
+      });
+    });
+  })();
 
   // ---- Stage data for Business Flow detail panel ----
   const STAGES = {
@@ -144,6 +158,36 @@
     if (panel) panel.style.display = 'none';
   };
 
+  // ---- Generic journey stage select/clear (for B2B New, B2B AS, B2C AS) ----
+  window.selectStageJourney = function (journeyKey, stageKey) {
+    const panelId  = 'pipeline-detail-' + journeyKey;
+    const nameId   = 'ds-name-'   + journeyKey;
+    const convId   = 'ds-conv-'   + journeyKey;
+    const volId    = 'ds-vol-'    + journeyKey;
+    const insightId= 'ds-insight-'+ journeyKey;
+    const gridId   = 'ds-grid-'   + journeyKey;
+    document.querySelectorAll('.sc').forEach(c => c.classList.remove('selected'));
+    const card = document.querySelector(`.sc[data-stage="${stageKey}"]`);
+    if (card) card.classList.add('selected');
+    const name    = document.getElementById(nameId);
+    const conv    = document.getElementById(convId);
+    const vol     = document.getElementById(volId);
+    const insight = document.getElementById(insightId);
+    const grid    = document.getElementById(gridId);
+    if (name)    name.textContent    = card ? card.querySelector('.sc-name')?.textContent || stageKey : stageKey;
+    if (conv)    conv.textContent    = '';
+    if (vol)     vol.textContent     = card ? card.querySelector('.sc-mv')?.textContent || '—' : '—';
+    if (insight) insight.innerHTML   = '';
+    if (grid)    grid.innerHTML      = '';
+    const panel = document.getElementById(panelId);
+    if (panel) { panel.style.display = 'block'; panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' }); }
+  };
+  window.clearStageJourney = function (journeyKey) {
+    document.querySelectorAll('.sc').forEach(c => c.classList.remove('selected'));
+    const panel = document.getElementById('pipeline-detail-' + journeyKey);
+    if (panel) panel.style.display = 'none';
+  };
+
   // ---- Date Selector ----
   (function () {
     const trigger  = document.getElementById('ds-trigger');
@@ -236,6 +280,80 @@
     function open()  { trigger.classList.add('open');  dropdown.classList.add('open'); }
     function close() { trigger.classList.remove('open'); dropdown.classList.remove('open'); }
   })();
+
+  // ---- Journey Selector (replaced by Journey Page Switcher above) ----
+
+  // ---- Stage data for Used Cars ----
+  const STAGES_USED = {
+    'used-sourcing':   { name: 'Lead Sourcing',       vol: '18,240', conv: 'Entry point · 100% of used-car leads', insight: '<strong>Web and social</strong> dominate used-car leads. 4.9% duplicate rate — lower than new cars, likely because used-car customers are more deliberate.', nodes: [{ label:'Web', count:'10,940', pct:'60.0%', cls:'blue' },{ label:'Social Media', count:'5,840', pct:'32.0%', cls:'blue' },{ label:'Walk-in', count:'1,248', pct:'6.8%', cls:'' },{ label:'Unique Leads', count:'17,348', pct:'95.1%', cls:'green' },{ label:'Duplicate Leads', count:'892', pct:'4.9%', cls:'red' }] },
+    'used-inspection': { name: 'Vehicle Inspection',  vol: '17,112', conv: '65.7% proceed to offer stage', insight: '<strong>34.3% drop-off at inspection</strong> is the primary funnel leak. Key drivers: vehicle condition mismatch, pricing expectations, and availability gaps. Review inspection-to-offer conversion by model.', nodes: [{ label:'Inspection Booked', count:'14,820', pct:'86.6%', cls:'green' },{ label:'Inspection Completed', count:'12,340', pct:'72.1%', cls:'green' },{ label:'Condition: Pass', count:'11,240', pct:'65.7%', cls:'green' },{ label:'Condition: Fail', count:'1,100', pct:'6.4%', cls:'red' },{ label:'No-show', count:'2,480', pct:'14.5%', cls:'red' },{ label:'Pending', count:'1,450', pct:'8.5%', cls:'' }] },
+    'used-offer':      { name: 'Offer & Negotiation', vol: '11,240', conv: '69.9% offer acceptance rate', insight: '<strong>18.7% decline rate</strong> at offer stage suggests pricing or perceived value gaps. Accepted offers convert well through to payment — the negotiation phase is the key leverage point.', nodes: [{ label:'Offer Sent', count:'11,240', pct:'100%', cls:'green' },{ label:'Accepted', count:'7,860', pct:'69.9%', cls:'green' },{ label:'Negotiating', count:'1,276', pct:'11.3%', cls:'' },{ label:'Declined', count:'2,104', pct:'18.7%', cls:'red' }] },
+    'used-finance':    { name: 'Finance & Payment',   vol: '7,860',  conv: '71.4% finance arranged', insight: '<strong>7.9% failure rate</strong> at finance stage — lower than new-car credit checks, likely due to lower loan amounts. 20.7% pending warrants a follow-up campaign.', nodes: [{ label:'Finance Arranged', count:'5,612', pct:'71.4%', cls:'green' },{ label:'Cash Purchase', count:'1,840', pct:'23.4%', cls:'blue' },{ label:'Pending', count:'1,630', pct:'20.7%', cls:'' },{ label:'Failed', count:'618', pct:'7.9%', cls:'red' }] },
+    'used-handover':   { name: 'Handover',            vol: '5,612',  conv: '88.7% handover completion rate', insight: '<strong>88.7% completion</strong> is strong. 580 units pending are likely logistics or registration-related delays — follow up on lead time by dealer.', nodes: [{ label:'Handover Completed', count:'4,980', pct:'88.7%', cls:'green' },{ label:'Pending', count:'580', pct:'10.3%', cls:'' },{ label:'Cancelled Post-Payment', count:'52', pct:'0.9%', cls:'red' }] },
+  };
+
+  // ---- Stage data for Lease Cars ----
+  const STAGES_LEASE = {
+    'lease-sourcing':  { name: 'Lead Sourcing',       vol: '9,450',  conv: 'Entry point · 100% of lease leads', insight: '<strong>Corporate fleet</strong> accounts for 42% of lease leads — significantly different to retail. Ensure CEC teams are equipped with fleet qualification scripts.', nodes: [{ label:'Corporate/Fleet', count:'3,969', pct:'42.0%', cls:'blue' },{ label:'Individual', count:'5,169', pct:'54.7%', cls:'blue' },{ label:'Unique Leads', count:'9,138', pct:'96.7%', cls:'green' },{ label:'Duplicate', count:'312', pct:'3.3%', cls:'red' }] },
+    'lease-cec':       { name: 'CEC Qualification',   vol: '8,960',  conv: '53.8% qualified after CEC contact', insight: '<strong>40.6% unreachable</strong> — slightly better than new cars but still the dominant drop-off. Lease customers are often corporate contacts; schedule callbacks during business hours.', nodes: [{ label:'Qualified', count:'4,820', pct:'53.8%', cls:'green' },{ label:'Unreachable', count:'3,640', pct:'40.6%', cls:'red' },{ label:'Not Interested', count:'870', pct:'9.7%', cls:'red' },{ label:'Pending', count:'500', pct:'5.6%', cls:'' }] },
+    'lease-proposal':  { name: 'Lease Proposal',      vol: '4,820',  conv: '68.1% proposal acceptance rate', insight: '<strong>19.7% rejection rate</strong> at proposal stage. Top reason: monthly payment too high. Consider introducing a lower-mileage or shorter-term tier to capture price-sensitive customers.', nodes: [{ label:'Proposal Sent', count:'4,610', pct:'95.6%', cls:'green' },{ label:'Accepted', count:'3,280', pct:'68.1%', cls:'green' },{ label:'Rejected', count:'892', pct:'18.5%', cls:'red' },{ label:'Pending Review', count:'438', pct:'9.1%', cls:'' }] },
+    'lease-credit':    { name: 'Credit Assessment',   vol: '3,280',  conv: '65.2% credit approval rate', insight: '<strong>23.8% pending</strong> at credit stage indicates processing delays. 11.0% declined — monitor by brand and tenure length, as longer leases attract higher credit scrutiny.', nodes: [{ label:'Approved', count:'2,140', pct:'65.2%', cls:'green' },{ label:'Pending', count:'780', pct:'23.8%', cls:'' },{ label:'Declined', count:'360', pct:'11.0%', cls:'red' }] },
+    'lease-contract':  { name: 'Contract Signed',     vol: '2,140',  conv: '62.7% contract completion rate', insight: '<strong>1,342 contracts signed</strong> this period. 29.0% remain pending — likely awaiting final documentation or vehicle availability. 8.3% lapsed; re-engage within 14 days before intent cools.', nodes: [{ label:'Signed', count:'1,342', pct:'62.7%', cls:'green' },{ label:'Pending', count:'620', pct:'29.0%', cls:'' },{ label:'Lapsed', count:'178', pct:'8.3%', cls:'red' }] },
+  };
+
+  function selectStageUsed(key) {
+    const stage = STAGES_USED[key]; if (!stage) return;
+    document.querySelectorAll('.journey-page[data-journey-page="used"] .sc').forEach(c => c.classList.remove('selected'));
+    const card = document.querySelector(`.journey-page[data-journey-page="used"] .sc[data-stage="${key}"]`);
+    if (card) card.classList.add('selected');
+    document.getElementById('ds-name-used').textContent  = stage.name;
+    document.getElementById('ds-conv-used').textContent  = stage.conv;
+    document.getElementById('ds-vol-used').textContent   = stage.vol;
+    document.getElementById('ds-insight-used').innerHTML = stage.insight;
+    const grid = document.getElementById('ds-grid-used');
+    grid.innerHTML = stage.nodes.map(n => `<div class="detail-node ${n.cls}"><div class="dn-label">${n.label}</div><div class="dn-count">${n.count}</div><div class="dn-pct">${n.pct}</div></div>`).join('');
+    const panel = document.getElementById('pipeline-detail-used');
+    if (panel) { panel.style.display = 'block'; panel.scrollIntoView({ behavior:'smooth', block:'nearest' }); }
+  }
+  function clearStageUsed() {
+    document.querySelectorAll('.journey-page[data-journey-page="used"] .sc').forEach(c => c.classList.remove('selected'));
+    const panel = document.getElementById('pipeline-detail-used');
+    if (panel) panel.style.display = 'none';
+  }
+
+  function selectStageLease(key) {
+    const stage = STAGES_LEASE[key]; if (!stage) return;
+    document.querySelectorAll('.journey-page[data-journey-page="lease"] .sc').forEach(c => c.classList.remove('selected'));
+    const card = document.querySelector(`.journey-page[data-journey-page="lease"] .sc[data-stage="${key}"]`);
+    if (card) card.classList.add('selected');
+    document.getElementById('ds-name-lease').textContent  = stage.name;
+    document.getElementById('ds-conv-lease').textContent  = stage.conv;
+    document.getElementById('ds-vol-lease').textContent   = stage.vol;
+    document.getElementById('ds-insight-lease').innerHTML = stage.insight;
+    const grid = document.getElementById('ds-grid-lease');
+    grid.innerHTML = stage.nodes.map(n => `<div class="detail-node ${n.cls}"><div class="dn-label">${n.label}</div><div class="dn-count">${n.count}</div><div class="dn-pct">${n.pct}</div></div>`).join('');
+    const panel = document.getElementById('pipeline-detail-lease');
+    if (panel) { panel.style.display = 'block'; panel.scrollIntoView({ behavior:'smooth', block:'nearest' }); }
+  }
+  function clearStageLease() {
+    document.querySelectorAll('.journey-page[data-journey-page="lease"] .sc').forEach(c => c.classList.remove('selected'));
+    const panel = document.getElementById('pipeline-detail-lease');
+    if (panel) panel.style.display = 'none';
+  }
+
+  // expose so onclick= works
+  window.selectStageUsed  = selectStageUsed;
+  window.clearStageUsed   = clearStageUsed;
+  window.selectStageLease = selectStageLease;
+  window.clearStageLease  = clearStageLease;
+
+  // Wire Used/Lease stage onclick handlers
+  document.querySelectorAll('.journey-page[data-journey-page="used"] .sc').forEach(card => {
+    card.onclick = () => selectStageUsed(card.getAttribute('data-stage'));
+  });
+  document.querySelectorAll('.journey-page[data-journey-page="lease"] .sc').forEach(card => {
+    card.onclick = () => selectStageLease(card.getAttribute('data-stage'));
+  });
 
   // ---- Brand Selector ----
   (function () {

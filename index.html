@@ -157,9 +157,21 @@
 
 <div class="page-content active" data-page="overview">
 
-<!-- ============ SUBTABS (Overview sub-views) ============ -->
-<nav class="subtabs" id="subtabs">
-  <div class="subtab" data-sub="topology">
+<!-- ============ JOURNEY NAV ============ -->
+<nav class="journey-nav">
+  <button class="journey-nav-pill active" data-journey-page="new">B2C New Cars</button>
+  <button class="journey-nav-pill" data-journey-page="used">B2C Used Cars</button>
+  <button class="journey-nav-pill" data-journey-page="lease">B2C Lease Cars</button>
+  <button class="journey-nav-pill" data-journey-page="b2b-new">B2B New Cars</button>
+  <button class="journey-nav-pill" data-journey-page="b2b-aftersales">B2B AfterSales</button>
+  <button class="journey-nav-pill" data-journey-page="b2c-aftersales">B2C AfterSales</button>
+</nav>
+
+<!-- ═══ JOURNEY PAGE: B2C New Cars ═══ -->
+<div class="journey-page active" data-journey-page="new">
+
+<nav class="subtabs">
+  <div class="subtab" data-sub="new-topology">
     <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
       <circle cx="4" cy="4" r="1.6"/><circle cx="12" cy="4" r="1.6"/>
       <circle cx="8" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/>
@@ -167,7 +179,7 @@
     </svg>
     System Topology
   </div>
-  <div class="subtab active" data-sub="flow">
+  <div class="subtab active" data-sub="new-flow">
     <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
       <rect x="1.5" y="3" width="4" height="3" rx="0.5"/>
       <rect x="10.5" y="3" width="4" height="3" rx="0.5"/>
@@ -178,8 +190,8 @@
   </div>
 </nav>
 
-<!-- ============ SUBVIEW: SYSTEM TOPOLOGY ============ -->
-<div class="subview" data-view="topology">
+<!-- SUBVIEW: System Topology (New Cars) -->
+<div class="subview" data-view="new-topology">
 <main class="main layout-overview">
 
   <!-- ---------- LENS 1 — TOPOLOGY ---------- -->
@@ -365,25 +377,21 @@
   </section>
 
 </main>
-</div><!-- /subview topology -->
+</div><!-- /subview new-topology -->
 
-<!-- ============ SUBVIEW: BUSINESS FLOW ============ -->
-<div class="subview active" data-view="flow">
-<main class="main layout-overview">
-
+<!-- SUBVIEW: Business Flow (New Cars) -->
+<div class="subview active" data-view="new-flow">
   <section class="lifecycle-panel">
     <div class="panel-header">
       <div class="panel-title-group">
         <span class="lens-tag">Lens 02</span>
         <div>
-          <div class="panel-title">Lead-to-Invoice Lifecycle</div>
-          <div class="panel-sub">Select a stage on the map to inspect its internal breakdown</div>
+          <div class="panel-title" id="lifecycle-title">Lead-to-Invoice Lifecycle · New Cars</div>
+          <div class="panel-sub">Select a stage to inspect its internal breakdown</div>
         </div>
       </div>
       <div class="panel-actions">May 1 – 10 · MTD</div>
     </div>
-
-    <!-- ===== STAGE COLUMN CARDS ===== -->
     <div class="stage-pipeline">
 
       <!-- Summary strip -->
@@ -670,8 +678,732 @@
       </div>
 
     </div><!-- /stage-pipeline -->
+  </section>
+</div><!-- /subview new-flow -->
 
-    <!-- ======= OLD TWO-PANEL (archived, hidden) ======= -->
+</div><!-- /journey-page new -->
+
+<!-- ═══ JOURNEY PAGE: B2C Used Cars ═══ -->
+<div class="journey-page" data-journey-page="used">
+
+<nav class="subtabs">
+  <div class="subtab" data-sub="used-topology">
+    <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+      <circle cx="4" cy="4" r="1.6"/><circle cx="12" cy="4" r="1.6"/>
+      <circle cx="8" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/>
+      <path d="M4 4l4 8M12 4l-4 8M8 12h4"/>
+    </svg>
+    System Topology
+  </div>
+  <div class="subtab active" data-sub="used-flow">
+    <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+      <rect x="1.5" y="3" width="4" height="3" rx="0.5"/>
+      <rect x="10.5" y="3" width="4" height="3" rx="0.5"/>
+      <rect x="6" y="10" width="4" height="3" rx="0.5"/>
+      <path d="M3.5 6v2h4.5M12.5 6v2h-4.5"/>
+    </svg>
+    Business Flow
+  </div>
+</nav>
+
+<!-- SUBVIEW: System Topology (Used Cars) -->
+<div class="subview" data-view="used-topology">
+  <main class="main layout-overview">
+    <section class="panel topology-panel">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <span class="lens-tag">Lens 01</span>
+          <div>
+            <div class="panel-title">System Topology · Used Cars</div>
+            <div class="panel-sub">Coming soon — system map for the used-car journey</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:60px;text-align:center;color:var(--ink-2);font-family:'Inter Tight',sans-serif;font-size:13px;">System Topology for the Used Cars journey is being configured.</div>
+    </section>
+  </main>
+</div><!-- /subview used-topology -->
+
+<!-- SUBVIEW: Business Flow (Used Cars) -->
+<div class="subview active" data-view="used-flow">
+  <section class="lifecycle-panel">
+    <div class="panel-header">
+      <div class="panel-title-group">
+        <span class="lens-tag">Lens 02</span>
+        <div>
+          <div class="panel-title">Lead-to-Sale Lifecycle · Used Cars</div>
+          <div class="panel-sub">Select a stage to inspect its internal breakdown</div>
+        </div>
+      </div>
+      <div class="panel-actions">May 1 – 10 · MTD</div>
+    </div>
+    <div class="stage-pipeline">
+      <div class="pipeline-meta">
+        <span>18,240 total leads · May 1–10 · MTD · 5 stages</span>
+        <span style="color:var(--green)">11.4% close rate · 2,080 sold</span>
+      </div>
+      <div class="pipeline-row">
+
+        <!-- 01 Lead Sourcing -->
+        <div class="sc" data-stage="used-sourcing" onclick="selectStage('used-sourcing')">
+          <div class="sc-head"><span class="sc-num">01</span><span class="sc-name">Lead Sourcing</span><span class="sc-dot green"></span></div>
+          <div class="sc-metrics">
+            <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">18,240</div></div>
+            <div class="sc-m"><div class="sc-ml">THROUGH</div><div class="sc-mv" style="color:var(--cyan)">17,112</div></div>
+            <div class="sc-m"><div class="sc-ml">DROPPED</div><div class="sc-mv" style="color:var(--red)">1,128</div></div>
+            <div class="sc-m"><div class="sc-ml">DUPLICATE</div><div class="sc-mv" style="color:var(--amber)">892</div></div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-fill green" style="width:93.8%"></div></div>
+        </div>
+
+        <div class="pipeline-connector">
+          <div class="pc-rate">93.8%</div>
+          <div class="pc-arrow">→</div>
+          <div class="pc-timing"><div class="pc-avg">avg 1.8d</div><div class="pc-bp"><span class="pc-range">0.2h–48h</span><div class="pc-quartiles"><span>Q1 0.8d</span><span>med 1.5d</span><span>Q3 3.2d</span></div></div></div>
+        </div>
+
+        <!-- 02 Vehicle Inspection -->
+        <div class="sc" data-stage="used-inspection" onclick="selectStage('used-inspection')">
+          <div class="sc-head"><span class="sc-num">02</span><span class="sc-name">Vehicle Inspection</span><span class="sc-dot amber"></span></div>
+          <div class="sc-metrics">
+            <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">17,112</div></div>
+            <div class="sc-m"><div class="sc-ml">THROUGH</div><div class="sc-mv" style="color:var(--cyan)">11,240</div></div>
+            <div class="sc-m"><div class="sc-ml">DROPPED</div><div class="sc-mv" style="color:var(--red)">5,872</div></div>
+            <div class="sc-m"><div class="sc-ml">PENDING</div><div class="sc-mv" style="color:var(--amber)">1,450</div></div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-fill amber" style="width:65.7%"></div></div>
+        </div>
+
+        <div class="pipeline-connector">
+          <div class="pc-rate">65.7%</div>
+          <div class="pc-arrow">→</div>
+          <div class="pc-timing"><div class="pc-avg">avg 3.4d</div><div class="pc-bp"><span class="pc-range">1d–14d</span><div class="pc-quartiles"><span>Q1 2.1d</span><span>med 3.0d</span><span>Q3 5.5d</span></div></div></div>
+        </div>
+
+        <!-- 03 Offer & Negotiation -->
+        <div class="sc" data-stage="used-offer" onclick="selectStage('used-offer')">
+          <div class="sc-head"><span class="sc-num">03</span><span class="sc-name">Offer & Negotiation</span><span class="sc-dot green"></span></div>
+          <div class="sc-metrics">
+            <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">11,240</div></div>
+            <div class="sc-m"><div class="sc-ml">ACCEPTED</div><div class="sc-mv" style="color:var(--green)">7,860</div></div>
+            <div class="sc-m"><div class="sc-ml">DECLINED</div><div class="sc-mv" style="color:var(--red)">2,104</div></div>
+            <div class="sc-m"><div class="sc-ml">PENDING</div><div class="sc-mv" style="color:var(--amber)">1,276</div></div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-fill green" style="width:69.9%"></div></div>
+        </div>
+
+        <div class="pipeline-connector">
+          <div class="pc-rate">69.9%</div>
+          <div class="pc-arrow">→</div>
+          <div class="pc-timing"><div class="pc-avg">avg 2.1d</div><div class="pc-bp"><span class="pc-range">0.5d–10d</span><div class="pc-quartiles"><span>Q1 1.0d</span><span>med 1.8d</span><span>Q3 3.4d</span></div></div></div>
+        </div>
+
+        <!-- 04 Finance & Payment -->
+        <div class="sc" data-stage="used-finance" onclick="selectStage('used-finance')">
+          <div class="sc-head"><span class="sc-num">04</span><span class="sc-name">Finance & Payment</span><span class="sc-dot amber"></span></div>
+          <div class="sc-metrics">
+            <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">7,860</div></div>
+            <div class="sc-m"><div class="sc-ml">ARRANGED</div><div class="sc-mv" style="color:var(--green)">5,612</div></div>
+            <div class="sc-m"><div class="sc-ml">PENDING</div><div class="sc-mv" style="color:var(--amber)">1,630</div></div>
+            <div class="sc-m"><div class="sc-ml">FAILED</div><div class="sc-mv" style="color:var(--red)">618</div></div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-fill amber" style="width:71.4%"></div></div>
+        </div>
+
+        <div class="pipeline-connector">
+          <div class="pc-rate">71.4%</div>
+          <div class="pc-arrow">→</div>
+          <div class="pc-timing"><div class="pc-avg">avg 1.2d</div><div class="pc-bp"><span class="pc-range">2h–7d</span><div class="pc-quartiles"><span>Q1 0.6d</span><span>med 1.0d</span><span>Q3 2.1d</span></div></div></div>
+        </div>
+
+        <!-- 05 Handover -->
+        <div class="sc" data-stage="used-handover" onclick="selectStage('used-handover')">
+          <div class="sc-head"><span class="sc-num">05</span><span class="sc-name">Handover</span><span class="sc-dot green"></span></div>
+          <div class="sc-metrics">
+            <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">5,612</div></div>
+            <div class="sc-m"><div class="sc-ml">COMPLETED</div><div class="sc-mv" style="color:var(--green)">4,980</div></div>
+            <div class="sc-m"><div class="sc-ml">PENDING</div><div class="sc-mv" style="color:var(--amber)">580</div></div>
+            <div class="sc-m"><div class="sc-ml">SOLD</div><div class="sc-mv" style="color:var(--green)">2,080</div></div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-fill green" style="width:88.7%"></div></div>
+        </div>
+
+      </div><!-- /pipeline-row -->
+
+      <div class="pipeline-detail" id="pipeline-detail-used" style="display:none">
+        <div class="detail-back" onclick="clearStageUsed()">← BACK</div>
+        <div class="detail-stage-header">
+          <div class="detail-stage-info"><div class="detail-stage-name" id="ds-name-used">—</div><div class="stage-conv" id="ds-conv-used">—</div></div>
+          <div class="detail-stage-vol"><div class="vol-num" id="ds-vol-used">—</div><div class="vol-label">Total volume</div></div>
+        </div>
+        <div class="detail-nodes-grid" id="ds-grid-used"></div>
+        <div class="detail-insight" id="ds-insight-used"></div>
+      </div>
+    </div><!-- /stage-pipeline -->
+  </section>
+</div><!-- /subview used-flow -->
+
+</div><!-- /journey-page used -->
+
+<!-- ═══ JOURNEY PAGE: B2C Lease Cars ═══ -->
+<div class="journey-page" data-journey-page="lease">
+
+<nav class="subtabs">
+  <div class="subtab" data-sub="lease-topology">
+    <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+      <circle cx="4" cy="4" r="1.6"/><circle cx="12" cy="4" r="1.6"/>
+      <circle cx="8" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/>
+      <path d="M4 4l4 8M12 4l-4 8M8 12h4"/>
+    </svg>
+    System Topology
+  </div>
+  <div class="subtab active" data-sub="lease-flow">
+    <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+      <rect x="1.5" y="3" width="4" height="3" rx="0.5"/>
+      <rect x="10.5" y="3" width="4" height="3" rx="0.5"/>
+      <rect x="6" y="10" width="4" height="3" rx="0.5"/>
+      <path d="M3.5 6v2h4.5M12.5 6v2h-4.5"/>
+    </svg>
+    Business Flow
+  </div>
+</nav>
+
+<!-- SUBVIEW: System Topology (Lease Cars) -->
+<div class="subview" data-view="lease-topology">
+  <main class="main layout-overview">
+    <section class="panel topology-panel">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <span class="lens-tag">Lens 01</span>
+          <div>
+            <div class="panel-title">System Topology · Lease Cars</div>
+            <div class="panel-sub">Coming soon — system map for the lease-car journey</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:60px;text-align:center;color:var(--ink-2);font-family:'Inter Tight',sans-serif;font-size:13px;">System Topology for the Lease Cars journey is being configured.</div>
+    </section>
+  </main>
+</div><!-- /subview lease-topology -->
+
+<!-- SUBVIEW: Business Flow (Lease Cars) -->
+<div class="subview active" data-view="lease-flow">
+  <section class="lifecycle-panel">
+    <div class="panel-header">
+      <div class="panel-title-group">
+        <span class="lens-tag">Lens 02</span>
+        <div>
+          <div class="panel-title">Lead-to-Contract Lifecycle · Lease Cars</div>
+          <div class="panel-sub">Select a stage to inspect its internal breakdown</div>
+        </div>
+      </div>
+      <div class="panel-actions">May 1 – 10 · MTD</div>
+    </div>
+    <div class="stage-pipeline">
+      <div class="pipeline-meta">
+        <span>9,450 total leads · May 1–10 · MTD · 5 stages</span>
+        <span style="color:var(--green)">14.2% close rate · 1,342 contracts</span>
+      </div>
+      <div class="pipeline-row">
+
+        <!-- 01 Lead Sourcing -->
+        <div class="sc" data-stage="lease-sourcing" onclick="selectStage('lease-sourcing')">
+          <div class="sc-head"><span class="sc-num">01</span><span class="sc-name">Lead Sourcing</span><span class="sc-dot green"></span></div>
+          <div class="sc-metrics">
+            <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">9,450</div></div>
+            <div class="sc-m"><div class="sc-ml">THROUGH</div><div class="sc-mv" style="color:var(--cyan)">8,960</div></div>
+            <div class="sc-m"><div class="sc-ml">DROPPED</div><div class="sc-mv" style="color:var(--red)">490</div></div>
+            <div class="sc-m"><div class="sc-ml">DUPLICATE</div><div class="sc-mv" style="color:var(--amber)">312</div></div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-fill green" style="width:94.8%"></div></div>
+        </div>
+
+        <div class="pipeline-connector">
+          <div class="pc-rate">94.8%</div>
+          <div class="pc-arrow">→</div>
+          <div class="pc-timing"><div class="pc-avg">avg 1.2d</div><div class="pc-bp"><span class="pc-range">0.1h–36h</span><div class="pc-quartiles"><span>Q1 0.5d</span><span>med 1.0d</span><span>Q3 2.0d</span></div></div></div>
+        </div>
+
+        <!-- 02 CEC Qualification -->
+        <div class="sc" data-stage="lease-cec" onclick="selectStage('lease-cec')">
+          <div class="sc-head"><span class="sc-num">02</span><span class="sc-name">CEC Qualification</span><span class="sc-dot red"></span></div>
+          <div class="sc-metrics">
+            <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">8,960</div></div>
+            <div class="sc-m"><div class="sc-ml">QUALIFIED</div><div class="sc-mv" style="color:var(--green)">4,820</div></div>
+            <div class="sc-m"><div class="sc-ml">UNREACHABLE</div><div class="sc-mv" style="color:var(--red)">3,640</div></div>
+            <div class="sc-m"><div class="sc-ml">PENDING</div><div class="sc-mv" style="color:var(--amber)">500</div></div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-fill red" style="width:53.8%"></div></div>
+        </div>
+
+        <div class="pipeline-connector">
+          <div class="pc-rate">53.8%</div>
+          <div class="pc-arrow">→</div>
+          <div class="pc-timing"><div class="pc-avg">avg 2.8d</div><div class="pc-bp"><span class="pc-range">4h–30d</span><div class="pc-quartiles"><span>Q1 1.5d</span><span>med 2.5d</span><span>Q3 5.0d</span></div></div></div>
+        </div>
+
+        <!-- 03 Lease Proposal -->
+        <div class="sc" data-stage="lease-proposal" onclick="selectStage('lease-proposal')">
+          <div class="sc-head"><span class="sc-num">03</span><span class="sc-name">Lease Proposal</span><span class="sc-dot green"></span></div>
+          <div class="sc-metrics">
+            <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">4,820</div></div>
+            <div class="sc-m"><div class="sc-ml">SENT</div><div class="sc-mv" style="color:var(--cyan)">4,610</div></div>
+            <div class="sc-m"><div class="sc-ml">ACCEPTED</div><div class="sc-mv" style="color:var(--green)">3,280</div></div>
+            <div class="sc-m"><div class="sc-ml">REJECTED</div><div class="sc-mv" style="color:var(--red)">892</div></div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-fill green" style="width:68.1%"></div></div>
+        </div>
+
+        <div class="pipeline-connector">
+          <div class="pc-rate">68.1%</div>
+          <div class="pc-arrow">→</div>
+          <div class="pc-timing"><div class="pc-avg">avg 4.5d</div><div class="pc-bp"><span class="pc-range">1d–21d</span><div class="pc-quartiles"><span>Q1 2.5d</span><span>med 4.0d</span><span>Q3 7.5d</span></div></div></div>
+        </div>
+
+        <!-- 04 Credit Assessment -->
+        <div class="sc" data-stage="lease-credit" onclick="selectStage('lease-credit')">
+          <div class="sc-head"><span class="sc-num">04</span><span class="sc-name">Credit Assessment</span><span class="sc-dot amber"></span></div>
+          <div class="sc-metrics">
+            <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">3,280</div></div>
+            <div class="sc-m"><div class="sc-ml">APPROVED</div><div class="sc-mv" style="color:var(--green)">2,140</div></div>
+            <div class="sc-m"><div class="sc-ml">PENDING</div><div class="sc-mv" style="color:var(--amber)">780</div></div>
+            <div class="sc-m"><div class="sc-ml">DECLINED</div><div class="sc-mv" style="color:var(--red)">360</div></div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-fill amber" style="width:65.2%"></div></div>
+        </div>
+
+        <div class="pipeline-connector">
+          <div class="pc-rate">65.2%</div>
+          <div class="pc-arrow">→</div>
+          <div class="pc-timing"><div class="pc-avg">avg 3.1d</div><div class="pc-bp"><span class="pc-range">1d–15d</span><div class="pc-quartiles"><span>Q1 1.8d</span><span>med 2.8d</span><span>Q3 4.6d</span></div></div></div>
+        </div>
+
+        <!-- 05 Contract Signed -->
+        <div class="sc" data-stage="lease-contract" onclick="selectStage('lease-contract')">
+          <div class="sc-head"><span class="sc-num">05</span><span class="sc-name">Contract Signed</span><span class="sc-dot green"></span></div>
+          <div class="sc-metrics">
+            <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">2,140</div></div>
+            <div class="sc-m"><div class="sc-mv" style="color:var(--green)">1,342</div><div class="sc-ml">SIGNED</div></div>
+            <div class="sc-m"><div class="sc-ml">PENDING</div><div class="sc-mv" style="color:var(--amber)">620</div></div>
+            <div class="sc-m"><div class="sc-ml">LAPSED</div><div class="sc-mv" style="color:var(--red)">178</div></div>
+          </div>
+          <div class="sc-depth"><div class="sc-depth-fill green" style="width:62.7%"></div></div>
+        </div>
+
+      </div><!-- /pipeline-row -->
+
+      <div class="pipeline-detail" id="pipeline-detail-lease" style="display:none">
+        <div class="detail-back" onclick="clearStageLease()">← BACK</div>
+        <div class="detail-stage-header">
+          <div class="detail-stage-info"><div class="detail-stage-name" id="ds-name-lease">—</div><div class="stage-conv" id="ds-conv-lease">—</div></div>
+          <div class="detail-stage-vol"><div class="vol-num" id="ds-vol-lease">—</div><div class="vol-label">Total volume</div></div>
+        </div>
+        <div class="detail-nodes-grid" id="ds-grid-lease"></div>
+        <div class="detail-insight" id="ds-insight-lease"></div>
+      </div>
+    </div><!-- /stage-pipeline -->
+  </section>
+</div><!-- /subview lease-flow -->
+
+</div><!-- /journey-page lease -->
+
+<!-- ═══ JOURNEY PAGE: B2B New Cars ═══ -->
+<div class="journey-page" data-journey-page="b2b-new">
+  <nav class="subtabs">
+    <div class="subtab" data-sub="b2bnew-topology">
+      <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="4" cy="4" r="1.6"/><circle cx="12" cy="4" r="1.6"/><circle cx="8" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><path d="M4 4l4 8M12 4l-4 8M8 12h4"/></svg>
+      System Topology
+    </div>
+    <div class="subtab active" data-sub="b2bnew-flow">
+      <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1.5" y="3" width="4" height="3" rx="0.5"/><rect x="10.5" y="3" width="4" height="3" rx="0.5"/><rect x="6" y="10" width="4" height="3" rx="0.5"/><path d="M3.5 6v2h4.5M12.5 6v2h-4.5"/></svg>
+      Business Flow
+    </div>
+  </nav>
+
+  <div class="subview" data-view="b2bnew-topology">
+    <main class="main layout-overview">
+      <section class="panel topology-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="lens-tag">Lens 01</span>
+            <div><div class="panel-title">System Topology · B2B New Cars</div><div class="panel-sub">System map for the B2B fleet & corporate new-car journey — coming soon</div></div>
+          </div>
+        </div>
+        <div style="padding:80px 40px;text-align:center;color:var(--ink-2);font-family:'Inter Tight',sans-serif;font-size:13px;">System Topology for the B2B New Cars journey is being configured.</div>
+      </section>
+    </main>
+  </div>
+
+  <div class="subview active" data-view="b2bnew-flow">
+    <section class="lifecycle-panel">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <span class="lens-tag">Lens 02</span>
+          <div>
+            <div class="panel-title">Fleet-to-Delivery Lifecycle · B2B New Cars</div>
+            <div class="panel-sub">Select a stage to inspect its internal breakdown</div>
+          </div>
+        </div>
+        <div class="panel-actions">May 1 – 10 · MTD</div>
+      </div>
+      <div class="stage-pipeline">
+        <div class="pipeline-meta">
+          <span>4,210 total enquiries · May 1–10 · MTD · 6 stages</span>
+          <span style="color:var(--green)">19.6% close rate · 824 units delivered</span>
+        </div>
+        <div class="pipeline-row">
+
+          <div class="sc" data-stage="b2bnew-sourcing" onclick="selectStageJourney('b2bnew','b2bnew-sourcing')">
+            <div class="sc-head"><span class="sc-num">01</span><span class="sc-name">Lead Sourcing</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">4,210</div></div>
+              <div class="sc-m"><div class="sc-ml">THROUGH</div><div class="sc-mv" style="color:var(--cyan)">3,960</div></div>
+              <div class="sc-m"><div class="sc-ml">DROPPED</div><div class="sc-mv" style="color:var(--red)">250</div></div>
+              <div class="sc-m"><div class="sc-ml">DUPLICATE</div><div class="sc-mv" style="color:var(--amber)">118</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:94.1%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">94.1%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 1.0d</div><div class="pc-bp"><span class="pc-range">2h–5d</span><div class="pc-quartiles"><span>Q1 0.5d</span><span>med 0.9d</span><span>Q3 1.8d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2bnew-qualify" onclick="selectStageJourney('b2bnew','b2bnew-qualify')">
+            <div class="sc-head"><span class="sc-num">02</span><span class="sc-name">Account Qualification</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">3,960</div></div>
+              <div class="sc-m"><div class="sc-ml">QUALIFIED</div><div class="sc-mv" style="color:var(--green)">3,180</div></div>
+              <div class="sc-m"><div class="sc-ml">DISQUALIFIED</div><div class="sc-mv" style="color:var(--red)">512</div></div>
+              <div class="sc-m"><div class="sc-ml">PENDING</div><div class="sc-mv" style="color:var(--amber)">268</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:80.3%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">80.3%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 2.4d</div><div class="pc-bp"><span class="pc-range">0.5d–12d</span><div class="pc-quartiles"><span>Q1 1.2d</span><span>med 2.1d</span><span>Q3 4.0d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2bnew-proposal" onclick="selectStageJourney('b2bnew','b2bnew-proposal')">
+            <div class="sc-head"><span class="sc-num">03</span><span class="sc-name">Fleet Proposal</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">3,180</div></div>
+              <div class="sc-m"><div class="sc-ml">SENT</div><div class="sc-mv" style="color:var(--cyan)">3,060</div></div>
+              <div class="sc-m"><div class="sc-ml">ACCEPTED</div><div class="sc-mv" style="color:var(--green)">2,140</div></div>
+              <div class="sc-m"><div class="sc-ml">REJECTED</div><div class="sc-mv" style="color:var(--red)">614</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:67.3%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">67.3%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 5.8d</div><div class="pc-bp"><span class="pc-range">2d–30d</span><div class="pc-quartiles"><span>Q1 3.0d</span><span>med 5.2d</span><span>Q3 10d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2bnew-credit" onclick="selectStageJourney('b2bnew','b2bnew-credit')">
+            <div class="sc-head"><span class="sc-num">04</span><span class="sc-name">Credit Check</span><span class="sc-dot amber"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">2,140</div></div>
+              <div class="sc-m"><div class="sc-ml">APPROVED</div><div class="sc-mv" style="color:var(--green)">1,680</div></div>
+              <div class="sc-m"><div class="sc-ml">PENDING</div><div class="sc-mv" style="color:var(--amber)">310</div></div>
+              <div class="sc-m"><div class="sc-ml">DECLINED</div><div class="sc-mv" style="color:var(--red)">150</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill amber" style="width:78.5%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">78.5%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 3.2d</div><div class="pc-bp"><span class="pc-range">1d–14d</span><div class="pc-quartiles"><span>Q1 1.8d</span><span>med 2.9d</span><span>Q3 5.1d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2bnew-po" onclick="selectStageJourney('b2bnew','b2bnew-po')">
+            <div class="sc-head"><span class="sc-num">05</span><span class="sc-name">Purchase Order</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">1,680</div></div>
+              <div class="sc-m"><div class="sc-ml">CONFIRMED</div><div class="sc-mv" style="color:var(--green)">1,542</div></div>
+              <div class="sc-m"><div class="sc-ml">PENDING</div><div class="sc-mv" style="color:var(--amber)">112</div></div>
+              <div class="sc-m"><div class="sc-ml">CANCELLED</div><div class="sc-mv" style="color:var(--red)">26</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:91.8%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">91.8%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 7.4d</div><div class="pc-bp"><span class="pc-range">3d–45d</span><div class="pc-quartiles"><span>Q1 5d</span><span>med 7d</span><span>Q3 14d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2bnew-delivery" onclick="selectStageJourney('b2bnew','b2bnew-delivery')">
+            <div class="sc-head"><span class="sc-num">06</span><span class="sc-name">Fleet Delivery</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">1,542</div></div>
+              <div class="sc-m"><div class="sc-ml">DELIVERED</div><div class="sc-mv" style="color:var(--green)">824</div></div>
+              <div class="sc-m"><div class="sc-ml">SCHEDULED</div><div class="sc-mv" style="color:var(--cyan)">618</div></div>
+              <div class="sc-m"><div class="sc-ml">PENDING</div><div class="sc-mv" style="color:var(--amber)">100</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:53.4%"></div></div>
+          </div>
+
+        </div><!-- /pipeline-row -->
+        <div class="pipeline-detail" id="pipeline-detail-b2bnew" style="display:none">
+          <div class="detail-back" onclick="clearStageJourney('b2bnew')">← BACK</div>
+          <div class="detail-stage-header">
+            <div class="detail-stage-info"><div class="detail-stage-name" id="ds-name-b2bnew">—</div><div class="stage-conv" id="ds-conv-b2bnew">—</div></div>
+            <div class="detail-stage-vol"><div class="vol-num" id="ds-vol-b2bnew">—</div><div class="vol-label">Total volume</div></div>
+          </div>
+          <div class="detail-nodes-grid" id="ds-grid-b2bnew"></div>
+          <div class="detail-insight" id="ds-insight-b2bnew"></div>
+        </div>
+      </div><!-- /stage-pipeline -->
+    </section>
+  </div><!-- /subview b2bnew-flow -->
+</div><!-- /journey-page b2b-new -->
+
+<!-- ═══ JOURNEY PAGE: B2B AfterSales ═══ -->
+<div class="journey-page" data-journey-page="b2b-aftersales">
+  <nav class="subtabs">
+    <div class="subtab" data-sub="b2bas-topology">
+      <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="4" cy="4" r="1.6"/><circle cx="12" cy="4" r="1.6"/><circle cx="8" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><path d="M4 4l4 8M12 4l-4 8M8 12h4"/></svg>
+      System Topology
+    </div>
+    <div class="subtab active" data-sub="b2bas-flow">
+      <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1.5" y="3" width="4" height="3" rx="0.5"/><rect x="10.5" y="3" width="4" height="3" rx="0.5"/><rect x="6" y="10" width="4" height="3" rx="0.5"/><path d="M3.5 6v2h4.5M12.5 6v2h-4.5"/></svg>
+      Business Flow
+    </div>
+  </nav>
+
+  <div class="subview" data-view="b2bas-topology">
+    <main class="main layout-overview">
+      <section class="panel topology-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="lens-tag">Lens 01</span>
+            <div><div class="panel-title">System Topology · B2B AfterSales</div><div class="panel-sub">System map for the corporate & fleet aftersales journey — coming soon</div></div>
+          </div>
+        </div>
+        <div style="padding:80px 40px;text-align:center;color:var(--ink-2);font-family:'Inter Tight',sans-serif;font-size:13px;">System Topology for the B2B AfterSales journey is being configured.</div>
+      </section>
+    </main>
+  </div>
+
+  <div class="subview active" data-view="b2bas-flow">
+    <section class="lifecycle-panel">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <span class="lens-tag">Lens 02</span>
+          <div>
+            <div class="panel-title">Request-to-Return Lifecycle · B2B AfterSales</div>
+            <div class="panel-sub">Select a stage to inspect its internal breakdown</div>
+          </div>
+        </div>
+        <div class="panel-actions">May 1 – 10 · MTD</div>
+      </div>
+      <div class="stage-pipeline">
+        <div class="pipeline-meta">
+          <span>6,840 service requests · May 1–10 · MTD · 6 stages</span>
+          <span style="color:var(--green)">89.2% completion rate · 6,100 closed</span>
+        </div>
+        <div class="pipeline-row">
+
+          <div class="sc" data-stage="b2bas-request" onclick="selectStageJourney('b2bas','b2bas-request')">
+            <div class="sc-head"><span class="sc-num">01</span><span class="sc-name">Service Request</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">6,840</div></div>
+              <div class="sc-m"><div class="sc-ml">THROUGH</div><div class="sc-mv" style="color:var(--cyan)">6,720</div></div>
+              <div class="sc-m"><div class="sc-ml">CANCELLED</div><div class="sc-mv" style="color:var(--red)">120</div></div>
+              <div class="sc-m"><div class="sc-ml">SLA BREACH</div><div class="sc-mv" style="color:var(--amber)">48</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:98.2%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">98.2%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 0.4d</div><div class="pc-bp"><span class="pc-range">1h–3d</span><div class="pc-quartiles"><span>Q1 0.2d</span><span>med 0.4d</span><span>Q3 0.8d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2bas-booking" onclick="selectStageJourney('b2bas','b2bas-booking')">
+            <div class="sc-head"><span class="sc-num">02</span><span class="sc-name">Workshop Booking</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">6,720</div></div>
+              <div class="sc-m"><div class="sc-ml">CONFIRMED</div><div class="sc-mv" style="color:var(--green)">6,480</div></div>
+              <div class="sc-m"><div class="sc-ml">PENDING SLOT</div><div class="sc-mv" style="color:var(--amber)">192</div></div>
+              <div class="sc-m"><div class="sc-ml">NO-SHOW</div><div class="sc-mv" style="color:var(--red)">48</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:96.4%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">96.4%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 0.8d</div><div class="pc-bp"><span class="pc-range">2h–5d</span><div class="pc-quartiles"><span>Q1 0.4d</span><span>med 0.7d</span><span>Q3 1.4d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2bas-checkin" onclick="selectStageJourney('b2bas','b2bas-checkin')">
+            <div class="sc-head"><span class="sc-num">03</span><span class="sc-name">Vehicle Check-In</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">6,480</div></div>
+              <div class="sc-m"><div class="sc-ml">CHECKED IN</div><div class="sc-mv" style="color:var(--green)">6,380</div></div>
+              <div class="sc-m"><div class="sc-ml">DELAYED</div><div class="sc-mv" style="color:var(--amber)">88</div></div>
+              <div class="sc-m"><div class="sc-ml">ADDL WORK</div><div class="sc-mv" style="color:var(--cyan)">1,240</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:98.5%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">98.5%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 1.6d</div><div class="pc-bp"><span class="pc-range">0.5d–6d</span><div class="pc-quartiles"><span>Q1 1.0d</span><span>med 1.5d</span><span>Q3 2.4d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2bas-service" onclick="selectStageJourney('b2bas','b2bas-service')">
+            <div class="sc-head"><span class="sc-num">04</span><span class="sc-name">Service Execution</span><span class="sc-dot amber"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">6,380</div></div>
+              <div class="sc-m"><div class="sc-ml">COMPLETED</div><div class="sc-mv" style="color:var(--green)">5,980</div></div>
+              <div class="sc-m"><div class="sc-ml">IN PROGRESS</div><div class="sc-mv" style="color:var(--amber)">340</div></div>
+              <div class="sc-m"><div class="sc-ml">PARTS WAIT</div><div class="sc-mv" style="color:var(--red)">60</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill amber" style="width:93.7%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">93.7%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 0.6d</div><div class="pc-bp"><span class="pc-range">1h–4d</span><div class="pc-quartiles"><span>Q1 0.3d</span><span>med 0.5d</span><span>Q3 1.0d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2bas-qa" onclick="selectStageJourney('b2bas','b2bas-qa')">
+            <div class="sc-head"><span class="sc-num">05</span><span class="sc-name">QA Inspection</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">5,980</div></div>
+              <div class="sc-m"><div class="sc-ml">PASSED</div><div class="sc-mv" style="color:var(--green)">5,820</div></div>
+              <div class="sc-m"><div class="sc-ml">REWORK</div><div class="sc-mv" style="color:var(--red)">160</div></div>
+              <div class="sc-m"><div class="sc-ml">PASS RATE</div><div class="sc-mv" style="color:var(--green)">97.3%</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:97.3%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">97.3%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 0.3d</div><div class="pc-bp"><span class="pc-range">1h–2d</span><div class="pc-quartiles"><span>Q1 0.2d</span><span>med 0.3d</span><span>Q3 0.5d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2bas-return" onclick="selectStageJourney('b2bas','b2bas-return')">
+            <div class="sc-head"><span class="sc-num">06</span><span class="sc-name">Vehicle Return</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">5,820</div></div>
+              <div class="sc-m"><div class="sc-ml">RETURNED</div><div class="sc-mv" style="color:var(--green)">6,100</div></div>
+              <div class="sc-m"><div class="sc-ml">INVOICED</div><div class="sc-mv" style="color:var(--cyan)">5,960</div></div>
+              <div class="sc-m"><div class="sc-ml">PENDING</div><div class="sc-mv" style="color:var(--amber)">140</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:89.2%"></div></div>
+          </div>
+
+        </div><!-- /pipeline-row -->
+        <div class="pipeline-detail" id="pipeline-detail-b2bas" style="display:none">
+          <div class="detail-back" onclick="clearStageJourney('b2bas')">← BACK</div>
+          <div class="detail-stage-header">
+            <div class="detail-stage-info"><div class="detail-stage-name" id="ds-name-b2bas">—</div><div class="stage-conv" id="ds-conv-b2bas">—</div></div>
+            <div class="detail-stage-vol"><div class="vol-num" id="ds-vol-b2bas">—</div><div class="vol-label">Total volume</div></div>
+          </div>
+          <div class="detail-nodes-grid" id="ds-grid-b2bas"></div>
+          <div class="detail-insight" id="ds-insight-b2bas"></div>
+        </div>
+      </div><!-- /stage-pipeline -->
+    </section>
+  </div><!-- /subview b2bas-flow -->
+</div><!-- /journey-page b2b-aftersales -->
+
+<!-- ═══ JOURNEY PAGE: B2C AfterSales ═══ -->
+<div class="journey-page" data-journey-page="b2c-aftersales">
+  <nav class="subtabs">
+    <div class="subtab" data-sub="b2cas-topology">
+      <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="4" cy="4" r="1.6"/><circle cx="12" cy="4" r="1.6"/><circle cx="8" cy="12" r="1.6"/><circle cx="12" cy="12" r="1.6"/><path d="M4 4l4 8M12 4l-4 8M8 12h4"/></svg>
+      System Topology
+    </div>
+    <div class="subtab active" data-sub="b2cas-flow">
+      <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="1.5" y="3" width="4" height="3" rx="0.5"/><rect x="10.5" y="3" width="4" height="3" rx="0.5"/><rect x="6" y="10" width="4" height="3" rx="0.5"/><path d="M3.5 6v2h4.5M12.5 6v2h-4.5"/></svg>
+      Business Flow
+    </div>
+  </nav>
+
+  <div class="subview" data-view="b2cas-topology">
+    <main class="main layout-overview">
+      <section class="panel topology-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="lens-tag">Lens 01</span>
+            <div><div class="panel-title">System Topology · B2C AfterSales</div><div class="panel-sub">System map for the retail customer aftersales journey — coming soon</div></div>
+          </div>
+        </div>
+        <div style="padding:80px 40px;text-align:center;color:var(--ink-2);font-family:'Inter Tight',sans-serif;font-size:13px;">System Topology for the B2C AfterSales journey is being configured.</div>
+      </section>
+    </main>
+  </div>
+
+  <div class="subview active" data-view="b2cas-flow">
+    <section class="lifecycle-panel">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <span class="lens-tag">Lens 02</span>
+          <div>
+            <div class="panel-title">Booking-to-Collection Lifecycle · B2C AfterSales</div>
+            <div class="panel-sub">Select a stage to inspect its internal breakdown</div>
+          </div>
+        </div>
+        <div class="panel-actions">May 1 – 10 · MTD</div>
+      </div>
+      <div class="stage-pipeline">
+        <div class="pipeline-meta">
+          <span>14,620 service requests · May 1–10 · MTD · 6 stages</span>
+          <span style="color:var(--green)">86.4% completion rate · 12,632 collected</span>
+        </div>
+        <div class="pipeline-row">
+
+          <div class="sc" data-stage="b2cas-request" onclick="selectStageJourney('b2cas','b2cas-request')">
+            <div class="sc-head"><span class="sc-num">01</span><span class="sc-name">Service Request</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">14,620</div></div>
+              <div class="sc-m"><div class="sc-ml">THROUGH</div><div class="sc-mv" style="color:var(--cyan)">13,980</div></div>
+              <div class="sc-m"><div class="sc-ml">CANCELLED</div><div class="sc-mv" style="color:var(--red)">640</div></div>
+              <div class="sc-m"><div class="sc-ml">DIGITAL</div><div class="sc-mv" style="color:var(--blue)">8,940</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:95.6%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">95.6%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 0.5d</div><div class="pc-bp"><span class="pc-range">1h–4d</span><div class="pc-quartiles"><span>Q1 0.2d</span><span>med 0.4d</span><span>Q3 0.9d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2cas-booking" onclick="selectStageJourney('b2cas','b2cas-booking')">
+            <div class="sc-head"><span class="sc-num">02</span><span class="sc-name">Appointment Booking</span><span class="sc-dot amber"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">13,980</div></div>
+              <div class="sc-m"><div class="sc-ml">CONFIRMED</div><div class="sc-mv" style="color:var(--green)">12,640</div></div>
+              <div class="sc-m"><div class="sc-ml">NO-SHOW</div><div class="sc-mv" style="color:var(--red)">1,820</div></div>
+              <div class="sc-m"><div class="sc-ml">RESCHEDULED</div><div class="sc-mv" style="color:var(--amber)">520</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill amber" style="width:90.4%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">90.4%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 1.2d</div><div class="pc-bp"><span class="pc-range">2h–7d</span><div class="pc-quartiles"><span>Q1 0.6d</span><span>med 1.0d</span><span>Q3 2.0d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2cas-checkin" onclick="selectStageJourney('b2cas','b2cas-checkin')">
+            <div class="sc-head"><span class="sc-num">03</span><span class="sc-name">Vehicle Check-In</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">12,640</div></div>
+              <div class="sc-m"><div class="sc-ml">CHECKED IN</div><div class="sc-mv" style="color:var(--green)">12,480</div></div>
+              <div class="sc-m"><div class="sc-ml">DELAYED</div><div class="sc-mv" style="color:var(--amber)">148</div></div>
+              <div class="sc-m"><div class="sc-ml">ADDL WORK</div><div class="sc-mv" style="color:var(--cyan)">2,140</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:98.7%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">98.7%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 1.4d</div><div class="pc-bp"><span class="pc-range">0.5d–5d</span><div class="pc-quartiles"><span>Q1 0.8d</span><span>med 1.2d</span><span>Q3 2.2d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2cas-service" onclick="selectStageJourney('b2cas','b2cas-service')">
+            <div class="sc-head"><span class="sc-num">04</span><span class="sc-name">Service Execution</span><span class="sc-dot amber"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">12,480</div></div>
+              <div class="sc-m"><div class="sc-ml">COMPLETED</div><div class="sc-mv" style="color:var(--green)">11,620</div></div>
+              <div class="sc-m"><div class="sc-ml">IN PROGRESS</div><div class="sc-mv" style="color:var(--amber)">680</div></div>
+              <div class="sc-m"><div class="sc-ml">PARTS WAIT</div><div class="sc-mv" style="color:var(--red)">180</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill amber" style="width:93.1%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">93.1%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 0.7d</div><div class="pc-bp"><span class="pc-range">2h–5d</span><div class="pc-quartiles"><span>Q1 0.4d</span><span>med 0.6d</span><span>Q3 1.2d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2cas-qa" onclick="selectStageJourney('b2cas','b2cas-qa')">
+            <div class="sc-head"><span class="sc-num">05</span><span class="sc-name">QA Inspection</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">11,620</div></div>
+              <div class="sc-m"><div class="sc-ml">PASSED</div><div class="sc-mv" style="color:var(--green)">11,200</div></div>
+              <div class="sc-m"><div class="sc-ml">REWORK</div><div class="sc-mv" style="color:var(--red)">420</div></div>
+              <div class="sc-m"><div class="sc-ml">PASS RATE</div><div class="sc-mv" style="color:var(--green)">96.4%</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:96.4%"></div></div>
+          </div>
+          <div class="pipeline-connector"><div class="pc-rate">96.4%</div><div class="pc-arrow">→</div><div class="pc-timing"><div class="pc-avg">avg 0.4d</div><div class="pc-bp"><span class="pc-range">1h–2d</span><div class="pc-quartiles"><span>Q1 0.2d</span><span>med 0.3d</span><span>Q3 0.6d</span></div></div></div></div>
+
+          <div class="sc" data-stage="b2cas-collection" onclick="selectStageJourney('b2cas','b2cas-collection')">
+            <div class="sc-head"><span class="sc-num">06</span><span class="sc-name">Customer Collection</span><span class="sc-dot green"></span></div>
+            <div class="sc-metrics">
+              <div class="sc-m"><div class="sc-ml">ENTERED</div><div class="sc-mv">11,200</div></div>
+              <div class="sc-m"><div class="sc-ml">COLLECTED</div><div class="sc-mv" style="color:var(--green)">12,632</div></div>
+              <div class="sc-m"><div class="sc-ml">INVOICED</div><div class="sc-mv" style="color:var(--cyan)">12,480</div></div>
+              <div class="sc-m"><div class="sc-ml">AWAITING</div><div class="sc-mv" style="color:var(--amber)">400</div></div>
+            </div>
+            <div class="sc-depth"><div class="sc-depth-fill green" style="width:86.4%"></div></div>
+          </div>
+
+        </div><!-- /pipeline-row -->
+        <div class="pipeline-detail" id="pipeline-detail-b2cas" style="display:none">
+          <div class="detail-back" onclick="clearStageJourney('b2cas')">← BACK</div>
+          <div class="detail-stage-header">
+            <div class="detail-stage-info"><div class="detail-stage-name" id="ds-name-b2cas">—</div><div class="stage-conv" id="ds-conv-b2cas">—</div></div>
+            <div class="detail-stage-vol"><div class="vol-num" id="ds-vol-b2cas">—</div><div class="vol-label">Total volume</div></div>
+          </div>
+          <div class="detail-nodes-grid" id="ds-grid-b2cas"></div>
+          <div class="detail-insight" id="ds-insight-b2cas"></div>
+        </div>
+      </div><!-- /stage-pipeline -->
+    </section>
+  </div><!-- /subview b2cas-flow -->
+</div><!-- /journey-page b2c-aftersales -->
+
+<!-- ======= OLD TWO-PANEL (archived, hidden — keep inside a display:none wrapper so IDs remain accessible) ======= -->
     <div style="display:none">
       <!-- LEFT: Flow Map -->
       <div class="map-panel">
@@ -1313,9 +2045,7 @@
       <div class="legend-item"><div class="legend-dot red"></div>Drop-off / Failed</div>
       <div class="legend-item" style="margin-left: auto;">─ ─ ─ Direction of lead flow</div>
     </div>
-  </section>
-</main>
-</div><!-- /subview flow -->
+    </div><!-- /lifecycle-canvas -->
 
 </div><!-- /page-content overview -->
 

@@ -646,6 +646,67 @@ body::after {
   border-bottom: 1px solid var(--line);
   background: var(--bg-0);
 }
+.journey-selector {
+  display: flex;
+  gap: 8px;
+  padding: 16px 28px 4px;
+}
+.journey-pill {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+  background: transparent;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 5px 14px;
+  cursor: pointer;
+  transition: color 0.15s, background 0.15s, border-color 0.15s;
+}
+.journey-pill:hover {
+  color: var(--ink-1);
+  border-color: var(--ink-2);
+}
+.journey-pill.active {
+  color: var(--cyan);
+  background: rgba(94,205,245,0.08);
+  border-color: var(--cyan);
+}
+.journey-view { display: none; }
+.journey-view.active { display: block; }
+
+/* ---- Journey navigation bar (top of overview page) ---- */
+.journey-nav {
+  display: flex;
+  gap: 0;
+  padding: 0 28px;
+  border-bottom: 1px solid var(--line);
+  background: var(--bg-0);
+}
+.journey-nav-pill {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--ink-2);
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  padding: 14px 20px 12px;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+  letter-spacing: 0.01em;
+}
+.journey-nav-pill:hover { color: var(--ink-1); }
+.journey-nav-pill.active {
+  color: var(--cyan);
+  border-bottom-color: var(--cyan);
+}
+
+/* ---- Journey pages ---- */
+.journey-page { display: none !important; }
+.journey-page.active { display: block !important; }
 .subtab {
   padding: 10px 18px;
   font-size: 13px;
