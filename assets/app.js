@@ -355,6 +355,150 @@
     card.onclick = () => selectStageLease(card.getAttribute('data-stage'));
   });
 
+  // ---- Showroom Configuration (Test Drive subtab) ----
+  (function () {
+    const showroomsList  = document.getElementById('sc-showrooms-list');
+    const searchInput    = document.getElementById('sc-search-input');
+    const bannerName     = document.getElementById('sc-banner-name');
+    const bannerMeta     = document.getElementById('sc-banner-meta');
+    const commSubtitle   = document.getElementById('sc-comm-subtitle');
+    const daysRow        = document.getElementById('sc-days-row');
+    const commRows       = document.getElementById('sc-comm-rows');
+    if (!showroomsList) return;
+
+    const SHOWROOMS = [
+      { name: 'Dubai Festival City',     city: 'Dubai',     status: 'green'  },
+      { name: 'Abu Dhabi Madinat Zayed', city: 'Abu Dhabi', status: 'green'  },
+      { name: 'Ajman Downtown',          city: 'Ajman',     status: 'red'    },
+      { name: 'Al Ain Central',          city: 'Al Ain',    status: 'green'  },
+      { name: 'Dubai Al Quoz',           city: 'Dubai',     status: 'green'  },
+      { name: 'Abu Dhabi Airport Road',  city: 'Abu Dhabi', status: 'red'    },
+      { name: 'Dubai SZR',               city: 'Dubai',     status: 'green'  },
+      { name: 'Fujairah City',           city: 'Fujairah',  status: 'green'  },
+      { name: 'Ras Al Khaimah',          city: 'RAK',       status: 'green'  },
+      { name: 'Sharjah Al Wahda',        city: 'Sharjah',   status: 'yellow' },
+    ];
+    let activeShowroom = 0;
+    let filterText = '';
+
+    function renderShowrooms() {
+      const filtered = SHOWROOMS
+        .map((s, idx) => ({ s, idx }))
+        .filter(({ s }) => s.name.toLowerCase().includes(filterText.toLowerCase()));
+      showroomsList.innerHTML = filtered.map(({ s, idx }) => `
+        <div class="sc-showroom-item${idx === activeShowroom ? ' active' : ''}" data-idx="${idx}">
+          <span class="sc-showroom-dot ${s.status}"></span>
+          <div class="sc-showroom-text">
+            <div class="sc-showroom-name">${s.name}</div>
+            <div class="sc-showroom-city">${s.city}</div>
+          </div>
+        </div>
+      `).join('');
+      showroomsList.querySelectorAll('.sc-showroom-item').forEach(el => {
+        el.addEventListener('click', () => {
+          activeShowroom = parseInt(el.getAttribute('data-idx'), 10);
+          renderAll();
+        });
+      });
+    }
+    function renderBanner() {
+      const s = SHOWROOMS[activeShowroom];
+      bannerName.textContent = s.name;
+      commSubtitle.textContent = '· ' + s.name;
+      const colors = { green: 'var(--green)', red: 'var(--red)', yellow: 'var(--amber)' };
+      document.getElementById('sc-banner').style.borderLeftColor = colors[s.status];
+      bannerMeta.style.color = colors[s.status];
+    }
+
+    // Days
+    const DAYS = ['S','M','T','W','T','F','S'];
+    const DAY_NAMES = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+    let activeDays = [false, true, true, true, true, true, true];
+    function renderDays() {
+      daysRow.innerHTML = DAYS.map((d, i) => `
+        <button class="sc-day${activeDays[i] ? ' active' : ''}" data-day="${i}" title="${DAY_NAMES[i]}">${d}</button>
+      `).join('');
+      daysRow.querySelectorAll('.sc-day').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const i = parseInt(btn.getAttribute('data-day'), 10);
+          activeDays[i] = !activeDays[i];
+          renderDays();
+        });
+      });
+    }
+
+    // Toggles
+    document.querySelectorAll('[data-toggle]').forEach(t => {
+      t.addEventListener('click', () => t.classList.toggle('on'));
+    });
+
+    // Communications log
+    const COMMS = [
+      { id:1, customer:'Mohammed Al Rashidi',  channel:'WhatsApp', type:'Booking Confirmation',  status:'Delivered', time:'Today 09:14',     vehicle:'Lexus LX 600' },
+      { id:2, customer:'Sara Al Mansoori',     channel:'Email',    type:'24-hr Reminder',        status:'Opened',    time:'Today 08:50',     vehicle:'Toyota Camry' },
+      { id:3, customer:'Khalid Bin Hamdan',    channel:'Call',     type:'Qualification Call',    status:'Answered',  time:'Yesterday 16:22', vehicle:'Lexus NX 350' },
+      { id:4, customer:'Fatima Al Zaabi',      channel:'WhatsApp', type:'No-Show Alert',         status:'Sent',      time:'Yesterday 11:05', vehicle:'Honda Accord' },
+      { id:5, customer:'Omar Al Suwaidi',      channel:'Email',    type:'Booking Confirmation',  status:'Bounced',   time:'Apr 14 · 14:30',  vehicle:'Jeep Wrangler' },
+      { id:6, customer:'Aisha Al Blooshi',     channel:'Call',     type:'Qualification Call',    status:'No Answer', time:'Apr 14 · 10:12',  vehicle:'BYD Seal' },
+      { id:7, customer:'Hamad Al Mazrouei',    channel:'WhatsApp', type:'24-hr Reminder',        status:'Read',      time:'Apr 13 · 09:55',  vehicle:'Volvo XC90' },
+    ];
+    const CH_META = {
+      WhatsApp: { cls:'wa',    icon:'WA' },
+      Email:    { cls:'email', icon:'EM' },
+      Call:     { cls:'call',  icon:'CL' },
+    };
+    const STATUS_CLS = {
+      Delivered:'ok', Read:'ok', Opened:'ok', Answered:'ok',
+      Sent:'info', Bounced:'bad', 'No Answer':'bad',
+    };
+    let channelFilter = 'All';
+
+    function renderComms() {
+      const filtered = channelFilter === 'All' ? COMMS : COMMS.filter(c => c.channel === channelFilter);
+      commRows.innerHTML = filtered.length === 0
+        ? `<div style="text-align:center;padding:24px 0;color:var(--ink-3);font-family:'Inter Tight',sans-serif;font-size:13px;">No communications match the filter.</div>`
+        : filtered.map(c => {
+            const ch = CH_META[c.channel];
+            const scls = STATUS_CLS[c.status] || 'info';
+            return `
+              <div class="sc-comm-row">
+                <div class="sc-comm-icon ${ch.cls}">${ch.icon}</div>
+                <div>
+                  <div class="sc-comm-customer">${c.customer}</div>
+                  <div class="sc-comm-vehicle">${c.vehicle}</div>
+                </div>
+                <span class="sc-comm-channel ${ch.cls}">${c.channel}</span>
+                <span class="sc-comm-type">${c.type}</span>
+                <span class="sc-comm-status ${scls}">${c.status}</span>
+                <span class="sc-comm-time">${c.time}</span>
+              </div>`;
+          }).join('');
+    }
+
+    document.querySelectorAll('.sc-pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        document.querySelectorAll('.sc-pill').forEach(p => p.classList.toggle('active', p === pill));
+        channelFilter = pill.getAttribute('data-ch');
+        renderComms();
+      });
+    });
+
+    if (searchInput) {
+      searchInput.addEventListener('input', e => {
+        filterText = e.target.value;
+        renderShowrooms();
+      });
+    }
+
+    function renderAll() {
+      renderShowrooms();
+      renderBanner();
+    }
+    renderAll();
+    renderDays();
+    renderComms();
+  })();
+
   // ---- Brand Selector ----
   (function () {
     const BRANDS = [
