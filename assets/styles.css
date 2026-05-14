@@ -2638,3 +2638,150 @@ body::after {
   font-weight: 700;
 }
 .sc-btn-primary:hover { filter: brightness(1.1); }
+
+/* ============================================================
+   Lead Sourcing breakdown diagram
+   ============================================================ */
+.ls-grid-override {
+  display: block !important;
+  grid-template-columns: none !important;
+  padding: 4px 0;
+}
+.ls-diagram-title {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--ink-2);
+  text-transform: uppercase;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 16px;
+}
+.ls-diagram-scroll {
+  overflow-x: auto;
+  padding-bottom: 8px;
+}
+.ls-diagram-scroll::-webkit-scrollbar { height: 6px; }
+.ls-diagram-scroll::-webkit-scrollbar-track { background: var(--bg-1); }
+.ls-diagram-scroll::-webkit-scrollbar-thumb { background: var(--line-2); border-radius: 3px; }
+
+.ls-diagram {
+  position: relative;
+  margin: 0 auto;
+}
+.ls-svg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+.ls-conn {
+  fill: none;
+  stroke: #5a7395;
+  stroke-width: 1.2;
+  stroke-dasharray: 4 3;
+  opacity: 0.55;
+  marker-end: url(#ls-arrow);
+}
+
+.ls-box {
+  position: absolute;
+  background: var(--bg-2);
+  border: 1px solid var(--line-2);
+  border-radius: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 6px 4px;
+  gap: 2px;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.ls-box:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0,0,0,0.4);
+}
+.ls-box-label {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  color: var(--ink-0);
+  line-height: 1.15;
+}
+.ls-box-count {
+  font-family: 'Fraunces', serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: var(--ink-0);
+  line-height: 1;
+}
+.ls-box-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 600;
+  color: var(--ink-2);
+  letter-spacing: 0.04em;
+}
+
+/* Sub-source variants */
+.ls-web-sub {
+  border-top: 2px solid var(--blue);
+  background: linear-gradient(180deg, rgba(59,158,255,0.04), var(--bg-2));
+}
+.ls-social-sub {
+  border-top: 2px solid var(--violet);
+  background: linear-gradient(180deg, rgba(139,92,246,0.05), var(--bg-2));
+}
+
+/* Channel aggregates */
+.ls-channel-web {
+  background: rgba(59,158,255,0.14);
+  border-color: var(--blue);
+}
+.ls-channel-web .ls-box-count { color: var(--blue); }
+.ls-channel-mid {
+  background: var(--bg-2);
+  border-color: var(--line-2);
+}
+.ls-channel-social {
+  background: rgba(139,92,246,0.14);
+  border-color: var(--violet);
+}
+.ls-channel-social .ls-box-count { color: var(--magenta); }
+
+/* Total */
+.ls-total {
+  background: rgba(77,255,170,0.14);
+  border-color: var(--green);
+  box-shadow: 0 0 16px rgba(77,255,170,0.18);
+}
+.ls-total .ls-box-label { color: var(--ink-0); font-size: 12px; }
+.ls-total .ls-box-count { color: var(--green); font-size: 20px; }
+.ls-total .ls-box-pct { color: var(--green); }
+
+/* Quality */
+.ls-quality-good {
+  background: rgba(77,255,170,0.10);
+  border-color: var(--green);
+}
+.ls-quality-good .ls-box-count { color: var(--green); }
+.ls-quality-bad {
+  background: rgba(255,91,122,0.10);
+  border-color: var(--red);
+}
+.ls-quality-bad .ls-box-count { color: var(--red); }
+
+/* Column labels */
+.ls-col-label {
+  position: absolute;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 8.5px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  color: var(--ink-3);
+  text-transform: uppercase;
+  white-space: nowrap;
+}

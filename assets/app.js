@@ -121,6 +121,83 @@
     }
   };
 
+  // ---- Lead Sourcing breakdown diagram ----
+  function renderLeadSourcingDiagram() {
+    const W = 100, H = 70;
+    const TW = 115, TH = 86;
+    const boxes = [
+      // Web sub-sources — Row 1
+      { id:'b1', x:10,  y:10,  w:W, h:H, kind:'web-sub',  label:'Offer Form',       count:'16,836', pct:'69.6%' },
+      { id:'b2', x:124, y:10,  w:W, h:H, kind:'web-sub',  label:'Web Form',         count:'3,345',  pct:'13.8%' },
+      { id:'b3', x:238, y:10,  w:W, h:H, kind:'web-sub',  label:'Loan Eligibility', count:'1,663',  pct:'6.9%'  },
+      { id:'b4', x:352, y:10,  w:W, h:H, kind:'web-sub',  label:'Enquiry Form',     count:'1,070',  pct:'4.4%'  },
+      // Web sub-sources — Row 2
+      { id:'b5', x:10,  y:100, w:W, h:H, kind:'web-sub',  label:'Test Drive Form',  count:'788',    pct:'3.3%'  },
+      { id:'b6', x:124, y:100, w:W, h:H, kind:'web-sub',  label:'Trade-in Form',    count:'478',    pct:'2.0%'  },
+      { id:'b7', x:238, y:100, w:W, h:H, kind:'web-sub',  label:'Web Other',        count:'30',     pct:'0.1%'  },
+      // Social sub-sources — Row 3
+      { id:'s1', x:10,  y:270, w:W, h:H, kind:'social-sub', label:'Facebook',     count:'7,764', pct:'63.8%' },
+      { id:'s2', x:124, y:270, w:W, h:H, kind:'social-sub', label:'Instagram',    count:'4,167', pct:'34.2%' },
+      { id:'s3', x:238, y:270, w:W, h:H, kind:'social-sub', label:'TikTok',       count:'185',   pct:'1.5%'  },
+      { id:'s4', x:352, y:270, w:W, h:H, kind:'social-sub', label:'Social Other', count:'55',    pct:'0.5%'  },
+      // Channel aggregates
+      { id:'web',    x:510, y:55,  w:W, h:H, kind:'channel-web',    label:'Web',                 count:'24,195', pct:'64.0%' },
+      { id:'promo',  x:510, y:145, w:W, h:H, kind:'channel-mid',    label:'Showroom Promotions', count:'1,318',  pct:'3.5%'  },
+      { id:'others', x:510, y:215, w:W, h:H, kind:'channel-mid',    label:'Others',              count:'147',    pct:'0.4%'  },
+      { id:'social', x:510, y:285, w:W, h:H, kind:'channel-social', label:'Social Media',        count:'12,167', pct:'32.2%' },
+      // Total
+      { id:'total',  x:660, y:165, w:TW, h:TH, kind:'total', label:'Total Leads', count:'37,815', pct:'100%' },
+      // Quality
+      { id:'unique', x:820, y:130, w:W, h:H, kind:'quality-good', label:'Unique Leads',    count:'35,600', pct:'94.1%' },
+      { id:'dup',    x:820, y:225, w:W, h:H, kind:'quality-bad',  label:'Duplicate Leads', count:'2,215',  pct:'5.9%'  },
+    ];
+    const conns = [
+      ['b1','web'],['b2','web'],['b3','web'],['b4','web'],
+      ['b5','web'],['b6','web'],['b7','web'],
+      ['s1','social'],['s2','social'],['s3','social'],['s4','social'],
+      ['web','total'],['promo','total'],['others','total'],['social','total'],
+      ['total','unique'],['total','dup'],
+    ];
+    const byId = Object.fromEntries(boxes.map(b => [b.id, b]));
+    const rc = b => ({ x: b.x + b.w, y: b.y + b.h / 2 });
+    const lc = b => ({ x: b.x,        y: b.y + b.h / 2 });
+    const path = (f, t) => {
+      const mx = f.x + (t.x - f.x) * 0.55;
+      return `M ${f.x} ${f.y} C ${mx} ${f.y}, ${mx} ${t.y}, ${t.x} ${t.y}`;
+    };
+    const VW = 940, VH = 360;
+    const connSvg = conns.map(([fid, tid]) => {
+      const f = byId[fid], t = byId[tid];
+      return `<path d="${path(rc(f), lc(t))}" class="ls-conn"/>`;
+    }).join('');
+    const boxesHtml = boxes.map(b => `
+      <div class="ls-box ls-${b.kind}" style="left:${b.x}px;top:${b.y}px;width:${b.w}px;height:${b.h}px;">
+        <div class="ls-box-label">${b.label}</div>
+        <div class="ls-box-count">${b.count}</div>
+        <div class="ls-box-pct">${b.pct}</div>
+      </div>`).join('');
+    return `
+      <div class="ls-diagram-title">LEAD SOURCING BREAKDOWN</div>
+      <div class="ls-diagram-scroll">
+        <div class="ls-diagram" style="width:${VW}px;height:${VH}px;">
+          <svg class="ls-svg" viewBox="0 0 ${VW} ${VH}" preserveAspectRatio="xMinYMin meet">
+            <defs>
+              <marker id="ls-arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M0,1 L6,4 L0,7 Z" fill="#5a7395"/>
+              </marker>
+            </defs>
+            ${connSvg}
+          </svg>
+          ${boxesHtml}
+          <div class="ls-col-label" style="left:10px;top:215px;">WEB SOURCES</div>
+          <div class="ls-col-label" style="left:10px;top:355px;">SOCIAL SOURCES</div>
+          <div class="ls-col-label" style="left:510px;top:0;">CHANNELS</div>
+          <div class="ls-col-label" style="left:660px;top:140px;">TOTAL</div>
+          <div class="ls-col-label" style="left:820px;top:105px;">QUALITY</div>
+        </div>
+      </div>`;
+  }
+
   // ---- Select a stage card ----
   window.selectStage = function (key) {
     const stage = STAGES[key];
@@ -138,12 +215,18 @@
     document.getElementById('ds-insight').innerHTML = stage.insight;
 
     const grid = document.getElementById('ds-grid');
-    grid.innerHTML = stage.nodes.map((n) => `
-      <div class="detail-node ${n.cls}">
-        <div class="dn-label">${n.label}</div>
-        <div class="dn-count">${n.count}</div>
-        <div class="dn-pct">${n.pct}</div>
-      </div>`).join('');
+    if (key === 'sourcing') {
+      grid.innerHTML = renderLeadSourcingDiagram();
+      grid.classList.add('ls-grid-override');
+    } else {
+      grid.classList.remove('ls-grid-override');
+      grid.innerHTML = stage.nodes.map((n) => `
+        <div class="detail-node ${n.cls}">
+          <div class="dn-label">${n.label}</div>
+          <div class="dn-count">${n.count}</div>
+          <div class="dn-pct">${n.pct}</div>
+        </div>`).join('');
+    }
 
     const panel = document.getElementById('pipeline-detail');
     if (panel) {
