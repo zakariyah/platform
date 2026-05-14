@@ -123,33 +123,33 @@
 
   // ---- Lead Sourcing breakdown diagram ----
   function renderLeadSourcingDiagram() {
-    const W = 100, H = 70;
-    const TW = 115, TH = 86;
+    const W = 134, H = 100;
+    const TW = 154, TH = 120;
     const boxes = [
-      // Web sub-sources — Row 1
-      { id:'b1', x:10,  y:10,  w:W, h:H, kind:'web-sub',  label:'Offer Form',       count:'16,836', pct:'69.6%' },
-      { id:'b2', x:124, y:10,  w:W, h:H, kind:'web-sub',  label:'Web Form',         count:'3,345',  pct:'13.8%' },
-      { id:'b3', x:238, y:10,  w:W, h:H, kind:'web-sub',  label:'Loan Eligibility', count:'1,663',  pct:'6.9%'  },
-      { id:'b4', x:352, y:10,  w:W, h:H, kind:'web-sub',  label:'Enquiry Form',     count:'1,070',  pct:'4.4%'  },
-      // Web sub-sources — Row 2
-      { id:'b5', x:10,  y:100, w:W, h:H, kind:'web-sub',  label:'Test Drive Form',  count:'788',    pct:'3.3%'  },
-      { id:'b6', x:124, y:100, w:W, h:H, kind:'web-sub',  label:'Trade-in Form',    count:'478',    pct:'2.0%'  },
-      { id:'b7', x:238, y:100, w:W, h:H, kind:'web-sub',  label:'Web Other',        count:'30',     pct:'0.1%'  },
-      // Social sub-sources — Row 3
-      { id:'s1', x:10,  y:270, w:W, h:H, kind:'social-sub', label:'Facebook',     count:'7,764', pct:'63.8%' },
-      { id:'s2', x:124, y:270, w:W, h:H, kind:'social-sub', label:'Instagram',    count:'4,167', pct:'34.2%' },
-      { id:'s3', x:238, y:270, w:W, h:H, kind:'social-sub', label:'TikTok',       count:'185',   pct:'1.5%'  },
-      { id:'s4', x:352, y:270, w:W, h:H, kind:'social-sub', label:'Social Other', count:'55',    pct:'0.5%'  },
-      // Channel aggregates
-      { id:'web',    x:510, y:55,  w:W, h:H, kind:'channel-web',    label:'Web',                 count:'24,195', pct:'64.0%' },
-      { id:'promo',  x:510, y:145, w:W, h:H, kind:'channel-mid',    label:'Showroom Promotions', count:'1,318',  pct:'3.5%'  },
-      { id:'others', x:510, y:215, w:W, h:H, kind:'channel-mid',    label:'Others',              count:'147',    pct:'0.4%'  },
-      { id:'social', x:510, y:285, w:W, h:H, kind:'channel-social', label:'Social Media',        count:'12,167', pct:'32.2%' },
-      // Total
-      { id:'total',  x:660, y:165, w:TW, h:TH, kind:'total', label:'Total Leads', count:'37,815', pct:'100%' },
-      // Quality
-      { id:'unique', x:820, y:130, w:W, h:H, kind:'quality-good', label:'Unique Leads',    count:'35,600', pct:'94.1%' },
-      { id:'dup',    x:820, y:225, w:W, h:H, kind:'quality-bad',  label:'Duplicate Leads', count:'2,215',  pct:'5.9%'  },
+      // Web sub-sources — Row 1 (y=10)
+      { id:'b1', x:10,  y:10,  w:W, h:H, kind:'web-sub',  label:'Offer Form',       share:'69.6%', e:'16,836', t:'15,950', d:'720', p:'166' },
+      { id:'b2', x:158, y:10,  w:W, h:H, kind:'web-sub',  label:'Web Form',         share:'13.8%', e:'3,345',  t:'3,180',  d:'130', p:'35'  },
+      { id:'b3', x:306, y:10,  w:W, h:H, kind:'web-sub',  label:'Loan Eligibility', share:'6.9%',  e:'1,663',  t:'1,540',  d:'105', p:'18'  },
+      { id:'b4', x:454, y:10,  w:W, h:H, kind:'web-sub',  label:'Enquiry Form',     share:'4.4%',  e:'1,070',  t:'1,005',  d:'55',  p:'10'  },
+      // Web sub-sources — Row 2 (y=175)
+      { id:'b5', x:10,  y:175, w:W, h:H, kind:'web-sub',  label:'Test Drive Form',  share:'3.3%',  e:'788',    t:'752',    d:'28',  p:'8'   },
+      { id:'b6', x:158, y:175, w:W, h:H, kind:'web-sub',  label:'Trade-in Form',    share:'2.0%',  e:'478',    t:'442',    d:'31',  p:'5'   },
+      { id:'b7', x:306, y:175, w:W, h:H, kind:'web-sub',  label:'Web Other',        share:'0.1%',  e:'30',     t:'26',     d:'3',   p:'1'   },
+      // Social sub-sources — Row 3 (y=340)
+      { id:'s1', x:10,  y:340, w:W, h:H, kind:'social-sub', label:'Facebook',     share:'63.8%', e:'7,764', t:'7,180', d:'488', p:'96' },
+      { id:'s2', x:158, y:340, w:W, h:H, kind:'social-sub', label:'Instagram',    share:'34.2%', e:'4,167', t:'3,890', d:'232', p:'45' },
+      { id:'s3', x:306, y:340, w:W, h:H, kind:'social-sub', label:'TikTok',       share:'1.5%',  e:'185',   t:'165',   d:'18',  p:'2'  },
+      { id:'s4', x:454, y:340, w:W, h:H, kind:'social-sub', label:'Social Other', share:'0.5%',  e:'55',    t:'48',    d:'6',   p:'1'  },
+      // Channel aggregates (x=642)
+      { id:'web',    x:642, y:10,  w:W, h:H, kind:'channel-web',    label:'Web',                 share:'64.0%', e:'24,195', t:'22,895', d:'1,072', p:'228' },
+      { id:'promo',  x:642, y:120, w:W, h:115, kind:'channel-mid',  label:'Showroom Promotions', share:'3.5%',  e:'1,318',  t:'1,265',  d:'38',    p:'15'  },
+      { id:'others', x:642, y:245, w:W, h:H, kind:'channel-mid',    label:'Others',              share:'0.4%',  e:'147',    t:'130',    d:'14',    p:'3'   },
+      { id:'social', x:642, y:340, w:W, h:H, kind:'channel-social', label:'Social Media',        share:'32.2%', e:'12,167', t:'11,283', d:'744',   p:'140' },
+      // Total (x=816)
+      { id:'total',  x:816, y:170, w:TW, h:TH, kind:'total',        label:'Total Leads',         share:'100%',  e:'37,815', t:'35,573', d:'1,868', p:'386' },
+      // Quality (x=1010)
+      { id:'unique', x:1010, y:125, w:W, h:H, kind:'quality-good', label:'Unique Leads',    share:'94.1%', e:'35,600', t:'35,600', d:'0',     p:'0' },
+      { id:'dup',    x:1010, y:235, w:W, h:H, kind:'quality-bad',  label:'Duplicate Leads', share:'5.9%',  e:'2,215',  t:'0',      d:'2,215', p:'0' },
     ];
     const conns = [
       ['b1','web'],['b2','web'],['b3','web'],['b4','web'],
@@ -165,16 +165,28 @@
       const mx = f.x + (t.x - f.x) * 0.55;
       return `M ${f.x} ${f.y} C ${mx} ${f.y}, ${mx} ${t.y}, ${t.x} ${t.y}`;
     };
-    const VW = 940, VH = 360;
+    const VW = 1160, VH = 460;
     const connSvg = conns.map(([fid, tid]) => {
       const f = byId[fid], t = byId[tid];
       return `<path d="${path(rc(f), lc(t))}" class="ls-conn"/>`;
     }).join('');
+    const fmtMetric = (lbl, val, cls) => `
+      <div class="ls-bm">
+        <div class="ls-bm-lbl">${lbl}</div>
+        <div class="ls-bm-val ${cls || ''}">${val}</div>
+      </div>`;
     const boxesHtml = boxes.map(b => `
       <div class="ls-box ls-${b.kind}" style="left:${b.x}px;top:${b.y}px;width:${b.w}px;height:${b.h}px;">
-        <div class="ls-box-label">${b.label}</div>
-        <div class="ls-box-count">${b.count}</div>
-        <div class="ls-box-pct">${b.pct}</div>
+        <div class="ls-box-head">
+          <span class="ls-box-label">${b.label}</span>
+          <span class="ls-box-share">${b.share}</span>
+        </div>
+        <div class="ls-box-metrics">
+          ${fmtMetric('ENTERED', b.e, '')}
+          ${fmtMetric('THROUGH', b.t, 'c-green')}
+          ${fmtMetric('DROPPED', b.d, 'c-red')}
+          ${fmtMetric('PENDING', b.p, 'c-amber')}
+        </div>
       </div>`).join('');
     return `
       <div class="ls-diagram-title">LEAD SOURCING BREAKDOWN</div>
@@ -189,11 +201,11 @@
             ${connSvg}
           </svg>
           ${boxesHtml}
-          <div class="ls-col-label" style="left:10px;top:215px;">WEB SOURCES</div>
-          <div class="ls-col-label" style="left:10px;top:355px;">SOCIAL SOURCES</div>
-          <div class="ls-col-label" style="left:510px;top:0;">CHANNELS</div>
-          <div class="ls-col-label" style="left:660px;top:140px;">TOTAL</div>
-          <div class="ls-col-label" style="left:820px;top:105px;">QUALITY</div>
+          <div class="ls-col-label" style="left:10px;top:285px;">WEB SOURCES (rows 1–2)</div>
+          <div class="ls-col-label" style="left:10px;top:445px;">SOCIAL SOURCES</div>
+          <div class="ls-col-label" style="left:642px;top:445px;">CHANNELS</div>
+          <div class="ls-col-label" style="left:816px;top:295px;">TOTAL</div>
+          <div class="ls-col-label" style="left:1010px;top:340px;">QUALITY</div>
         </div>
       </div>`;
   }
