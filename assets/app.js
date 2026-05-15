@@ -1170,6 +1170,71 @@
   // ---- Auto-expand Lead Sourcing on load ----
   selectStage('sourcing');
 
+  // ---- To-Do page ----
+  (function () {
+    const list = document.getElementById('todo-list');
+    const counter = document.getElementById('todo-counter');
+    const addBtn = document.getElementById('todo-add');
+    if (!list) return;
+
+    const STORAGE_KEY = 'afa-todos-v1';
+    let state = {};
+    try { state = JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}') || {}; } catch (e) { state = {}; }
+
+    function persist() {
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+    }
+    function updateItem(item) {
+      const id = item.getAttribute('data-id');
+      const done = !!state[id];
+      item.classList.toggle('done', done);
+      const status = item.querySelector('.todo-status');
+      if (status) status.textContent = done ? 'Done' : 'Open';
+    }
+    function updateCounter() {
+      const items = list.querySelectorAll('.todo-item');
+      const done = [...items].filter(it => state[it.getAttribute('data-id')]).length;
+      if (counter) counter.textContent = `${done} / ${items.length} complete`;
+    }
+    function bindItem(item) {
+      const check = item.querySelector('.todo-check');
+      if (!check) return;
+      check.addEventListener('click', () => {
+        const id = item.getAttribute('data-id');
+        state[id] = !state[id];
+        updateItem(item);
+        updateCounter();
+        persist();
+      });
+      // hydrate
+      updateItem(item);
+    }
+    list.querySelectorAll('.todo-item').forEach(bindItem);
+    updateCounter();
+
+    if (addBtn) {
+      addBtn.addEventListener('click', () => {
+        const text = prompt('Task name:');
+        if (!text) return;
+        const sub  = prompt('Short description (optional):') || '';
+        const id = 't' + Date.now();
+        const item = document.createElement('div');
+        item.className = 'todo-item';
+        item.setAttribute('data-id', id);
+        item.innerHTML = `
+          <button class="todo-check" aria-label="toggle"></button>
+          <div class="todo-body">
+            <div class="todo-title">${text.replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]))}</div>
+            ${sub ? `<div class="todo-sub">${sub.replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]))}</div>` : ''}
+          </div>
+          <div class="todo-status">Open</div>`;
+        list.appendChild(item);
+        bindItem(item);
+        updateCounter();
+      });
+    }
+  })();
+
   // ---- Live GST clock ----
   function tick() {
     const el = document.getElementById('clock');

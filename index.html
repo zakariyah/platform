@@ -58,6 +58,7 @@
     <div class="tabbar-tab" data-page="finance">Finance Application</div>
     <div class="tabbar-tab" data-page="service">Service Booking</div>
     <div class="tabbar-tab" data-page="vehicle">Vehicle Delivery</div>
+    <div class="tabbar-tab" data-page="todo">To-Do</div>
   </div>
   <div class="tabbar-right">
 
@@ -2637,6 +2638,59 @@
 </div><!-- /page-content testdrive -->
 
 
-<script src="assets/app.js?v=15"></script>
+<!-- ============================================================ -->
+<!-- PAGE: TO-DO                                                  -->
+<!-- ============================================================ -->
+<div class="page-content" data-page="todo">
+  <main class="main layout-overview">
+    <section class="lifecycle-panel">
+      <div class="panel-header">
+        <div class="panel-title-group">
+          <span class="lens-tag">Ops</span>
+          <div>
+            <div class="panel-title">Build Backlog</div>
+            <div class="panel-sub">Open items for the Platform Observability rollout</div>
+          </div>
+        </div>
+        <div class="panel-actions" id="todo-counter">0 / 3 complete</div>
+      </div>
+
+      <div class="todo-list" id="todo-list">
+        <div class="todo-item" data-id="t1">
+          <button class="todo-check" aria-label="toggle"></button>
+          <div class="todo-body">
+            <div class="todo-title">Finalize the overview page</div>
+            <div class="todo-sub">Tighten layout, lock data sources, sign-off design tokens</div>
+          </div>
+          <div class="todo-status">Open</div>
+        </div>
+        <div class="todo-item" data-id="t2">
+          <button class="todo-check" aria-label="toggle"></button>
+          <div class="todo-body">
+            <div class="todo-title">Make the Business Flow visible within the overview page</div>
+            <div class="todo-sub">Surface the lifecycle pipeline as the primary view on entry</div>
+          </div>
+          <div class="todo-status">Open</div>
+        </div>
+        <div class="todo-item" data-id="t3">
+          <button class="todo-check" aria-label="toggle"></button>
+          <div class="todo-body">
+            <div class="todo-title">Add the UI for all the RV initiative</div>
+            <div class="todo-sub">Wire residual-value flows + dashboards across journeys</div>
+          </div>
+          <div class="todo-status">Open</div>
+        </div>
+      </div>
+
+      <div class="todo-footer">
+        <button class="todo-add" id="todo-add">+ Add task</button>
+        <span class="todo-hint">Click a checkbox to mark complete. State persists locally.</span>
+      </div>
+    </section>
+  </main>
+</div><!-- /page-content todo -->
+
+
+<script src="assets/app.js?v=16"></script>
 </body>
 </html>
