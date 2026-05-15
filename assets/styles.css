@@ -2823,3 +2823,90 @@ body::after {
   text-transform: uppercase;
   white-space: nowrap;
 }
+
+/* ============================================================
+   Call Center Processing breakdown diagram
+   ============================================================ */
+.cec-diagram {
+  position: relative;
+  margin: 0 auto;
+}
+.cec-svg {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  overflow: visible;
+}
+.cec-conn {
+  fill: none;
+  stroke: #5a7395;
+  stroke-width: 1.5;
+  stroke-dasharray: 5 3;
+  opacity: 0.6;
+  marker-end: url(#cec-arrow);
+}
+
+.cec-box {
+  position: absolute;
+  border: 1.5px solid;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 10px;
+  gap: 3px;
+  text-align: center;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.cec-box:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+}
+.cec-box-label {
+  font-family: 'Inter Tight', sans-serif;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: var(--ink-0);
+  line-height: 1.15;
+  letter-spacing: 0.01em;
+}
+.cec-box-count {
+  font-family: 'Fraunces', serif;
+  font-size: 24px;
+  font-weight: 400;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  margin-top: 2px;
+}
+.cec-box-pct {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+}
+
+/* Variants */
+.cec-good {
+  background: rgba(77, 255, 170, 0.12);
+  border-color: var(--green);
+  box-shadow: 0 0 14px rgba(77, 255, 170, 0.10);
+}
+.cec-good .cec-box-count,
+.cec-good .cec-box-pct { color: var(--green); }
+
+.cec-bad {
+  background: rgba(255, 91, 122, 0.10);
+  border-color: var(--red);
+  box-shadow: 0 0 14px rgba(255, 91, 122, 0.10);
+}
+.cec-bad .cec-box-count,
+.cec-bad .cec-box-pct { color: var(--red); }
+
+.cec-neutral {
+  background: var(--bg-2);
+  border-color: var(--line-2);
+}
+.cec-neutral .cec-box-count { color: var(--ink-0); }
+.cec-neutral .cec-box-pct { color: var(--ink-2); }

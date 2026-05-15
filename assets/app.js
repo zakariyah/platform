@@ -210,6 +210,74 @@
       </div>`;
   }
 
+  // ---- Call Center Processing breakdown diagram ----
+  function renderCECDiagram() {
+    const W = 158, H = 96;
+    const boxes = [
+      // Left column — Action outcome
+      { id:'actioned', x:30,  y:75,  w:W, h:H, kind:'good',    label:'CEC Actioned',     count:'35,426', pct:'99.95%' },
+      { id:'notact',   x:30,  y:235, w:W, h:H, kind:'bad',     label:'CEC Not Actioned', count:'174',    pct:'0.05%'  },
+      // Right column — Reach outcome
+      { id:'reach',    x:360, y:20,  w:W, h:H, kind:'good',    label:'Reachable',        count:'17,271', pct:'48.8%'  },
+      { id:'pend',     x:360, y:160, w:W, h:H, kind:'neutral', label:'Pending',          count:'2,763',  pct:'7.8%'   },
+      { id:'unreach',  x:360, y:300, w:W, h:H, kind:'bad',     label:'Unreachable',      count:'18,265', pct:'51.6%'  },
+    ];
+    const VW = 580, VH = 420;
+    const byId = Object.fromEntries(boxes.map(b => [b.id, b]));
+    const rc = b => ({ x: b.x + b.w, y: b.y + b.h / 2 });
+    const lc = b => ({ x: b.x,        y: b.y + b.h / 2 });
+    const curvePath = (f, t, curve = 0.55) => {
+      const mx = f.x + (t.x - f.x) * curve;
+      return `M ${f.x} ${f.y} C ${mx} ${f.y}, ${mx} ${t.y}, ${t.x} ${t.y}`;
+    };
+
+    // Internal: CEC Actioned → Reachable / Pending / Unreachable
+    const internal = ['reach','pend','unreach'].map(tid =>
+      `<path d="${curvePath(rc(byId.actioned), lc(byId[tid]))}" class="cec-conn"/>`
+    ).join('');
+
+    // Entry arrows from left edge → CEC Actioned & CEC Not Actioned
+    const entries = ['actioned','notact'].map(tid => {
+      const b = byId[tid];
+      const ty = b.y + b.h / 2;
+      return `<path d="M 0 ${ty} L ${b.x - 4} ${ty}" class="cec-conn"/>`;
+    }).join('');
+
+    // Exit arrows from right boxes → right edge (to next stage)
+    const exits = ['reach','pend','unreach'].map(fid => {
+      const b = byId[fid];
+      const fx = b.x + b.w, fy = b.y + b.h / 2;
+      return `<path d="M ${fx} ${fy} L ${VW} ${fy}" class="cec-conn"/>`;
+    }).join('');
+
+    const boxesHtml = boxes.map(b => `
+      <div class="cec-box cec-${b.kind}" style="left:${b.x}px;top:${b.y}px;width:${b.w}px;height:${b.h}px;">
+        <div class="cec-box-label">${b.label}</div>
+        <div class="cec-box-count">${b.count}</div>
+        <div class="cec-box-pct">${b.pct}</div>
+      </div>`).join('');
+
+    return `
+      <div class="ls-diagram-title">CALL CENTER PROCESSING BREAKDOWN</div>
+      <div class="ls-diagram-scroll">
+        <div class="cec-diagram" style="width:${VW}px;height:${VH}px;">
+          <svg class="cec-svg" viewBox="0 0 ${VW} ${VH}" preserveAspectRatio="xMinYMin meet">
+            <defs>
+              <marker id="cec-arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M0,1 L6,4 L0,7 Z" fill="#5a7395"/>
+              </marker>
+            </defs>
+            ${entries}
+            ${internal}
+            ${exits}
+          </svg>
+          ${boxesHtml}
+          <div class="ls-col-label" style="left:30px;top:0;">ACTION OUTCOME</div>
+          <div class="ls-col-label" style="left:360px;top:0;">REACH OUTCOME</div>
+        </div>
+      </div>`;
+  }
+
   // ---- Select a stage card ----
   window.selectStage = function (key) {
     const stage = STAGES[key];
@@ -229,6 +297,9 @@
     const grid = document.getElementById('ds-grid');
     if (key === 'sourcing') {
       grid.innerHTML = renderLeadSourcingDiagram();
+      grid.classList.add('ls-grid-override');
+    } else if (key === 'cec') {
+      grid.innerHTML = renderCECDiagram();
       grid.classList.add('ls-grid-override');
     } else {
       grid.classList.remove('ls-grid-override');
