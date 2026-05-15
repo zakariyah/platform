@@ -2967,14 +2967,14 @@ body::after {
 }
 #cy-ls {
   width: 100%;
-  height: 560px;
+  height: 760px;
   background: var(--bg-1);
   border: 1px solid var(--line);
   border-radius: 8px;
 }
 .ls-cy-controls {
   position: absolute;
-  top: 12px;
+  bottom: 12px;
   right: 12px;
   display: flex;
   gap: 6px;

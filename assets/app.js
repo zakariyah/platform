@@ -228,7 +228,8 @@
       <div class="ls-cy-wrap">
         <div id="cy-ls"></div>
         <div class="ls-cy-controls">
-          <button onclick="window.cyLS && window.cyLS.fit(null, 30)">FIT</button>
+          <button onclick="window.cyLS && (window.cyLS.zoom(1.0), window.cyLS.center())">RESET</button>
+          <button onclick="window.cyLS && window.cyLS.fit(null, 40)">FIT ALL</button>
           <button onclick="window.cyLS && window.cyLS.zoom(window.cyLS.zoom() * 1.2)">+</button>
           <button onclick="window.cyLS && window.cyLS.zoom(window.cyLS.zoom() / 1.2)">−</button>
           <button onclick="window.cyLS && cyRelayoutLS('dagre-lr')">L→R</button>
@@ -254,8 +255,8 @@
     }
 
     // Box dimensions — must match HTML overlay sizes
-    const W = 154, H = 108;
-    const TW = 172, TH = 120;
+    const W = 184, H = 124;
+    const TW = 210, TH = 140;
     const dimsFor = (kind) => kind === 'total' ? { w: TW, h: TH } : { w: W, h: H };
 
     const nodes = [
@@ -323,17 +324,18 @@
       layout: {
         name: 'dagre',
         rankDir: 'LR',
-        nodeSep: 14,
-        rankSep: 95,
-        edgeSep: 10,
+        nodeSep: 28,
+        rankSep: 130,
+        edgeSep: 14,
         ranker: 'network-simplex',
-        fit: true,
+        fit: false,
         padding: 30,
       },
       minZoom: 0.3,
       maxZoom: 2.5,
       wheelSensitivity: 0.25,
       boxSelectionEnabled: false,
+      zoom: 1.0,
     });
 
     // ─── HTML overlay (your AFA-styled cards on top of Cytoscape's auto-layout) ───
@@ -383,18 +385,25 @@
       overlay.style.transform = `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`;
     }
 
-    window.cyLS.on('layoutstop', () => { syncPositions(); syncTransform(); });
+    function centerAtReadableZoom() {
+      // Keep cards at 1:1 (readable) and center the diagram in viewport.
+      window.cyLS.zoom(1.0);
+      window.cyLS.center();
+      syncPositions();
+      syncTransform();
+    }
+
+    window.cyLS.on('layoutstop', centerAtReadableZoom);
     window.cyLS.on('drag',  'node', syncPositions);
     window.cyLS.on('pan zoom render', syncTransform);
 
-    // After dagre finishes (microtask), sync.
-    setTimeout(() => { syncPositions(); syncTransform(); }, 50);
+    setTimeout(centerAtReadableZoom, 50);
 
     window.cyRelayoutLS = function (mode) {
       const rankDir = mode === 'dagre-tb' ? 'TB' : 'LR';
       window.cyLS.layout({
-        name: 'dagre', rankDir, nodeSep: 14, rankSep: 95,
-        edgeSep: 10, ranker: 'network-simplex', fit: true, padding: 30,
+        name: 'dagre', rankDir, nodeSep: 28, rankSep: 130,
+        edgeSep: 14, ranker: 'network-simplex', fit: false, padding: 30,
       }).run();
     };
   }
