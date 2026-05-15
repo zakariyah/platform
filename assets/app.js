@@ -213,22 +213,36 @@
   // ---- Call Center Processing breakdown diagram ----
   function renderCECDiagram() {
     const W = 158, H = 96;
+    const QW = 174, QH = 100;
     const boxes = [
       // Left column — Action outcome
       { id:'actioned', x:30,  y:75,  w:W, h:H, kind:'good',    label:'CEC Actioned',     count:'35,426', pct:'99.95%' },
       { id:'notact',   x:30,  y:235, w:W, h:H, kind:'bad',     label:'CEC Not Actioned', count:'174',    pct:'0.05%'  },
-      // Right column — Reach outcome
+      // Middle column — Reach outcome
       { id:'reach',    x:360, y:20,  w:W, h:H, kind:'good',    label:'Reachable',        count:'17,271', pct:'48.8%'  },
       { id:'pend',     x:360, y:160, w:W, h:H, kind:'neutral', label:'Pending',          count:'2,763',  pct:'7.8%'   },
       { id:'unreach',  x:360, y:300, w:W, h:H, kind:'bad',     label:'Unreachable',      count:'18,265', pct:'51.6%'  },
+      // Bottom row — Qualification outcome
+      { id:'cold',     x:170, y:520, w:QW, h:QH, kind:'bad',   label:'Cold Leads',       count:'15,925', pct:'45%'    },
+      { id:'hot',      x:380, y:520, w:QW, h:QH, kind:'good',  label:'Hot Leads',        count:'19,500', pct:'55%'    },
     ];
-    const VW = 580, VH = 420;
+    const VW = 620, VH = 660;
     const byId = Object.fromEntries(boxes.map(b => [b.id, b]));
     const rc = b => ({ x: b.x + b.w, y: b.y + b.h / 2 });
     const lc = b => ({ x: b.x,        y: b.y + b.h / 2 });
+    const tc = b => ({ x: b.x + b.w / 2, y: b.y });
     const curvePath = (f, t, curve = 0.55) => {
       const mx = f.x + (t.x - f.x) * curve;
       return `M ${f.x} ${f.y} C ${mx} ${f.y}, ${mx} ${t.y}, ${t.x} ${t.y}`;
+    };
+    // Curve that exits horizontally from source's right edge and approaches
+    // target's top vertically (used for Reach → Qualification flows).
+    const curveDownToTop = (f, t) => {
+      const cx1 = f.x + 64;
+      const cy1 = f.y;
+      const cx2 = t.x;
+      const cy2 = t.y - 90;
+      return `M ${f.x} ${f.y} C ${cx1} ${cy1}, ${cx2} ${cy2}, ${t.x} ${t.y}`;
     };
 
     // Internal: CEC Actioned → Reachable / Pending / Unreachable
@@ -243,8 +257,19 @@
       return `<path d="M 0 ${ty} L ${b.x - 4} ${ty}" class="cec-conn"/>`;
     }).join('');
 
-    // Exit arrows from right boxes → right edge (to next stage)
-    const exits = ['reach','pend','unreach'].map(fid => {
+    // Reach outcomes → Qualification (Hot/Cold)
+    const qualPairs = [
+      ['reach',   'hot' ],
+      ['pend',    'hot' ],
+      ['pend',    'cold'],
+      ['unreach', 'cold'],
+    ];
+    const qualConns = qualPairs.map(([fid, tid]) =>
+      `<path d="${curveDownToTop(rc(byId[fid]), tc(byId[tid]))}" class="cec-conn"/>`
+    ).join('');
+
+    // Exit arrows from Hot/Cold → right edge (to next stage)
+    const exits = ['hot','cold'].map(fid => {
       const b = byId[fid];
       const fx = b.x + b.w, fy = b.y + b.h / 2;
       return `<path d="M ${fx} ${fy} L ${VW} ${fy}" class="cec-conn"/>`;
@@ -269,11 +294,13 @@
             </defs>
             ${entries}
             ${internal}
+            ${qualConns}
             ${exits}
           </svg>
           ${boxesHtml}
           <div class="ls-col-label" style="left:30px;top:0;">ACTION OUTCOME</div>
           <div class="ls-col-label" style="left:360px;top:0;">REACH OUTCOME</div>
+          <div class="ls-col-label" style="left:170px;top:495px;">QUALIFICATION</div>
         </div>
       </div>`;
   }
