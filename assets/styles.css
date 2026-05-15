@@ -3005,3 +3005,25 @@ body::after {
   color: var(--ink-3);
   padding-top: 6px;
 }
+
+/* HTML overlay above Cytoscape canvas — keeps AFA cards with auto-layout */
+#cy-ls { position: relative; overflow: hidden; }
+.cy-html-overlay {
+  position: absolute;
+  top: 0; left: 0;
+  width: 0; height: 0;
+  transform-origin: 0 0;
+  pointer-events: none;
+  z-index: 5;
+}
+.cy-html-box {
+  /* uses .ls-box styling from earlier; just override z-index + isolation */
+  pointer-events: none;
+  z-index: auto;
+  cursor: default;
+}
+/* prevent .ls-box hover transform inside Cytoscape (would desync from edges) */
+.cy-html-box.ls-box:hover {
+  transform: none;
+  box-shadow: none;
+}

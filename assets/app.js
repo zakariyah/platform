@@ -248,31 +248,35 @@
       el.innerHTML = '<div style="padding:24px;color:var(--ink-2);font-family:sans-serif;">Cytoscape.js failed to load (offline?).</div>';
       return;
     }
-    // Register dagre extension once
     if (typeof window.cytoscapeDagre !== 'undefined' && !window._cyDagreRegistered) {
       cytoscape.use(window.cytoscapeDagre);
       window._cyDagreRegistered = true;
     }
 
+    // Box dimensions — must match HTML overlay sizes
+    const W = 154, H = 108;
+    const TW = 172, TH = 120;
+    const dimsFor = (kind) => kind === 'total' ? { w: TW, h: TH } : { w: W, h: H };
+
     const nodes = [
-      { id:'b1', name:'Offer Form',       count:'16,836', pct:'69.6%', kind:'web-sub' },
-      { id:'b2', name:'Web Form',         count:'3,345',  pct:'13.8%', kind:'web-sub' },
-      { id:'b3', name:'Loan Eligibility', count:'1,663',  pct:'6.9%',  kind:'web-sub' },
-      { id:'b4', name:'Enquiry Form',     count:'1,070',  pct:'4.4%',  kind:'web-sub' },
-      { id:'b5', name:'Test Drive Form',  count:'788',    pct:'3.3%',  kind:'web-sub' },
-      { id:'b6', name:'Trade-in Form',    count:'478',    pct:'2.0%',  kind:'web-sub' },
-      { id:'b7', name:'Web Other',        count:'30',     pct:'0.1%',  kind:'web-sub' },
-      { id:'s1', name:'Facebook',         count:'7,764',  pct:'63.8%', kind:'social-sub' },
-      { id:'s2', name:'Instagram',        count:'4,167',  pct:'34.2%', kind:'social-sub' },
-      { id:'s3', name:'TikTok',           count:'185',    pct:'1.5%',  kind:'social-sub' },
-      { id:'s4', name:'Social Other',     count:'55',     pct:'0.5%',  kind:'social-sub' },
-      { id:'web',    name:'Web',                 count:'24,195', pct:'64.0%', kind:'channel-web' },
-      { id:'promo',  name:'Showroom Promotions', count:'1,318',  pct:'3.5%',  kind:'channel-mid' },
-      { id:'others', name:'Others',              count:'147',    pct:'0.4%',  kind:'channel-mid' },
-      { id:'social', name:'Social Media',        count:'12,167', pct:'32.2%', kind:'channel-social' },
-      { id:'total',  name:'Total Leads',         count:'37,815', pct:'100%',  kind:'total' },
-      { id:'unique', name:'Unique Leads',        count:'35,600', pct:'94.1%', kind:'quality-good' },
-      { id:'dup',    name:'Duplicate Leads',     count:'2,215',  pct:'5.9%',  kind:'quality-bad' },
+      { id:'b1', name:'Offer Form',       share:'69.6%', e:'16,836', t:'15,950', d:'720',   p:'166', kind:'web-sub' },
+      { id:'b2', name:'Web Form',         share:'13.8%', e:'3,345',  t:'3,180',  d:'130',   p:'35',  kind:'web-sub' },
+      { id:'b3', name:'Loan Eligibility', share:'6.9%',  e:'1,663',  t:'1,540',  d:'105',   p:'18',  kind:'web-sub' },
+      { id:'b4', name:'Enquiry Form',     share:'4.4%',  e:'1,070',  t:'1,005',  d:'55',    p:'10',  kind:'web-sub' },
+      { id:'b5', name:'Test Drive Form',  share:'3.3%',  e:'788',    t:'752',    d:'28',    p:'8',   kind:'web-sub' },
+      { id:'b6', name:'Trade-in Form',    share:'2.0%',  e:'478',    t:'442',    d:'31',    p:'5',   kind:'web-sub' },
+      { id:'b7', name:'Web Other',        share:'0.1%',  e:'30',     t:'26',     d:'3',     p:'1',   kind:'web-sub' },
+      { id:'s1', name:'Facebook',         share:'63.8%', e:'7,764',  t:'7,180',  d:'488',   p:'96',  kind:'social-sub' },
+      { id:'s2', name:'Instagram',        share:'34.2%', e:'4,167',  t:'3,890',  d:'232',   p:'45',  kind:'social-sub' },
+      { id:'s3', name:'TikTok',           share:'1.5%',  e:'185',    t:'165',    d:'18',    p:'2',   kind:'social-sub' },
+      { id:'s4', name:'Social Other',     share:'0.5%',  e:'55',     t:'48',     d:'6',     p:'1',   kind:'social-sub' },
+      { id:'web',    name:'Web',                 share:'64.0%', e:'24,195', t:'22,895', d:'1,072', p:'228', kind:'channel-web' },
+      { id:'promo',  name:'Showroom Promotions', share:'3.5%',  e:'1,318',  t:'1,265',  d:'38',    p:'15',  kind:'channel-mid' },
+      { id:'others', name:'Others',              share:'0.4%',  e:'147',    t:'130',    d:'14',    p:'3',   kind:'channel-mid' },
+      { id:'social', name:'Social Media',        share:'32.2%', e:'12,167', t:'11,283', d:'744',   p:'140', kind:'channel-social' },
+      { id:'total',  name:'Total Leads',         share:'100%',  e:'37,815', t:'35,573', d:'1,868', p:'386', kind:'total' },
+      { id:'unique', name:'Unique Leads',        share:'94.1%', e:'35,600', t:'35,600', d:'0',     p:'0',   kind:'quality-good' },
+      { id:'dup',    name:'Duplicate Leads',     share:'5.9%',  e:'2,215',  t:'0',      d:'2,215', p:'0',   kind:'quality-bad' },
     ];
     const edges = [
       ['b1','web'],['b2','web'],['b3','web'],['b4','web'],
@@ -281,25 +285,10 @@
       ['web','total'],['promo','total'],['others','total'],['social','total'],
       ['total','unique'],['total','dup'],
     ];
-
-    // Phantom source nodes for promo/others (dagre needs predecessors to rank them)
     const elements = [
-      ...nodes.map(n => ({
-        data: { ...n, displayLabel: `${n.name}\n${n.count}\n${n.pct}` }
-      })),
+      ...nodes.map(n => ({ data: { ...n } })),
       ...edges.map(([s, t]) => ({ data: { id: `${s}_${t}`, source: s, target: t } })),
     ];
-
-    const kindColors = {
-      'web-sub':        { bg: 'rgba(59,158,255,0.10)',  border: '#3b9eff', text: '#cfdaeb' },
-      'social-sub':     { bg: 'rgba(139,92,246,0.12)',  border: '#8b5cf6', text: '#cfdaeb' },
-      'channel-web':    { bg: 'rgba(59,158,255,0.22)',  border: '#3b9eff', text: '#ffffff' },
-      'channel-mid':    { bg: '#0e213a',                border: '#254672', text: '#ffffff' },
-      'channel-social': { bg: 'rgba(139,92,246,0.22)',  border: '#8b5cf6', text: '#ffffff' },
-      'total':          { bg: 'rgba(77,255,170,0.20)',  border: '#4dffaa', text: '#ffffff' },
-      'quality-good':   { bg: 'rgba(77,255,170,0.14)',  border: '#4dffaa', text: '#ffffff' },
-      'quality-bad':    { bg: 'rgba(255,91,122,0.14)',  border: '#ff5b7a', text: '#ffffff' },
-    };
 
     window.cyLS = cytoscape({
       container: el,
@@ -309,22 +298,12 @@
           selector: 'node',
           style: {
             'shape': 'round-rectangle',
-            'width': 150,
-            'height': 78,
-            'background-color': ele => (kindColors[ele.data('kind')] || {}).bg || '#0e213a',
-            'border-color':     ele => (kindColors[ele.data('kind')] || {}).border || '#254672',
-            'border-width': 1.5,
-            'label': 'data(displayLabel)',
-            'color': ele => (kindColors[ele.data('kind')] || {}).text || '#ffffff',
-            'font-family': "'Inter Tight', sans-serif",
-            'font-size': 11,
-            'font-weight': 600,
-            'text-valign': 'center',
-            'text-halign': 'center',
-            'text-wrap': 'wrap',
-            'text-max-width': 140,
-            'line-height': 1.35,
-            'text-margin-y': 0,
+            'width':  ele => dimsFor(ele.data('kind')).w,
+            'height': ele => dimsFor(ele.data('kind')).h,
+            // Invisible — the HTML overlay does the rendering
+            'background-opacity': 0,
+            'border-width': 0,
+            'label': '',
           }
         },
         {
@@ -334,40 +313,87 @@
             'line-style': 'dashed',
             'line-color': '#5a7395',
             'width': 1.3,
-            'opacity': 0.7,
+            'opacity': 0.65,
             'target-arrow-shape': 'triangle',
             'target-arrow-color': '#5a7395',
-            'arrow-scale': 0.8,
-          }
-        },
-        {
-          selector: 'node:selected',
-          style: {
-            'border-width': 3,
-            'border-color': '#5ecdf5',
+            'arrow-scale': 0.9,
           }
         }
       ],
       layout: {
         name: 'dagre',
         rankDir: 'LR',
-        nodeSep: 16,
-        rankSep: 90,
+        nodeSep: 14,
+        rankSep: 95,
         edgeSep: 10,
         ranker: 'network-simplex',
         fit: true,
         padding: 30,
       },
-      minZoom: 0.4,
+      minZoom: 0.3,
       maxZoom: 2.5,
       wheelSensitivity: 0.25,
       boxSelectionEnabled: false,
     });
 
+    // ─── HTML overlay (your AFA-styled cards on top of Cytoscape's auto-layout) ───
+    let overlay = el.querySelector('.cy-html-overlay');
+    if (!overlay) {
+      overlay = document.createElement('div');
+      overlay.className = 'cy-html-overlay';
+      el.appendChild(overlay);
+    }
+    overlay.innerHTML = '';
+
+    const nodeDivs = {};
+    nodes.forEach(n => {
+      const { w, h } = dimsFor(n.kind);
+      const div = document.createElement('div');
+      div.className = `cy-html-box ls-box ls-${n.kind}`;
+      div.style.width  = w + 'px';
+      div.style.height = h + 'px';
+      div.innerHTML = `
+        <div class="ls-box-head">
+          <span class="ls-box-label">${n.name}</span>
+          <span class="ls-box-share">${n.share}</span>
+        </div>
+        <div class="ls-box-metrics">
+          <div class="ls-bm"><div class="ls-bm-lbl">ENTERED</div><div class="ls-bm-val">${n.e}</div></div>
+          <div class="ls-bm"><div class="ls-bm-lbl">THROUGH</div><div class="ls-bm-val c-green">${n.t}</div></div>
+          <div class="ls-bm"><div class="ls-bm-lbl">DROPPED</div><div class="ls-bm-val c-red">${n.d}</div></div>
+          <div class="ls-bm"><div class="ls-bm-lbl">PENDING</div><div class="ls-bm-val c-amber">${n.p}</div></div>
+        </div>`;
+      overlay.appendChild(div);
+      nodeDivs[n.id] = div;
+    });
+
+    function syncPositions() {
+      Object.entries(nodeDivs).forEach(([id, div]) => {
+        const node = window.cyLS.getElementById(id);
+        const pos  = node.position();
+        const w    = parseFloat(div.style.width);
+        const h    = parseFloat(div.style.height);
+        div.style.left = (pos.x - w / 2) + 'px';
+        div.style.top  = (pos.y - h / 2) + 'px';
+      });
+    }
+    function syncTransform() {
+      const pan  = window.cyLS.pan();
+      const zoom = window.cyLS.zoom();
+      overlay.style.transform = `translate(${pan.x}px, ${pan.y}px) scale(${zoom})`;
+    }
+
+    window.cyLS.on('layoutstop', () => { syncPositions(); syncTransform(); });
+    window.cyLS.on('drag',  'node', syncPositions);
+    window.cyLS.on('pan zoom render', syncTransform);
+
+    // After dagre finishes (microtask), sync.
+    setTimeout(() => { syncPositions(); syncTransform(); }, 50);
+
     window.cyRelayoutLS = function (mode) {
       const rankDir = mode === 'dagre-tb' ? 'TB' : 'LR';
       window.cyLS.layout({
-        name: 'dagre', rankDir, nodeSep: 16, rankSep: 90,
+        name: 'dagre', rankDir, nodeSep: 14, rankSep: 95,
         edgeSep: 10, ranker: 'network-simplex', fit: true, padding: 30,
       }).run();
     };
