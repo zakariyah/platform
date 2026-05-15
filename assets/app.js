@@ -305,6 +305,159 @@
       </div>`;
   }
 
+  // ---- Showroom / Sales Executive breakdown diagram ----
+  function renderSEDiagram() {
+    const W = 145, H = 100;
+    const boxes = [
+      // Source — left column
+      { id:'total',    x:20,  y:165, w:W, h:H, kind:'good',    label:'Total Opportunity',      count:'14,013', pct:'100%'  },
+      // Walk-In row (top)
+      { id:'wiopp',    x:200, y:25,  w:W, h:H, kind:'warning', label:'Walk-In Opportunity',    count:'10,932', pct:'100%'  },
+      { id:'wienq',    x:360, y:25,  w:W, h:H, kind:'warning', label:'Walk-In Enquiry',        count:'10,932', pct:'100%'  },
+      // SE Not Assigned (right, between rows 1-2)
+      { id:'senotass', x:520, y:105, w:W, h:H, kind:'bad',     label:'SE Not Assigned',        count:'371',    pct:'1.9%'  },
+      // Middle row
+      { id:'noopp',    x:200, y:165, w:W, h:H, kind:'bad',     label:'No Opportunity',         count:'16,024', pct:'83.9%' },
+      { id:'senoact',  x:360, y:165, w:W, h:H, kind:'bad',     label:'SE No Action',           count:'25',     pct:'0.1%'  },
+      // SE Assigned (right, between rows 2-3)
+      { id:'seass',    x:520, y:245, w:W, h:H, kind:'good',    label:'SE Assigned',            count:'19,130', pct:'98.1%' },
+      // Bottom row
+      { id:'digops',   x:200, y:305, w:W, h:H, kind:'good',    label:'Digital Opportunities',  count:'3,081',  pct:'16.1%' },
+      { id:'seact',    x:360, y:305, w:W, h:H, kind:'good',    label:'SE Actioned',            count:'19,105', pct:'99.9%' },
+    ];
+    const VW = 700, VH = 440;
+    const byId = Object.fromEntries(boxes.map(b => [b.id, b]));
+    const rc = b => ({ x: b.x + b.w, y: b.y + b.h / 2 });
+    const lc = b => ({ x: b.x,        y: b.y + b.h / 2 });
+    const tc = b => ({ x: b.x + b.w / 2, y: b.y });
+    const bc = b => ({ x: b.x + b.w / 2, y: b.y + b.h });
+    const curvePath = (f, t, curve = 0.55) => {
+      const mx = f.x + (t.x - f.x) * curve;
+      return `M ${f.x} ${f.y} C ${mx} ${f.y}, ${mx} ${t.y}, ${t.x} ${t.y}`;
+    };
+    const vCurvePath = (f, t, curve = 0.55) => {
+      const my = f.y + (t.y - f.y) * curve;
+      return `M ${f.x} ${f.y} C ${f.x} ${my}, ${t.x} ${my}, ${t.x} ${t.y}`;
+    };
+
+    // Entry arrows
+    const entriesArr = [
+      // Left edge → Total Opportunity
+      `M 0 ${byId.total.y + byId.total.h/2} L ${byId.total.x - 4} ${byId.total.y + byId.total.h/2}`,
+      // Right edge → SE Not Assigned
+      `M ${VW} ${byId.senotass.y + byId.senotass.h/2} L ${byId.senotass.x + byId.senotass.w + 4} ${byId.senotass.y + byId.senotass.h/2}`,
+      // Right edge → SE Assigned
+      `M ${VW} ${byId.seass.y + byId.seass.h/2} L ${byId.seass.x + byId.seass.w + 4} ${byId.seass.y + byId.seass.h/2}`,
+      // Top edge → Walk-In Enquiry
+      `M ${byId.wienq.x + byId.wienq.w/2} 0 L ${byId.wienq.x + byId.wienq.w/2} ${byId.wienq.y - 4}`,
+    ];
+    const entries = entriesArr.map(p => `<path d="${p}" class="cec-conn"/>`).join('');
+
+    // Internal connectors
+    const internalArr = [
+      curvePath (rc(byId.total),   lc(byId.wiopp)),   // total → walk-in opp (up-right)
+      curvePath (rc(byId.total),   lc(byId.noopp)),   // total → no opp (right)
+      curvePath (rc(byId.total),   lc(byId.digops)),  // total → digital opps (down-right)
+      curvePath (lc(byId.wienq),   rc(byId.wiopp)),   // walk-in enq → walk-in opp (left)
+      curvePath (lc(byId.seass),   rc(byId.seact)),   // SE Assigned → SE Actioned (down-left)
+      vCurvePath(tc(byId.seact),   bc(byId.senoact)), // SE Actioned ↑ SE No Action
+      curvePath (lc(byId.seact),   rc(byId.digops)),  // SE Actioned → Digital Opps (left)
+    ];
+    const internal = internalArr.map(p => `<path d="${p}" class="cec-conn"/>`).join('');
+
+    const boxesHtml = boxes.map(b => `
+      <div class="cec-box cec-${b.kind}" style="left:${b.x}px;top:${b.y}px;width:${b.w}px;height:${b.h}px;">
+        <div class="cec-box-label">${b.label}</div>
+        <div class="cec-box-count">${b.count}</div>
+        <div class="cec-box-pct">${b.pct}</div>
+      </div>`).join('');
+
+    return `
+      <div class="ls-diagram-title">SALES EXECUTIVE BREAKDOWN</div>
+      <div class="ls-diagram-scroll">
+        <div class="cec-diagram" style="width:${VW}px;height:${VH}px;">
+          <svg class="cec-svg" viewBox="0 0 ${VW} ${VH}" preserveAspectRatio="xMinYMin meet">
+            <defs>
+              <marker id="cec-arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M0,1 L6,4 L0,7 Z" fill="#5a7395"/>
+              </marker>
+            </defs>
+            ${entries}
+            ${internal}
+          </svg>
+          ${boxesHtml}
+        </div>
+      </div>`;
+  }
+
+  // ---- Test Drive breakdown diagram ----
+  function renderTDDiagram() {
+    const SW = 190, SH = 130;
+    const OW = 150, OH = 105;
+    const boxes = [
+      // Source — top-right
+      { id:'booked',    x:225, y:30,  w:SW, h:SH, kind:'neutral', label:'Test Drive Booked', count:'6,442', pct:'47.3%' },
+      // Outcomes — bottom row (left to right)
+      { id:'completed', x:25,  y:225, w:OW, h:OH, kind:'good',    label:'Completed', count:'5,325', pct:'82.7%' },
+      { id:'nshow',     x:195, y:225, w:OW, h:OH, kind:'bad',     label:'No Show',   count:'1,117', pct:'17.3%' },
+      { id:'pending',   x:365, y:225, w:OW, h:OH, kind:'warning', label:'Pending',   count:'1,438', pct:'22.3%' },
+      { id:'cancelled', x:535, y:225, w:OW, h:OH, kind:'neutral', label:'Cancelled', count:'412',   pct:'6.4%'  },
+    ];
+    const VW = 720, VH = 365;
+    const byId = Object.fromEntries(boxes.map(b => [b.id, b]));
+    const rc = b => ({ x: b.x + b.w, y: b.y + b.h / 2 });
+    const lc = b => ({ x: b.x,        y: b.y + b.h / 2 });
+    const tc = b => ({ x: b.x + b.w / 2, y: b.y });
+    const bc = b => ({ x: b.x + b.w / 2, y: b.y + b.h });
+    const vCurvePath = (f, t, curve = 0.55) => {
+      const my = f.y + (t.y - f.y) * curve;
+      return `M ${f.x} ${f.y} C ${f.x} ${my}, ${t.x} ${my}, ${t.x} ${t.y}`;
+    };
+
+    // Entry: from right edge → Test Drive Booked
+    const entries = [
+      `M ${VW} ${byId.booked.y + byId.booked.h/2} L ${byId.booked.x + byId.booked.w + 4} ${byId.booked.y + byId.booked.h/2}`,
+    ];
+
+    // Test Drive Booked → each outcome (down curves)
+    const outcomes = ['completed','nshow','pending','cancelled'].map(tid =>
+      vCurvePath(bc(byId.booked), tc(byId[tid]))
+    );
+
+    // Exit arrows from each outcome going down (to next stage / terminal)
+    const exits = ['completed','nshow','pending','cancelled'].map(fid => {
+      const b = byId[fid];
+      const fx = b.x + b.w / 2, fy = b.y + b.h;
+      return `M ${fx} ${fy} L ${fx} ${VH}`;
+    });
+
+    const allPaths = [...entries, ...outcomes, ...exits]
+      .map(p => `<path d="${p}" class="cec-conn"/>`).join('');
+
+    const boxesHtml = boxes.map(b => `
+      <div class="cec-box cec-${b.kind}" style="left:${b.x}px;top:${b.y}px;width:${b.w}px;height:${b.h}px;">
+        <div class="cec-box-label">${b.label}</div>
+        <div class="cec-box-count">${b.count}</div>
+        <div class="cec-box-pct">${b.pct}</div>
+      </div>`).join('');
+
+    return `
+      <div class="ls-diagram-title">TEST DRIVE BREAKDOWN</div>
+      <div class="ls-diagram-scroll">
+        <div class="cec-diagram" style="width:${VW}px;height:${VH}px;">
+          <svg class="cec-svg" viewBox="0 0 ${VW} ${VH}" preserveAspectRatio="xMinYMin meet">
+            <defs>
+              <marker id="cec-arrow" viewBox="0 0 8 8" refX="6" refY="4" markerWidth="5" markerHeight="5" orient="auto">
+                <path d="M0,1 L6,4 L0,7 Z" fill="#5a7395"/>
+              </marker>
+            </defs>
+            ${allPaths}
+          </svg>
+          ${boxesHtml}
+        </div>
+      </div>`;
+  }
+
   // ---- Select a stage card ----
   window.selectStage = function (key) {
     const stage = STAGES[key];
@@ -327,6 +480,12 @@
       grid.classList.add('ls-grid-override');
     } else if (key === 'cec') {
       grid.innerHTML = renderCECDiagram();
+      grid.classList.add('ls-grid-override');
+    } else if (key === 'se') {
+      grid.innerHTML = renderSEDiagram();
+      grid.classList.add('ls-grid-override');
+    } else if (key === 'td') {
+      grid.innerHTML = renderTDDiagram();
       grid.classList.add('ls-grid-override');
     } else {
       grid.classList.remove('ls-grid-override');

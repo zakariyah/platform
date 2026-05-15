@@ -2910,3 +2910,12 @@ body::after {
 }
 .cec-neutral .cec-box-count { color: var(--ink-0); }
 .cec-neutral .cec-box-pct { color: var(--ink-2); }
+
+/* Warning (amber) variant — used for Walk-In Opportunity/Enquiry boxes */
+.cec-warning {
+  background: rgba(255, 183, 77, 0.12);
+  border-color: var(--amber);
+  box-shadow: 0 0 14px rgba(255, 183, 77, 0.10);
+}
+.cec-warning .cec-box-count,
+.cec-warning .cec-box-pct { color: var(--amber); }
