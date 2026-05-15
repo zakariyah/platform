@@ -2923,3 +2923,85 @@ body::after {
 }
 .cec-warning .cec-box-count,
 .cec-warning .cec-box-pct { color: var(--amber); }
+
+/* ============================================================
+   Engine toggle + Cytoscape spike (Lead Sourcing)
+   ============================================================ */
+.ls-diagram-title-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 16px;
+}
+.ls-diagram-title-text {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--ink-2);
+  text-transform: uppercase;
+}
+.ls-engine-toggle {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  background: var(--bg-2);
+  border: 1px solid var(--cyan);
+  color: var(--cyan);
+  padding: 5px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+.ls-engine-toggle:hover {
+  background: rgba(94,205,245,0.12);
+}
+
+.ls-cy-wrap {
+  position: relative;
+  margin-bottom: 10px;
+}
+#cy-ls {
+  width: 100%;
+  height: 560px;
+  background: var(--bg-1);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+.ls-cy-controls {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: flex;
+  gap: 6px;
+  z-index: 10;
+}
+.ls-cy-controls button {
+  padding: 5px 10px;
+  background: rgba(14,33,58,0.85);
+  border: 1px solid var(--line-2);
+  color: var(--ink-1);
+  border-radius: 4px;
+  cursor: pointer;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  backdrop-filter: blur(4px);
+  transition: border-color 0.15s, color 0.15s;
+}
+.ls-cy-controls button:hover {
+  border-color: var(--cyan);
+  color: var(--cyan);
+}
+.ls-cy-hint {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px;
+  letter-spacing: 0.04em;
+  color: var(--ink-3);
+  padding-top: 6px;
+}
