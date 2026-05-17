@@ -2639,6 +2639,408 @@
 
 
 <!-- ============================================================ -->
+<!-- PAGE: LEAD MANAGEMENT                                        -->
+<!-- ============================================================ -->
+<div class="page-content" data-page="lead">
+
+  <!-- Sub-tabs -->
+  <nav class="subtabs">
+    <div class="subtab active" data-sub="lead-overview">
+      <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+        <rect x="2" y="3" width="12" height="2" rx="0.5"/>
+        <rect x="2" y="7" width="9" height="2" rx="0.5"/>
+        <rect x="2" y="11" width="11" height="2" rx="0.5"/>
+      </svg>
+      Overview
+    </div>
+    <div class="subtab" data-sub="lead-scoring">
+      <svg class="subtab-icon" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6">
+        <circle cx="8" cy="8" r="6"/>
+        <path d="M8 4v4l2.5 1.5"/>
+      </svg>
+      Scoring Model
+    </div>
+  </nav>
+
+  <!-- ─────────── OVERVIEW SUBVIEW ─────────── -->
+  <div class="subview active" data-view="lead-overview">
+    <main class="main layout-overview">
+      <section class="lifecycle-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="lens-tag">Lens 04</span>
+            <div>
+              <div class="panel-title">Lead Management</div>
+              <div class="panel-sub">Capture, qualify, and route leads in real time</div>
+            </div>
+          </div>
+          <div class="panel-actions">May 1 – 10 · MTD</div>
+        </div>
+
+        <!-- KPI strip -->
+        <div class="lead-kpi-strip">
+          <div class="lead-kpi">
+            <div class="lead-kpi-label">Total Leads</div>
+            <div class="lead-kpi-value">37,815</div>
+            <div class="lead-kpi-delta c-green">▲ 12.4% vs prior MTD</div>
+          </div>
+          <div class="lead-kpi">
+            <div class="lead-kpi-label">Unique Leads</div>
+            <div class="lead-kpi-value">35,600</div>
+            <div class="lead-kpi-delta c-dim">94.1% of total</div>
+          </div>
+          <div class="lead-kpi lead-kpi-accent-green">
+            <div class="lead-kpi-label">Hot Leads</div>
+            <div class="lead-kpi-value c-green">19,500</div>
+            <div class="lead-kpi-delta c-green">55% of unique</div>
+          </div>
+          <div class="lead-kpi">
+            <div class="lead-kpi-label">Avg Lead Score</div>
+            <div class="lead-kpi-value">62.4</div>
+            <div class="lead-kpi-delta c-amber">▼ 2.1 from prior</div>
+          </div>
+          <div class="lead-kpi">
+            <div class="lead-kpi-label">Close Rate</div>
+            <div class="lead-kpi-value c-green">8.8%</div>
+            <div class="lead-kpi-delta c-green">▲ 1.2 pts</div>
+          </div>
+        </div>
+
+        <!-- Two-column: sources + recent activity -->
+        <div class="lead-grid-2">
+          <div class="lead-card">
+            <div class="lead-card-head">
+              <div class="lead-card-title">Top Lead Sources</div>
+              <div class="lead-card-sub">Past 10 days</div>
+            </div>
+            <table class="lead-table">
+              <thead>
+                <tr><th>#</th><th>Source</th><th>Leads</th><th>Avg Score</th><th>Tier</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>01</td><td>Website</td><td>24,195</td><td>68</td><td><span class="lead-tag warm">WARM</span></td></tr>
+                <tr><td>02</td><td>Social Media</td><td>12,167</td><td>54</td><td><span class="lead-tag warm">WARM</span></td></tr>
+                <tr><td>03</td><td>Walk-In</td><td>1,850</td><td>95</td><td><span class="lead-tag hot">HOT</span></td></tr>
+                <tr><td>04</td><td>Showroom Promotions</td><td>1,318</td><td>82</td><td><span class="lead-tag hot">HOT</span></td></tr>
+                <tr><td>05</td><td>Call Center</td><td>1,453</td><td>76</td><td><span class="lead-tag hot">HOT</span></td></tr>
+                <tr><td>06</td><td>Blue App</td><td>9,250</td><td>71</td><td><span class="lead-tag warm">WARM</span></td></tr>
+                <tr><td>07</td><td>Chatbot</td><td>2,917</td><td>49</td><td><span class="lead-tag warm">WARM</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="lead-card">
+            <div class="lead-card-head">
+              <div class="lead-card-title">Recent Leads</div>
+              <div class="lead-card-sub">Live feed · scored on capture</div>
+            </div>
+            <div class="lead-feed">
+              <div class="lead-feed-row">
+                <div class="lead-feed-score score-hot">92</div>
+                <div class="lead-feed-body">
+                  <div class="lead-feed-name">Mohammed Al Rashidi</div>
+                  <div class="lead-feed-meta">Lexus LX 600 · Walk-in · Dubai Festival City</div>
+                </div>
+                <div class="lead-feed-time">2 min</div>
+              </div>
+              <div class="lead-feed-row">
+                <div class="lead-feed-score score-warm">68</div>
+                <div class="lead-feed-body">
+                  <div class="lead-feed-name">Sara Al Mansoori</div>
+                  <div class="lead-feed-meta">Toyota Camry · Website · Self-serve</div>
+                </div>
+                <div class="lead-feed-time">14 min</div>
+              </div>
+              <div class="lead-feed-row">
+                <div class="lead-feed-score score-hot">78</div>
+                <div class="lead-feed-body">
+                  <div class="lead-feed-name">Khalid Bin Hamdan</div>
+                  <div class="lead-feed-meta">Lexus NX 350 · Call Center · Booked TD</div>
+                </div>
+                <div class="lead-feed-time">27 min</div>
+              </div>
+              <div class="lead-feed-row">
+                <div class="lead-feed-score score-warm">42</div>
+                <div class="lead-feed-body">
+                  <div class="lead-feed-name">Fatima Al Zaabi</div>
+                  <div class="lead-feed-meta">Honda Accord · Social · Instagram form</div>
+                </div>
+                <div class="lead-feed-time">48 min</div>
+              </div>
+              <div class="lead-feed-row">
+                <div class="lead-feed-score score-hot">88</div>
+                <div class="lead-feed-body">
+                  <div class="lead-feed-name">Omar Al Suwaidi</div>
+                  <div class="lead-feed-meta">Jeep Wrangler · Showroom · Returning</div>
+                </div>
+                <div class="lead-feed-time">1 hr</div>
+              </div>
+              <div class="lead-feed-row">
+                <div class="lead-feed-score score-cold">35</div>
+                <div class="lead-feed-body">
+                  <div class="lead-feed-name">Aisha Al Blooshi</div>
+                  <div class="lead-feed-meta">BYD Seal · TikTok · Comment-source</div>
+                </div>
+                <div class="lead-feed-time">1 hr</div>
+              </div>
+              <div class="lead-feed-row">
+                <div class="lead-feed-score score-warm">65</div>
+                <div class="lead-feed-body">
+                  <div class="lead-feed-name">Hamad Al Mazrouei</div>
+                  <div class="lead-feed-meta">Volvo XC90 · WhatsApp · Brochure DL</div>
+                </div>
+                <div class="lead-feed-time">2 hr</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div><!-- /subview lead-overview -->
+
+  <!-- ─────────── SCORING MODEL SUBVIEW ─────────── -->
+  <div class="subview" data-view="lead-scoring">
+    <main class="main layout-overview">
+      <section class="lifecycle-panel">
+        <div class="panel-header">
+          <div class="panel-title-group">
+            <span class="lens-tag">Model</span>
+            <div>
+              <div class="panel-title">Lead Scoring Model · v2.3</div>
+              <div class="panel-sub">Composite score 0–100 · 5 weighted factors · Re-trained nightly</div>
+            </div>
+          </div>
+          <div class="panel-actions">
+            <span class="lsm-pill">● ACCURACY 87.4%</span>
+            <span class="lsm-pill">LAST TRAINED 2026-05-10 03:14 GST</span>
+          </div>
+        </div>
+
+        <!-- Factors + Tiers -->
+        <div class="lsm-grid-2">
+
+          <!-- Scoring Factors -->
+          <div class="lead-card">
+            <div class="lead-card-head">
+              <div class="lead-card-title">Scoring Factors</div>
+              <div class="lead-card-sub">Weighted contributions to the composite score</div>
+            </div>
+            <div class="lsm-factors">
+              <div class="lsm-factor">
+                <div class="lsm-factor-row">
+                  <span class="lsm-factor-name">Lead Source</span>
+                  <span class="lsm-factor-weight">25%</span>
+                </div>
+                <div class="lsm-factor-bar"><div class="lsm-factor-fill" style="width:25%; background:var(--blue);"></div></div>
+                <div class="lsm-factor-desc">Walk-in 100 · Inbound call 95 · Website 65 · Social 35</div>
+              </div>
+              <div class="lsm-factor">
+                <div class="lsm-factor-row">
+                  <span class="lsm-factor-name">Engagement Depth</span>
+                  <span class="lsm-factor-weight">30%</span>
+                </div>
+                <div class="lsm-factor-bar"><div class="lsm-factor-fill" style="width:30%; background:var(--cyan);"></div></div>
+                <div class="lsm-factor-desc">High touchpoints (10+) 100 · Medium 70 · Low 30 · None 0</div>
+              </div>
+              <div class="lsm-factor">
+                <div class="lsm-factor-row">
+                  <span class="lsm-factor-name">Demographic Fit</span>
+                  <span class="lsm-factor-weight">20%</span>
+                </div>
+                <div class="lsm-factor-bar"><div class="lsm-factor-fill" style="width:20%; background:var(--green);"></div></div>
+                <div class="lsm-factor-desc">Strong ICP match 100 · Partial 60 · Outside ICP 20</div>
+              </div>
+              <div class="lsm-factor">
+                <div class="lsm-factor-row">
+                  <span class="lsm-factor-name">Intent Signals</span>
+                  <span class="lsm-factor-weight">15%</span>
+                </div>
+                <div class="lsm-factor-bar"><div class="lsm-factor-fill" style="width:15%; background:var(--amber);"></div></div>
+                <div class="lsm-factor-desc">TD booked 100 · Brochure DL 70 · Page visit 30 · None 0</div>
+              </div>
+              <div class="lsm-factor">
+                <div class="lsm-factor-row">
+                  <span class="lsm-factor-name">Recency</span>
+                  <span class="lsm-factor-weight">10%</span>
+                </div>
+                <div class="lsm-factor-bar"><div class="lsm-factor-fill" style="width:10%; background:var(--violet);"></div></div>
+                <div class="lsm-factor-desc">Today 100 · This week 75 · This month 50 · Older 20</div>
+              </div>
+              <div class="lsm-factors-total">
+                <span>Total weight</span>
+                <span class="c-green">100% ✓</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tier Thresholds -->
+          <div class="lead-card">
+            <div class="lead-card-head">
+              <div class="lead-card-title">Score Tiers</div>
+              <div class="lead-card-sub">Tier thresholds drive routing &amp; SLA</div>
+            </div>
+            <div class="lsm-tiers">
+              <div class="lsm-tier tier-hot">
+                <div class="lsm-tier-band">HOT</div>
+                <div class="lsm-tier-range">75 – 100</div>
+                <div class="lsm-tier-count">19,500</div>
+                <div class="lsm-tier-pct">54.8%</div>
+                <div class="lsm-tier-action">→ SE within 1 hr</div>
+              </div>
+              <div class="lsm-tier tier-warm">
+                <div class="lsm-tier-band">WARM</div>
+                <div class="lsm-tier-range">40 – 74</div>
+                <div class="lsm-tier-count">9,675</div>
+                <div class="lsm-tier-pct">27.2%</div>
+                <div class="lsm-tier-action">→ Nurture sequence</div>
+              </div>
+              <div class="lsm-tier tier-cold">
+                <div class="lsm-tier-band">COLD</div>
+                <div class="lsm-tier-range">0 – 39</div>
+                <div class="lsm-tier-count">6,425</div>
+                <div class="lsm-tier-pct">18.0%</div>
+                <div class="lsm-tier-action">→ Re-engagement campaign</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Score Distribution histogram -->
+        <div class="lead-card lsm-histogram-card">
+          <div class="lead-card-head">
+            <div class="lead-card-title">Live Score Distribution</div>
+            <div class="lead-card-sub">35,600 scored leads · 10-point bands</div>
+          </div>
+          <div class="lsm-histogram" id="lsm-histogram"></div>
+          <div class="lsm-histogram-axis">
+            <span>0</span><span>10</span><span>20</span><span>30</span><span>40</span><span>50</span><span>60</span><span>70</span><span>80</span><span>90</span><span>100</span>
+          </div>
+        </div>
+
+        <!-- Calculator + Conversion -->
+        <div class="lsm-grid-2">
+
+          <!-- Live Calculator -->
+          <div class="lead-card">
+            <div class="lead-card-head">
+              <div class="lead-card-title">Live Score Calculator</div>
+              <div class="lead-card-sub">Select factor values to compute a composite score</div>
+            </div>
+            <div class="lsm-calc">
+              <div class="lsm-calc-inputs">
+                <div class="lsm-calc-row">
+                  <label>Lead Source</label>
+                  <select data-factor="source">
+                    <option value="100">Walk-in (100)</option>
+                    <option value="95">Inbound call (95)</option>
+                    <option value="65" selected>Website (65)</option>
+                    <option value="35">Social media (35)</option>
+                    <option value="40">WhatsApp (40)</option>
+                  </select>
+                </div>
+                <div class="lsm-calc-row">
+                  <label>Engagement</label>
+                  <select data-factor="engagement">
+                    <option value="100">High — 10+ touches (100)</option>
+                    <option value="70" selected>Medium — 5–10 (70)</option>
+                    <option value="30">Low — &lt;5 (30)</option>
+                    <option value="0">None (0)</option>
+                  </select>
+                </div>
+                <div class="lsm-calc-row">
+                  <label>Demographic Fit</label>
+                  <select data-factor="demo">
+                    <option value="100" selected>Strong ICP match (100)</option>
+                    <option value="60">Partial match (60)</option>
+                    <option value="20">Outside ICP (20)</option>
+                  </select>
+                </div>
+                <div class="lsm-calc-row">
+                  <label>Intent Signals</label>
+                  <select data-factor="intent">
+                    <option value="100">Test drive booked (100)</option>
+                    <option value="70" selected>Brochure downloaded (70)</option>
+                    <option value="30">Page visit only (30)</option>
+                    <option value="0">No signal (0)</option>
+                  </select>
+                </div>
+                <div class="lsm-calc-row">
+                  <label>Recency</label>
+                  <select data-factor="recency">
+                    <option value="100" selected>Today (100)</option>
+                    <option value="75">This week (75)</option>
+                    <option value="50">This month (50)</option>
+                    <option value="20">Older (20)</option>
+                  </select>
+                </div>
+              </div>
+              <div class="lsm-calc-result">
+                <div class="lsm-calc-score-label">Composite Score</div>
+                <div class="lsm-calc-score" id="lsm-calc-score">—</div>
+                <div class="lsm-calc-tier" id="lsm-calc-tier">—</div>
+                <div class="lsm-calc-breakdown" id="lsm-calc-breakdown"></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Conversion Rate by Tier -->
+          <div class="lead-card">
+            <div class="lead-card-head">
+              <div class="lead-card-title">Model Performance</div>
+              <div class="lead-card-sub">Conversion rate by tier · last 90 days</div>
+            </div>
+            <div class="lsm-perf">
+              <div class="lsm-perf-row">
+                <div class="lsm-perf-label"><span class="lead-tag hot">HOT</span></div>
+                <div class="lsm-perf-bar-wrap">
+                  <div class="lsm-perf-bar bar-hot" style="width:91%"></div>
+                </div>
+                <div class="lsm-perf-val c-green">18.2%</div>
+              </div>
+              <div class="lsm-perf-row">
+                <div class="lsm-perf-label"><span class="lead-tag warm">WARM</span></div>
+                <div class="lsm-perf-bar-wrap">
+                  <div class="lsm-perf-bar bar-warm" style="width:32%"></div>
+                </div>
+                <div class="lsm-perf-val c-amber">6.4%</div>
+              </div>
+              <div class="lsm-perf-row">
+                <div class="lsm-perf-label"><span class="lead-tag cold">COLD</span></div>
+                <div class="lsm-perf-bar-wrap">
+                  <div class="lsm-perf-bar bar-cold" style="width:5%"></div>
+                </div>
+                <div class="lsm-perf-val c-red">1.1%</div>
+              </div>
+              <div class="lsm-perf-divider"></div>
+              <div class="lsm-perf-stat">
+                <div>
+                  <div class="lsm-perf-stat-label">Model Lift</div>
+                  <div class="lsm-perf-stat-value c-green">16.5×</div>
+                  <div class="lsm-perf-stat-sub">HOT vs COLD conversion</div>
+                </div>
+                <div>
+                  <div class="lsm-perf-stat-label">AUC-ROC</div>
+                  <div class="lsm-perf-stat-value">0.874</div>
+                  <div class="lsm-perf-stat-sub">Predictive accuracy</div>
+                </div>
+                <div>
+                  <div class="lsm-perf-stat-label">Drift Score</div>
+                  <div class="lsm-perf-stat-value c-amber">0.12</div>
+                  <div class="lsm-perf-stat-sub">7-day rolling</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+    </main>
+  </div><!-- /subview lead-scoring -->
+
+</div><!-- /page-content lead -->
+
+
+<!-- ============================================================ -->
 <!-- PAGE: TO-DO                                                  -->
 <!-- ============================================================ -->
 <div class="page-content" data-page="todo">
@@ -2677,6 +3079,14 @@
           <div class="todo-body">
             <div class="todo-title">Add the UI for all the RV initiative</div>
             <div class="todo-sub">Wire residual-value flows + dashboards across journeys</div>
+          </div>
+          <div class="todo-status">Open</div>
+        </div>
+        <div class="todo-item" data-id="t4">
+          <button class="todo-check" aria-label="toggle"></button>
+          <div class="todo-body">
+            <div class="todo-title">Include studying Reta's UI and making it into the dashboard</div>
+            <div class="todo-sub">Review Reta's existing UI patterns and port relevant flows into this dashboard</div>
           </div>
           <div class="todo-status">Open</div>
         </div>
